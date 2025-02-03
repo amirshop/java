@@ -4,14 +4,12 @@ import com.ecommerce.backend.dto.LoginRequest;
 import com.ecommerce.backend.dto.RegisterRequest;
 import com.ecommerce.backend.entity.Account;
 import com.ecommerce.backend.entity.Role;
-import com.ecommerce.backend.entity.VerificationToken;
 import com.ecommerce.backend.enums.AccountStatus;
 import com.ecommerce.backend.jwt.JwtUtils;
 import com.ecommerce.backend.repository.auth.AccountRepository;
 import com.ecommerce.backend.repository.auth.RoleRepository;
-import com.ecommerce.backend.repository.auth.VerificationTokenRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -22,9 +20,9 @@ public class AuthService {
 
     private final AccountRepository accountRepository;
     private final RoleRepository roleRepository;
-    private final VerificationTokenRepository verificationTokenRepository;
+    private final VerificationTokenService verificationTokenService;
     private final JwtUtils jwtTokenProvider;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     public void register(RegisterRequest request) {
         // Check if account exists
@@ -47,22 +45,27 @@ public class AuthService {
 
         accountRepository.save(account);
 
-        // Create verification token and save it
-        VerificationToken token = new VerificationToken(account);
-        verificationTokenRepository.save(token);
+        // Create verification token and store in Redis
+        String token = verificationTokenService.createVerificationToken(account.getUsername());
 
         // TODO: Send an email with the verification link that includes token.getToken()
         // For example: http://localhost:8080/api/auth/verify?token=token.getToken()
     }
 
     public void verify(String token) {
-        VerificationToken verificationToken = verificationTokenRepository.findByToken(token)
-                .orElseThrow(() -> new RuntimeException("Invalid token"));
-        Account account = verificationToken.getAccount();
+        // Get the associated account identifier (userName) from Redis
+        String accountIdentifier = verificationTokenService.getAccountIdentifierByToken(token);
+        if (accountIdentifier == null) {
+            throw new RuntimeException("Invalid or expired token");
+        }
+        // Retrieve the account by username
+        Account account = accountRepository.findByUsername(accountIdentifier)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
         // Update status to ACTIVE upon successful verification
         account.setStatus(AccountStatus.ACTIVE);
         accountRepository.save(account);
-        verificationTokenRepository.delete(verificationToken);
+        verificationTokenService.deleteVerificationToken(token);
     }
 
     public String login(LoginRequest request) {
