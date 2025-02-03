@@ -1,9 +1,10 @@
 package com.ecommerce.backend.service;
 
 import com.ecommerce.backend.entity.Account;
+import com.ecommerce.backend.repository.auth.AccountRepository;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.ecommerce.backend.repository.AccountRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,14 @@ import java.util.Optional;
 public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private  UserDetailsServiceImpl userDetailsService;
+
+    public Account getAccount() {
+        UserDetailsImpl userDetails = userDetailsService.getPrincipal();
+        return accountRepository.findById(userDetails.getId()).orElseThrow(
+                () -> new ServiceException("user not found"));
+    }
 
     public List<Account> getAllAccounts() {
         return accountRepository.findAll();
@@ -27,7 +36,7 @@ public class AccountService {
 
     public Account updateAccount(Long id, Account updatedAccount) {
         return accountRepository.findById(id).map(account -> {
-            account.setUserName(updatedAccount.getUserName());
+            account.setUsername(updatedAccount.getUsername());
             account.setPassword(updatedAccount.getPassword());
             account.setStatus(updatedAccount.getStatus());
             account.setEmail(updatedAccount.getEmail());
@@ -39,4 +48,3 @@ public class AccountService {
         accountRepository.deleteById(id);
     }
 }
-
