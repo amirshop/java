@@ -3,7 +3,7 @@ package com.ecommerce.backend.controller;
 import com.ecommerce.backend.dto.JwtResponse;
 import com.ecommerce.backend.dto.LoginRequest;
 import com.ecommerce.backend.dto.RegisterRequest;
-import com.ecommerce.backend.service.AuthService;
+import com.ecommerce.backend.service.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

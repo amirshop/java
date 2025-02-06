@@ -1,9 +1,9 @@
 package com.ecommerce.backend.controller;
 
-import com.ecommerce.backend.entity.Payment;
+import com.ecommerce.backend.entity.payment.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.ecommerce.backend.service.PaymentService;
+import com.ecommerce.backend.service.payment.PaymentService;
 
 import java.util.List;
 

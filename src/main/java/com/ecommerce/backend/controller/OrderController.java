@@ -1,10 +1,10 @@
 package com.ecommerce.backend.controller;
 
-import com.ecommerce.backend.entity.Order;
+import com.ecommerce.backend.entity.order.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.ecommerce.backend.service.OrderService;
+import com.ecommerce.backend.service.order.OrderService;
 
 import java.util.List;
 

@@ -2,7 +2,7 @@ package com.ecommerce.backend.config;
 
 import com.ecommerce.backend.jwt.AuthEntryPointJwt;
 import com.ecommerce.backend.jwt.AuthTokenFilter;
-import com.ecommerce.backend.service.UserDetailsServiceImpl;
+import com.ecommerce.backend.service.auth.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

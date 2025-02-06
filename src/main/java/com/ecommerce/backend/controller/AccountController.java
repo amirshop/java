@@ -1,10 +1,10 @@
 package com.ecommerce.backend.controller;
 
-import com.ecommerce.backend.entity.Account;
+import com.ecommerce.backend.entity.account.Account;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import com.ecommerce.backend.service.AccountService;
+import com.ecommerce.backend.service.account.AccountService;
 
 import java.util.List;
 
