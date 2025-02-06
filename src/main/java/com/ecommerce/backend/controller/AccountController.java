@@ -1,18 +1,18 @@
 package com.ecommerce.backend.controller;
 
 import com.ecommerce.backend.entity.account.Account;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import com.ecommerce.backend.service.account.AccountService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/accounts")
+@RequiredArgsConstructor
 public class AccountController {
-    @Autowired
-    private AccountService accountService;
+    private final AccountService accountService;
 
     @GetMapping
     public List<Account> getAllAccounts() {

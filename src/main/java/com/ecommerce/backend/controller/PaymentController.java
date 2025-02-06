@@ -1,17 +1,17 @@
 package com.ecommerce.backend.controller;
 
 import com.ecommerce.backend.entity.payment.Payment;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import com.ecommerce.backend.service.payment.PaymentService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/payments")
+@RequiredArgsConstructor
 public class PaymentController {
-    @Autowired
-    private PaymentService paymentService;
+    private final PaymentService paymentService;
 
     @GetMapping
     public List<Payment> getAllPayments() {

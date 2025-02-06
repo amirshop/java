@@ -1,17 +1,17 @@
 package com.ecommerce.backend.controller;
 
 import com.ecommerce.backend.entity.shipment.Shipment;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import com.ecommerce.backend.service.shipment.ShipmentService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/shipments")
+@RequiredArgsConstructor
 public class ShipmentController {
-    @Autowired
-    private ShipmentService shipmentService;
+    private final ShipmentService shipmentService;
 
     @GetMapping
     public List<Shipment> getAllShipments() {
