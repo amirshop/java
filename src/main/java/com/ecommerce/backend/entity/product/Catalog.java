@@ -13,6 +13,8 @@ public class Catalog {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String name;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdated;
 
