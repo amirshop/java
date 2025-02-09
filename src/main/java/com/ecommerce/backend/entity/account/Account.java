@@ -1,24 +1,30 @@
 package com.ecommerce.backend.entity.account;
 
+import com.ecommerce.backend.entity.cart.Cart;
+import com.ecommerce.backend.entity.product.ProductReview;
 import com.ecommerce.backend.enums.AccountStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Data
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "account_type", discriminatorType = DiscriminatorType.STRING)
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String username;
+
     private String password;
+
+    @Column(unique = true)
     private String email;
+
     private String phone;
     private String name;
 
@@ -28,9 +34,11 @@ public class Account {
     @Embedded
     private Address shippingAddress;
 
-    // In a real app, you might have roles, etc.
-    // Omitted for brevity, or add if needed:
-    // @ManyToMany(...) private Set<Role> roles;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Cart cart;
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    private List<ProductReview> accountReviews;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "account_roles",

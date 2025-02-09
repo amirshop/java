@@ -29,8 +29,6 @@ public class Order {
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
 
-    // Possibly link an order to shipments, payments, etc.
-    // For example:
     @OneToMany
     @JoinColumn(name = "order_id")
     private List<Payment> payments;

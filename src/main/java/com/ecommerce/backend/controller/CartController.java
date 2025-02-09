@@ -1,7 +1,7 @@
 package com.ecommerce.backend.controller;
 
-import com.ecommerce.backend.entity.cart.ShoppingCart;
-import com.ecommerce.backend.service.cart.ShoppingCartService;
+import com.ecommerce.backend.entity.cart.Cart;
+import com.ecommerce.backend.service.cart.CartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/shopping-carts")
+@RequestMapping("/carts")
 @RequiredArgsConstructor
-public class ShoppingCartController {
-    private final ShoppingCartService shoppingCartService;
+public class CartController {
+    private final CartService cartService;
 
     @GetMapping
-    public List<ShoppingCart> getAllCarts() {
-        return shoppingCartService.getAllCarts();
+    public List<Cart> getAllCarts() {
+        return cartService.getAllCarts();
     }
 }

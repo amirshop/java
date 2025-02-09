@@ -21,5 +21,5 @@ public class Product {
     private ProductCategory category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<ProductReview> reviews;
+    private List<ProductReview> productReviews;
 }

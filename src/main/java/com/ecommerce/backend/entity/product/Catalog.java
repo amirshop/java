@@ -19,7 +19,6 @@ public class Catalog {
     private Date lastUpdated;
 
     // A catalog can contain many products
-    @OneToMany
-    @JoinColumn(name = "catalog_id")
-    private List<Product> listOfProducts;
+    @OneToMany(mappedBy = "catalog", cascade = CascadeType.ALL)
+    private List<Product> products;
 }
