@@ -4,6 +4,7 @@ import com.ecommerce.backend.entity.account.Account;
 import com.ecommerce.backend.repository.account.AccountRepository;
 import com.ecommerce.backend.service.auth.UserDetailsImpl;
 import com.ecommerce.backend.service.auth.UserDetailsServiceImpl;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,11 +13,18 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class AccountService {
-    @Autowired
-    private AccountRepository accountRepository;
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private final AccountRepository accountRepository;
+    private final UserDetailsServiceImpl userDetailsService;
+
+    public Optional<Account> getAccountByUsername(String userName) {
+        return accountRepository.findByUsername(userName);
+    }
+
+    public Optional<Account> getAccountByEmail(String email) {
+        return accountRepository.findByEmail(email);
+    }
 
     public Account getAccount() {
         UserDetailsImpl userDetails = userDetailsService.getPrincipal();
@@ -49,4 +57,5 @@ public class AccountService {
     public void deleteAccount(Long id) {
         accountRepository.deleteById(id);
     }
+
 }
