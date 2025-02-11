@@ -1,4 +1,4 @@
-package com.ecommerce.backend.dto;
+package com.ecommerce.backend.dto.auth;
 
 import lombok.Getter;
 import lombok.Setter;

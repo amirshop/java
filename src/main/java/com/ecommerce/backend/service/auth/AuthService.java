@@ -1,7 +1,7 @@
 package com.ecommerce.backend.service.auth;
 
-import com.ecommerce.backend.dto.LoginRequest;
-import com.ecommerce.backend.dto.RegisterRequest;
+import com.ecommerce.backend.dto.auth.LoginRequest;
+import com.ecommerce.backend.dto.auth.RegisterRequest;
 import com.ecommerce.backend.entity.account.Account;
 import com.ecommerce.backend.entity.account.Role;
 import com.ecommerce.backend.enums.AccountStatus;

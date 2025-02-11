@@ -2,10 +2,9 @@ package com.ecommerce.backend.service.product;
 
 import com.ecommerce.backend.entity.product.Product;
 import com.ecommerce.backend.entity.product.ProductCategory;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.ecommerce.backend.repository.product.ProductRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
