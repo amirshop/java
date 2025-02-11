@@ -1,33 +1,53 @@
 package com.ecommerce.backend.controller;
 
+import com.ecommerce.backend.dto.order.request.OrderRequestDto;
+import com.ecommerce.backend.dto.order.response.OrderResponseDto;
 import com.ecommerce.backend.entity.order.Order;
 import com.ecommerce.backend.service.order.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders")
+@RequestMapping("/api/orders")
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
 
     @GetMapping
-    public List<Order> getAllOrders() {
-        return orderService.getAllOrders();
+    public ResponseEntity<List<OrderResponseDto>> getAllOrders() {
+        List<OrderResponseDto> orders = orderService.getAllOrders();
+        return ResponseEntity.ok(orders);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
-        return orderService.getOrderById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/{orderId}")
+    public ResponseEntity<OrderResponseDto> getOrderById(@PathVariable Long orderId) {
+        OrderResponseDto order = orderService.getOrderById(orderId);
+        return order != null ? ResponseEntity.ok(order) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public Order createOrder(@RequestBody Order order) {
-        return orderService.createOrder(order);
+    public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderRequestDto orderRequest) {
+        OrderResponseDto createdOrder = orderService.createOrder(orderRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
+    }
+
+    @PutMapping("/{orderId}")
+    public ResponseEntity<OrderResponseDto> updateOrder(@PathVariable Long orderId,
+                                                        @RequestBody OrderRequestDto orderRequest) {
+        OrderResponseDto updatedOrder = orderService.updateOrder(orderId, orderRequest);
+        return updatedOrder != null
+                ? ResponseEntity.ok(updatedOrder)
+                : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{orderId}")
+    public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
+        orderService.deleteOrder(orderId);
+        return ResponseEntity.noContent().build();
     }
 }
+

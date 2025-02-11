@@ -1,5 +1,6 @@
 package com.ecommerce.backend.dto.shipment.request;
 
+import com.ecommerce.backend.enums.ShipmentStatus;
 import lombok.Data;
 import java.util.Date;
 
@@ -8,5 +9,5 @@ public class ShipmentRequestDto {
     private Date shipmentDate;
     private Date estimatedArrival;
     private String shipmentMethod;
-    private String status; // e.g., PENDING, SHIPPED, etc.
+    private ShipmentStatus status; // e.g., PENDING, SHIPPED, etc.
 }

@@ -1,39 +1,55 @@
 package com.ecommerce.backend.controller;
 
-import com.ecommerce.backend.entity.product.Product;
+import com.ecommerce.backend.dto.product.request.ProductRequestDto;
+import com.ecommerce.backend.dto.product.response.ProductResponseDto;
 import com.ecommerce.backend.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 @RequiredArgsConstructor
 public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public List<Product> getAllProducts() {
-        return productService.getAllProducts();
+    public ResponseEntity<List<ProductResponseDto>> getAllProducts(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) Long categoryId) {
+        List<ProductResponseDto> products = productService.getAllProducts(name, categoryId);
+        return ResponseEntity.ok(products);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        return productService.getProductById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    @GetMapping("/{productId}")
+    public ResponseEntity<ProductResponseDto> getProductById(@PathVariable Long productId) {
+        ProductResponseDto product = productService.getProductById(productId);
+        return product != null
+                ? ResponseEntity.ok(product)
+                : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public Product createProduct(@RequestBody Product product) {
-        return productService.createProduct(product);
+    public ResponseEntity<ProductResponseDto> createProduct(@RequestBody ProductRequestDto productRequest) {
+        ProductResponseDto createdProduct = productService.createProduct(productRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
-        productService.deleteProduct(id);
+    @PutMapping("/{productId}")
+    public ResponseEntity<ProductResponseDto> updateProduct(@PathVariable Long productId,
+                                                            @RequestBody ProductRequestDto productRequest) {
+        ProductResponseDto updatedProduct = productService.updateProduct(productId, productRequest);
+        return updatedProduct != null
+                ? ResponseEntity.ok(updatedProduct)
+                : ResponseEntity.notFound().build();
+    }
+
+    @DeleteMapping("/{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
+        productService.deleteProduct(productId);
         return ResponseEntity.noContent().build();
     }
 }

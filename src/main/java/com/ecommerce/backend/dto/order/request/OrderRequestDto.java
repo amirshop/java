@@ -1,6 +1,7 @@
 package com.ecommerce.backend.dto.order.request;
 
 import com.ecommerce.backend.dto.cart.request.ItemRequestDto;
+import com.ecommerce.backend.enums.OrderStatus;
 import lombok.Data;
 import java.util.Date;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 public class OrderRequestDto {
     private String orderNumber;
     private String orderProcessor;
-    private String status; // e.g., UNSHIPPED, PENDING, etc.
+    private OrderStatus status; // e.g., UNSHIPPED, PENDING, etc.
     private Date orderDate;
     private List<ItemRequestDto> items;
 }
