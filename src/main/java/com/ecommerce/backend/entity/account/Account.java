@@ -6,16 +6,17 @@ import com.ecommerce.backend.enums.AccountStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    private Date createdAt;
+    private Date updatedAt;
 
     @Column(unique = true)
     private String username;

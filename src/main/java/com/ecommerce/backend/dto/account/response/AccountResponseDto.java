@@ -4,10 +4,11 @@ import com.ecommerce.backend.dto.account.AddressDto;
 import com.ecommerce.backend.dto.cart.response.CartResponseDto;
 import lombok.Data;
 import java.util.Set;
+import java.util.UUID;
 
 @Data
 public class AccountResponseDto {
-    private Long id;
+    private UUID id;
     private String username;
     private String email;
     private String phone;

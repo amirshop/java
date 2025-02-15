@@ -9,6 +9,7 @@ import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "orders")
@@ -17,8 +18,11 @@ import java.util.List;
 @DiscriminatorColumn(name = "order_type", discriminatorType = DiscriminatorType.STRING)
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    private Date createdAt;
+    private Date updatedAt;
 
     private String orderNumber;
     private String orderProcessor;

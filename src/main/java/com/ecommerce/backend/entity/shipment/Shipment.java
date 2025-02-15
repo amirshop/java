@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -12,8 +13,11 @@ import java.util.Date;
 @DiscriminatorColumn(name = "shipment_type", discriminatorType = DiscriminatorType.STRING)
 public class Shipment {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    private Date createdAt;
+    private Date updatedAt;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date shipmentDate;

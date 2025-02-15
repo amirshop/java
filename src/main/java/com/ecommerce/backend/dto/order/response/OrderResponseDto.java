@@ -6,10 +6,11 @@ import com.ecommerce.backend.dto.payment.response.PaymentResponseDto;
 import lombok.Data;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 public class OrderResponseDto {
-    private Long id;
+    private UUID id;
     private String orderNumber;
     private String orderProcessor;
     private String status;

@@ -2,10 +2,11 @@ package com.ecommerce.backend.dto.notification.response;
 
 import lombok.Data;
 import java.util.Date;
+import java.util.UUID;
 
 @Data
 public class NotificationResponseDto {
-    private Long id;
+    private UUID id;
     private String title;
     private String message;
     private Date createdAt;
