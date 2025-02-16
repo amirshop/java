@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -21,13 +22,13 @@ public class CartService {
     private final ItemRepository itemRepository;
     private final ModelMapper modelMapper;
 
-    public CartResponseDto getCartById(Long cartId) {
+    public CartResponseDto getCartById(UUID cartId) {
         return cartRepository.findById(cartId)
                 .map(cart -> modelMapper.map(cart, CartResponseDto.class))
                 .orElse(null);
     }
 
-    public ItemResponseDto addItem(Long cartId, ItemRequestDto itemRequest) {
+    public ItemResponseDto addItem(UUID cartId, ItemRequestDto itemRequest) {
         Optional<Cart> cartOpt = cartRepository.findById(cartId);
         if (!cartOpt.isPresent()) {
             return null; // Optionally, throw an exception
@@ -39,7 +40,7 @@ public class CartService {
         return modelMapper.map(savedItem, ItemResponseDto.class);
     }
 
-    public ItemResponseDto updateItem(Long cartId, Long itemId, ItemRequestDto itemRequest) {
+    public ItemResponseDto updateItem(UUID cartId, UUID itemId, ItemRequestDto itemRequest) {
         Optional<Item> itemOpt = itemRepository.findById(itemId);
         if (itemOpt.isPresent()) {
             Item item = itemOpt.get();
@@ -54,7 +55,7 @@ public class CartService {
         return null;
     }
 
-    public void removeItem(Long cartId, Long itemId) {
+    public void removeItem(UUID cartId, UUID itemId) {
         Optional<Item> itemOpt = itemRepository.findById(itemId);
         if (itemOpt.isPresent()) {
             Item item = itemOpt.get();
@@ -64,7 +65,7 @@ public class CartService {
         }
     }
 
-    public void clearCart(Long cartId) {
+    public void clearCart(UUID cartId) {
         Optional<Cart> cartOpt = cartRepository.findById(cartId);
         if (cartOpt.isPresent()) {
             Cart cart = cartOpt.get();

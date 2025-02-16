@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +27,7 @@ public class OrderService  {
                 .collect(Collectors.toList());
     }
 
-    public OrderResponseDto getOrderById(Long orderId) {
+    public OrderResponseDto getOrderById(UUID orderId) {
         return orderRepository.findById(orderId)
                 .map(order -> modelMapper.map(order, OrderResponseDto.class))
                 .orElse(null);
@@ -39,7 +40,7 @@ public class OrderService  {
         return modelMapper.map(saved, OrderResponseDto.class);
     }
 
-    public OrderResponseDto updateOrder(Long orderId, OrderRequestDto orderRequest) {
+    public OrderResponseDto updateOrder(UUID orderId, OrderRequestDto orderRequest) {
         return orderRepository.findById(orderId)
                 .map(existing -> {
                     existing.setOrderProcessor(orderRequest.getOrderProcessor());
@@ -51,7 +52,7 @@ public class OrderService  {
                 .orElse(null);
     }
 
-    public void deleteOrder(Long orderId) {
+    public void deleteOrder(UUID orderId) {
         orderRepository.deleteById(orderId);
     }
 }

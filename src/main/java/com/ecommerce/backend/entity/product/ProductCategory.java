@@ -19,5 +19,6 @@ public class ProductCategory {
     private Date createdAt;
     private Date updatedAt;
     private String name;
+    private String slug;
     private String description;
 }

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/products")
@@ -19,13 +20,13 @@ public class ProductController {
     @GetMapping
     public ResponseEntity<List<ProductResponseDto>> getAllProducts(
             @RequestParam(required = false) String name,
-            @RequestParam(required = false) Long categoryId) {
+            @RequestParam(required = false) UUID categoryId) {
         List<ProductResponseDto> products = productService.getAllProducts(name, categoryId);
         return ResponseEntity.ok(products);
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductResponseDto> getProductById(@PathVariable Long productId) {
+    public ResponseEntity<ProductResponseDto> getProductById(@PathVariable UUID productId) {
         ProductResponseDto product = productService.getProductById(productId);
         return product != null
                 ? ResponseEntity.ok(product)
@@ -39,7 +40,7 @@ public class ProductController {
     }
 
     @PutMapping("/{productId}")
-    public ResponseEntity<ProductResponseDto> updateProduct(@PathVariable Long productId,
+    public ResponseEntity<ProductResponseDto> updateProduct(@PathVariable UUID productId,
                                                             @RequestBody ProductRequestDto productRequest) {
         ProductResponseDto updatedProduct = productService.updateProduct(productId, productRequest);
         return updatedProduct != null
@@ -48,7 +49,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable UUID productId) {
         productService.deleteProduct(productId);
         return ResponseEntity.noContent().build();
     }

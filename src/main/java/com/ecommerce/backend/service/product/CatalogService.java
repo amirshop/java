@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +27,7 @@ public class CatalogService {
                 .collect(Collectors.toList());
     }
 
-    public CatalogResponseDto getCatalogById(Long catalogId) {
+    public CatalogResponseDto getCatalogById(UUID catalogId) {
         return catalogRepository.findById(catalogId)
                 .map(catalog -> modelMapper.map(catalog, CatalogResponseDto.class))
                 .orElse(null);
@@ -38,7 +39,7 @@ public class CatalogService {
         return modelMapper.map(saved, CatalogResponseDto.class);
     }
 
-    public CatalogResponseDto updateCatalog(Long catalogId, CatalogRequestDto catalogRequest) {
+    public CatalogResponseDto updateCatalog(UUID catalogId, CatalogRequestDto catalogRequest) {
         return catalogRepository.findById(catalogId)
                 .map(existing -> {
                     existing.setName(catalogRequest.getName());
@@ -50,7 +51,7 @@ public class CatalogService {
                 .orElse(null);
     }
 
-    public void deleteCatalog(Long catalogId) {
+    public void deleteCatalog(UUID catalogId) {
         catalogRepository.deleteById(catalogId);
     }
 }

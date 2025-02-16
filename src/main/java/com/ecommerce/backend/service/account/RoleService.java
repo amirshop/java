@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +26,7 @@ public class RoleService {
                 .collect(Collectors.toList());
     }
 
-    public RoleResponseDto getRoleById(Long roleId) {
+    public RoleResponseDto getRoleById(UUID roleId) {
         return roleRepository.findById(roleId)
                 .map(role -> modelMapper.map(role, RoleResponseDto.class))
                 .orElse(null);
@@ -37,7 +38,7 @@ public class RoleService {
         return modelMapper.map(saved, RoleResponseDto.class);
     }
 
-    public RoleResponseDto updateRole(Long roleId, RoleRequestDto roleRequest) {
+    public RoleResponseDto updateRole(UUID roleId, RoleRequestDto roleRequest) {
         return roleRepository.findById(roleId)
                 .map(existing -> {
                     existing.setName(roleRequest.getName());
@@ -48,7 +49,7 @@ public class RoleService {
                 .orElse(null);
     }
 
-    public void deleteRole(Long roleId) {
+    public void deleteRole(UUID roleId) {
         roleRepository.deleteById(roleId);
     }
 }

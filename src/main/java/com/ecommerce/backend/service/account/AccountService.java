@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +37,7 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
-    public Optional<Account> getAccountById(Long id) {
+    public Optional<Account> getAccountById(UUID id) {
         return accountRepository.findById(id);
     }
 
@@ -44,7 +45,7 @@ public class AccountService {
         return accountRepository.save(account);
     }
 
-    public Account updateAccount(Long id, Account updatedAccount) {
+    public Account updateAccount(UUID id, Account updatedAccount) {
         return accountRepository.findById(id).map(account -> {
             account.setUsername(updatedAccount.getUsername());
             account.setPassword(updatedAccount.getPassword());
@@ -54,7 +55,7 @@ public class AccountService {
         }).orElseThrow(() -> new RuntimeException("Account not found"));
     }
 
-    public void deleteAccount(Long id) {
+    public void deleteAccount(UUID id) {
         accountRepository.deleteById(id);
     }
 

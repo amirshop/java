@@ -9,7 +9,8 @@ public class AccountRequestDto {
     private String password;
     private String email;
     private String phone;
-    private String name;
+    private String firstname;
+    private String lastname;
     // You can either pass the enum as a String or change the type to your AccountStatus enum.
     private String status;
     private AddressDto shippingAddress;

@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/shipments")
@@ -24,7 +25,7 @@ public class ShipmentController {
     }
 
     @GetMapping("/{shipmentId}")
-    public ResponseEntity<ShipmentResponseDto> getShipmentById(@PathVariable Long shipmentId) {
+    public ResponseEntity<ShipmentResponseDto> getShipmentById(@PathVariable UUID shipmentId) {
         ShipmentResponseDto shipment = shipmentService.getShipmentById(shipmentId);
         return shipment != null
                 ? ResponseEntity.ok(shipment)
@@ -38,7 +39,7 @@ public class ShipmentController {
     }
 
     @PutMapping("/{shipmentId}")
-    public ResponseEntity<ShipmentResponseDto> updateShipment(@PathVariable Long shipmentId,
+    public ResponseEntity<ShipmentResponseDto> updateShipment(@PathVariable UUID shipmentId,
                                                               @RequestBody ShipmentRequestDto shipmentRequest) {
         ShipmentResponseDto updatedShipment = shipmentService.updateShipment(shipmentId, shipmentRequest);
         return updatedShipment != null
@@ -47,7 +48,7 @@ public class ShipmentController {
     }
 
     @DeleteMapping("/{shipmentId}")
-    public ResponseEntity<Void> deleteShipment(@PathVariable Long shipmentId) {
+    public ResponseEntity<Void> deleteShipment(@PathVariable UUID shipmentId) {
         shipmentService.deleteShipment(shipmentId);
         return ResponseEntity.noContent().build();
     }

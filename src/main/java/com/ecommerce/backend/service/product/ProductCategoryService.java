@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +27,7 @@ public class ProductCategoryService {
                 .collect(Collectors.toList());
     }
 
-    public ProductCategoryResponseDto getCategoryById(Long categoryId) {
+    public ProductCategoryResponseDto getCategoryById(UUID categoryId) {
         return categoryRepository.findById(categoryId)
                 .map(category -> modelMapper.map(category, ProductCategoryResponseDto.class))
                 .orElse(null);
@@ -38,7 +39,7 @@ public class ProductCategoryService {
         return modelMapper.map(saved, ProductCategoryResponseDto.class);
     }
 
-    public ProductCategoryResponseDto updateCategory(Long categoryId, ProductCategoryRequestDto categoryRequest) {
+    public ProductCategoryResponseDto updateCategory(UUID categoryId, ProductCategoryRequestDto categoryRequest) {
         return categoryRepository.findById(categoryId)
                 .map(existing -> {
                     existing.setName(categoryRequest.getName());
@@ -49,7 +50,7 @@ public class ProductCategoryService {
                 .orElse(null);
     }
 
-    public void deleteCategory(Long categoryId) {
+    public void deleteCategory(UUID categoryId) {
         categoryRepository.deleteById(categoryId);
     }
 }

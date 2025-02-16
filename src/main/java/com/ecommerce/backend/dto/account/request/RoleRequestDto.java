@@ -5,7 +5,8 @@ import java.util.Set;
 
 @Data
 public class RoleRequestDto {
-    private String name;
+    private String label;
+    private String value;
     // List of permission IDs to be assigned to this role
     private Set<Long> permissionIds;
 }

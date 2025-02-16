@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/categories")
@@ -24,7 +25,7 @@ public class ProductCategoryController {
     }
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<ProductCategoryResponseDto> getCategoryById(@PathVariable Long categoryId) {
+    public ResponseEntity<ProductCategoryResponseDto> getCategoryById(@PathVariable UUID categoryId) {
         ProductCategoryResponseDto category = categoryService.getCategoryById(categoryId);
         return category != null
                 ? ResponseEntity.ok(category)
@@ -38,7 +39,7 @@ public class ProductCategoryController {
     }
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<ProductCategoryResponseDto> updateCategory(@PathVariable Long categoryId,
+    public ResponseEntity<ProductCategoryResponseDto> updateCategory(@PathVariable UUID categoryId,
                                                                      @RequestBody ProductCategoryRequestDto categoryRequest) {
         ProductCategoryResponseDto updatedCategory = categoryService.updateCategory(categoryId, categoryRequest);
         return updatedCategory != null
@@ -47,7 +48,7 @@ public class ProductCategoryController {
     }
 
     @DeleteMapping("/{categoryId}")
-    public ResponseEntity<Void> deleteCategory(@PathVariable Long categoryId) {
+    public ResponseEntity<Void> deleteCategory(@PathVariable UUID categoryId) {
         categoryService.deleteCategory(categoryId);
         return ResponseEntity.noContent().build();
     }

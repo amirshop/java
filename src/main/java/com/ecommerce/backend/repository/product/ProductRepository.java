@@ -5,11 +5,12 @@ import com.ecommerce.backend.entity.product.ProductCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, UUID> {
 
     List<Product> findByCategory(ProductCategory category);
     List<Product> findByNameContainingIgnoreCase(String name);
 
-    List<Product> findByNameContainingAndCategoryId(String name, Long categoryId);
+    List<Product> findByNameContainingAndCategoryId(String name, UUID categoryId);
 }

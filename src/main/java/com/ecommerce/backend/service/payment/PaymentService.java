@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,7 +28,7 @@ public class PaymentService {
                 .collect(Collectors.toList());
     }
 
-    public PaymentResponseDto getPaymentById(Long paymentId) {
+    public PaymentResponseDto getPaymentById(UUID paymentId) {
         return paymentRepository.findById(paymentId)
                 .map(payment -> modelMapper.map(payment, PaymentResponseDto.class))
                 .orElse(null);
@@ -40,7 +41,7 @@ public class PaymentService {
         return modelMapper.map(saved, PaymentResponseDto.class);
     }
 
-    public PaymentResponseDto updatePayment(Long paymentId, PaymentRequestDto paymentRequest) {
+    public PaymentResponseDto updatePayment(UUID paymentId, PaymentRequestDto paymentRequest) {
         return paymentRepository.findById(paymentId)
                 .map(existing -> {
                     existing.setAmount(paymentRequest.getAmount());
@@ -52,7 +53,7 @@ public class PaymentService {
                 .orElse(null);
     }
 
-    public void deletePayment(Long paymentId) {
+    public void deletePayment(UUID paymentId) {
         paymentRepository.deleteById(paymentId);
     }
 }

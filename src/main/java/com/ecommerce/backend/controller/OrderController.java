@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/orders")
@@ -24,7 +25,7 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<OrderResponseDto> getOrderById(@PathVariable Long orderId) {
+    public ResponseEntity<OrderResponseDto> getOrderById(@PathVariable UUID orderId) {
         OrderResponseDto order = orderService.getOrderById(orderId);
         return order != null ? ResponseEntity.ok(order) : ResponseEntity.notFound().build();
     }
@@ -36,7 +37,7 @@ public class OrderController {
     }
 
     @PutMapping("/{orderId}")
-    public ResponseEntity<OrderResponseDto> updateOrder(@PathVariable Long orderId,
+    public ResponseEntity<OrderResponseDto> updateOrder(@PathVariable UUID orderId,
                                                         @RequestBody OrderRequestDto orderRequest) {
         OrderResponseDto updatedOrder = orderService.updateOrder(orderId, orderRequest);
         return updatedOrder != null
@@ -45,7 +46,7 @@ public class OrderController {
     }
 
     @DeleteMapping("/{orderId}")
-    public ResponseEntity<Void> deleteOrder(@PathVariable Long orderId) {
+    public ResponseEntity<Void> deleteOrder(@PathVariable UUID orderId) {
         orderService.deleteOrder(orderId);
         return ResponseEntity.noContent().build();
     }

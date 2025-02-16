@@ -12,7 +12,8 @@ public class AccountResponseDto {
     private String username;
     private String email;
     private String phone;
-    private String name;
+    private String firstname;
+    private String lastname;
     private String status;
     private AddressDto shippingAddress;
     private CartResponseDto cart;

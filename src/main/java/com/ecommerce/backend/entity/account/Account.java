@@ -26,8 +26,11 @@ public class Account {
     @Column(unique = true)
     private String email;
 
+    @Column(unique = true)
     private String phone;
-    private String name;
+
+    private String firstname;
+    private String lastname;
 
     @Enumerated(EnumType.STRING)
     private AccountStatus status = AccountStatus.UNKNOWN;

@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +27,7 @@ public class ShipmentService {
                 .collect(Collectors.toList());
     }
 
-    public ShipmentResponseDto getShipmentById(Long shipmentId) {
+    public ShipmentResponseDto getShipmentById(UUID shipmentId) {
         return shipmentRepository.findById(shipmentId)
                 .map(shipment -> modelMapper.map(shipment, ShipmentResponseDto.class))
                 .orElse(null);
@@ -38,7 +39,7 @@ public class ShipmentService {
         return modelMapper.map(saved, ShipmentResponseDto.class);
     }
 
-    public ShipmentResponseDto updateShipment(Long shipmentId, ShipmentRequestDto shipmentRequest) {
+    public ShipmentResponseDto updateShipment(UUID shipmentId, ShipmentRequestDto shipmentRequest) {
         return shipmentRepository.findById(shipmentId)
                 .map(existing -> {
                     existing.setShipmentDate(shipmentRequest.getShipmentDate());
@@ -51,7 +52,7 @@ public class ShipmentService {
                 .orElse(null);
     }
 
-    public void deleteShipment(Long shipmentId) {
+    public void deleteShipment(UUID shipmentId) {
         shipmentRepository.deleteById(shipmentId);
     }
 }

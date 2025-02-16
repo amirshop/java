@@ -4,10 +4,11 @@ import com.ecommerce.backend.entity.product.ProductReview;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface ProductReviewRepository extends JpaRepository<ProductReview, Long> {
+public interface ProductReviewRepository extends JpaRepository<ProductReview, UUID> {
 
-    List<ProductReview> findByProductId(Long productId);
+    List<ProductReview> findByProductId(UUID productId);
 
-    List<ProductReview> findByReviewerId(Long accountId);
+    List<ProductReview> findByReviewerId(UUID accountId);
 }

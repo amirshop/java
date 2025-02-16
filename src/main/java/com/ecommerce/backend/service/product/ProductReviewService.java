@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,7 +20,7 @@ public class ProductReviewService {
 
     private final ModelMapper modelMapper;
 
-    public List<ProductReviewResponseDto> getAllReviews(Long productId, Long accountId) {
+    public List<ProductReviewResponseDto> getAllReviews(UUID productId, UUID accountId) {
         List<ProductReview> reviews;
         if (productId != null) {
             reviews = reviewRepository.findByProductId(productId);
@@ -33,7 +34,7 @@ public class ProductReviewService {
                 .collect(Collectors.toList());
     }
 
-    public ProductReviewResponseDto getReviewById(Long reviewId) {
+    public ProductReviewResponseDto getReviewById(UUID reviewId) {
         return reviewRepository.findById(reviewId)
                 .map(review -> modelMapper.map(review, ProductReviewResponseDto.class))
                 .orElse(null);
@@ -45,7 +46,7 @@ public class ProductReviewService {
         return modelMapper.map(saved, ProductReviewResponseDto.class);
     }
 
-    public ProductReviewResponseDto updateReview(Long reviewId, ProductReviewRequestDto reviewRequest) {
+    public ProductReviewResponseDto updateReview(UUID reviewId, ProductReviewRequestDto reviewRequest) {
         return reviewRepository.findById(reviewId)
                 .map(existing -> {
                     existing.setRating(reviewRequest.getRating());
@@ -56,7 +57,7 @@ public class ProductReviewService {
                 .orElse(null);
     }
 
-    public void deleteReview(Long reviewId) {
+    public void deleteReview(UUID reviewId) {
         reviewRepository.deleteById(reviewId);
     }
 

@@ -8,6 +8,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -18,20 +19,20 @@ public class NotificationService {
 
     private final ModelMapper modelMapper;
 
-    public List<NotificationResponseDto> getNotificationsForAccount(Long accountId) {
+    public List<NotificationResponseDto> getNotificationsForAccount(UUID accountId) {
         List<Notification> notifications = notificationRepository.findByAccountId(accountId);
         return notifications.stream()
                 .map(notification -> modelMapper.map(notification, NotificationResponseDto.class))
                 .collect(Collectors.toList());
     }
 
-    public NotificationResponseDto getNotificationById(Long notificationId) {
+    public NotificationResponseDto getNotificationById(UUID notificationId) {
         return notificationRepository.findById(notificationId)
                 .map(notification -> modelMapper.map(notification, NotificationResponseDto.class))
                 .orElse(null);
     }
 
-    public NotificationResponseDto markAsRead(Long notificationId) {
+    public NotificationResponseDto markAsRead(UUID notificationId) {
         return notificationRepository.findById(notificationId)
                 .map(notification -> {
                     notification.setRead(true);

@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,7 +26,7 @@ public class PermissionService {
                 .collect(Collectors.toList());
     }
 
-    public PermissionResponseDto getPermissionById(Long permissionId) {
+    public PermissionResponseDto getPermissionById(UUID permissionId) {
         return permissionRepository.findById(permissionId)
                 .map(permission -> modelMapper.map(permission, PermissionResponseDto.class))
                 .orElse(null);
@@ -37,7 +38,7 @@ public class PermissionService {
         return modelMapper.map(saved, PermissionResponseDto.class);
     }
 
-    public PermissionResponseDto updatePermission(Long permissionId, PermissionRequestDto permissionRequest) {
+    public PermissionResponseDto updatePermission(UUID permissionId, PermissionRequestDto permissionRequest) {
         return permissionRepository.findById(permissionId)
                 .map(existing -> {
                     existing.setName(permissionRequest.getName());
@@ -47,7 +48,7 @@ public class PermissionService {
                 .orElse(null);
     }
 
-    public void deletePermission(Long permissionId) {
+    public void deletePermission(UUID permissionId) {
         permissionRepository.deleteById(permissionId);
     }
 }

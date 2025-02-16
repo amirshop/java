@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/reviews")
@@ -19,14 +20,14 @@ public class ProductReviewController {
 
     @GetMapping
     public ResponseEntity<List<ProductReviewResponseDto>> getAllReviews(
-            @RequestParam(required = false) Long productId,
-            @RequestParam(required = false) Long accountId) {
+            @RequestParam(required = false) UUID productId,
+            @RequestParam(required = false) UUID accountId) {
         List<ProductReviewResponseDto> reviews = productReviewService.getAllReviews(productId, accountId);
         return ResponseEntity.ok(reviews);
     }
 
     @GetMapping("/{reviewId}")
-    public ResponseEntity<ProductReviewResponseDto> getReviewById(@PathVariable Long reviewId) {
+    public ResponseEntity<ProductReviewResponseDto> getReviewById(@PathVariable UUID reviewId) {
         ProductReviewResponseDto review = productReviewService.getReviewById(reviewId);
         return review != null
                 ? ResponseEntity.ok(review)
@@ -40,7 +41,7 @@ public class ProductReviewController {
     }
 
     @PutMapping("/{reviewId}")
-    public ResponseEntity<ProductReviewResponseDto> updateReview(@PathVariable Long reviewId,
+    public ResponseEntity<ProductReviewResponseDto> updateReview(@PathVariable UUID reviewId,
                                                                  @RequestBody ProductReviewRequestDto reviewRequest) {
         ProductReviewResponseDto updatedReview = productReviewService.updateReview(reviewId, reviewRequest);
         return updatedReview != null
@@ -49,7 +50,7 @@ public class ProductReviewController {
     }
 
     @DeleteMapping("/{reviewId}")
-    public ResponseEntity<Void> deleteReview(@PathVariable Long reviewId) {
+    public ResponseEntity<Void> deleteReview(@PathVariable UUID reviewId) {
         productReviewService.deleteReview(reviewId);
         return ResponseEntity.noContent().build();
     }

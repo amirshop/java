@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/catalogs")
@@ -24,7 +25,7 @@ public class CatalogController {
     }
 
     @GetMapping("/{catalogId}")
-    public ResponseEntity<CatalogResponseDto> getCatalogById(@PathVariable Long catalogId) {
+    public ResponseEntity<CatalogResponseDto> getCatalogById(@PathVariable UUID catalogId) {
         CatalogResponseDto catalog = catalogService.getCatalogById(catalogId);
         return catalog != null
                 ? ResponseEntity.ok(catalog)
@@ -38,7 +39,7 @@ public class CatalogController {
     }
 
     @PutMapping("/{catalogId}")
-    public ResponseEntity<CatalogResponseDto> updateCatalog(@PathVariable Long catalogId,
+    public ResponseEntity<CatalogResponseDto> updateCatalog(@PathVariable UUID catalogId,
                                                             @RequestBody CatalogRequestDto catalogRequest) {
         CatalogResponseDto updatedCatalog = catalogService.updateCatalog(catalogId, catalogRequest);
         return updatedCatalog != null
@@ -47,7 +48,7 @@ public class CatalogController {
     }
 
     @DeleteMapping("/{catalogId}")
-    public ResponseEntity<Void> deleteCatalog(@PathVariable Long catalogId) {
+    public ResponseEntity<Void> deleteCatalog(@PathVariable UUID catalogId) {
         catalogService.deleteCatalog(catalogId);
         return ResponseEntity.noContent().build();
     }

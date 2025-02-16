@@ -1,6 +1,7 @@
 package com.ecommerce.backend.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.ecommerce.backend.dto.account.request.RoleRequestDto;
 import com.ecommerce.backend.dto.account.response.RoleResponseDto;
@@ -25,7 +26,7 @@ public class RoleController {
     }
 
     @GetMapping("/{roleId}")
-    public ResponseEntity<RoleResponseDto> getRoleById(@PathVariable Long roleId) {
+    public ResponseEntity<RoleResponseDto> getRoleById(@PathVariable UUID roleId) {
         RoleResponseDto role = roleService.getRoleById(roleId);
         return role != null
                 ? ResponseEntity.ok(role)
@@ -39,7 +40,7 @@ public class RoleController {
     }
 
     @PutMapping("/{roleId}")
-    public ResponseEntity<RoleResponseDto> updateRole(@PathVariable Long roleId, @RequestBody RoleRequestDto roleRequest) {
+    public ResponseEntity<RoleResponseDto> updateRole(@PathVariable UUID roleId, @RequestBody RoleRequestDto roleRequest) {
         RoleResponseDto updatedRole = roleService.updateRole(roleId, roleRequest);
         return updatedRole != null
                 ? ResponseEntity.ok(updatedRole)
@@ -47,7 +48,7 @@ public class RoleController {
     }
 
     @DeleteMapping("/{roleId}")
-    public ResponseEntity<Void> deleteRole(@PathVariable Long roleId) {
+    public ResponseEntity<Void> deleteRole(@PathVariable UUID roleId) {
         roleService.deleteRole(roleId);
         return ResponseEntity.noContent().build();
     }

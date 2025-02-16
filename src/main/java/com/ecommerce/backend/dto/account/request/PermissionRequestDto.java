@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class PermissionRequestDto {
-    private String name;
+    private String label;
+    private String value;
 }
 
