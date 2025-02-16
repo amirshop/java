@@ -41,7 +41,7 @@ public class PermissionService {
     public PermissionResponseDto updatePermission(UUID permissionId, PermissionRequestDto permissionRequest) {
         return permissionRepository.findById(permissionId)
                 .map(existing -> {
-                    existing.setName(permissionRequest.getName());
+                    existing.setValue(permissionRequest.getValue());
                     Permission updated = permissionRepository.save(existing);
                     return modelMapper.map(updated, PermissionResponseDto.class);
                 })

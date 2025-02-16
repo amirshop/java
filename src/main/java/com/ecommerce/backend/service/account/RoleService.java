@@ -41,7 +41,7 @@ public class RoleService {
     public RoleResponseDto updateRole(UUID roleId, RoleRequestDto roleRequest) {
         return roleRepository.findById(roleId)
                 .map(existing -> {
-                    existing.setName(roleRequest.getName());
+                    existing.setValue(roleRequest.getValue());
                     // Optionally update associated permissions if needed.
                     Role updated = roleRepository.save(existing);
                     return modelMapper.map(updated, RoleResponseDto.class);
