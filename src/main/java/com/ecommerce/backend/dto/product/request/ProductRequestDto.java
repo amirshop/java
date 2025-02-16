@@ -12,7 +12,6 @@ public class ProductRequestDto {
     private String description;
     private double price;
     private int availableItemCount;
-    // Reference to a category by its ID
     private UUID categoryId;
     private Set<UUID> tagIds;
 }

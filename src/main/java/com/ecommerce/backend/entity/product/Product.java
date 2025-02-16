@@ -21,7 +21,10 @@ public class Product {
     private Date updatedAt;
 
     private String name;
+
+    @Column(nullable = false, unique = true)
     private String slug;
+
     private String description;
     private double price;
     private int availableItemCount;

@@ -1,9 +1,6 @@
 package com.ecommerce.backend.entity.product;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.util.Date;
@@ -19,6 +16,9 @@ public class ProductCategory {
     private Date createdAt;
     private Date updatedAt;
     private String name;
+
+    @Column(nullable = false, unique = true)
     private String slug;
+
     private String description;
 }
