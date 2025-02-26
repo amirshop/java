@@ -5,11 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.IOException;
 import java.util.*;
 
 @Entity
 @Data
-@Table(name = "tags")
+@Table(name = "product")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Product {
@@ -34,6 +35,16 @@ public class Product {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductReview> productReviews;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    private List<Specification> specifications; // مشخصات فنی
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductImage> images; // لیست تصاویر محصول
+
+    @ManyToOne
+    @JoinColumn(name = "brand_id", nullable = false)
+    private Brand brand;
 
     @ManyToMany
     @JoinTable(
