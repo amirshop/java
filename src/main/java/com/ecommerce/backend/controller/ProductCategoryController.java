@@ -1,7 +1,6 @@
 package com.ecommerce.backend.controller;
 
-import com.ecommerce.backend.dto.product.request.ProductCategoryRequestDto;
-import com.ecommerce.backend.dto.product.response.ProductCategoryResponseDto;
+import com.ecommerce.backend.dto.product.ProductCategoryDto;
 import com.ecommerce.backend.service.product.ProductCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,29 +18,29 @@ public class ProductCategoryController {
     private final ProductCategoryService categoryService;
 
     @GetMapping
-    public ResponseEntity<List<ProductCategoryResponseDto>> getAllCategories() {
-        List<ProductCategoryResponseDto> categories = categoryService.getAllCategories();
+    public ResponseEntity<List<ProductCategoryDto>> getAllCategories() {
+        List<ProductCategoryDto> categories = categoryService.getAllCategories();
         return ResponseEntity.ok(categories);
     }
 
     @GetMapping("/{categoryId}")
-    public ResponseEntity<ProductCategoryResponseDto> getCategoryById(@PathVariable UUID categoryId) {
-        ProductCategoryResponseDto category = categoryService.getCategoryById(categoryId);
+    public ResponseEntity<ProductCategoryDto> getCategoryById(@PathVariable UUID categoryId) {
+        ProductCategoryDto category = categoryService.getCategoryById(categoryId);
         return category != null
                 ? ResponseEntity.ok(category)
                 : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<ProductCategoryResponseDto> createCategory(@RequestBody ProductCategoryRequestDto categoryRequest) {
-        ProductCategoryResponseDto createdCategory = categoryService.createCategory(categoryRequest);
+    public ResponseEntity<ProductCategoryDto> createCategory(@RequestBody ProductCategoryDto categoryRequest) {
+        ProductCategoryDto createdCategory = categoryService.createCategory(categoryRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCategory);
     }
 
     @PutMapping("/{categoryId}")
-    public ResponseEntity<ProductCategoryResponseDto> updateCategory(@PathVariable UUID categoryId,
-                                                                     @RequestBody ProductCategoryRequestDto categoryRequest) {
-        ProductCategoryResponseDto updatedCategory = categoryService.updateCategory(categoryId, categoryRequest);
+    public ResponseEntity<ProductCategoryDto> updateCategory(@PathVariable UUID categoryId,
+                                                                     @RequestBody ProductCategoryDto categoryRequest) {
+        ProductCategoryDto updatedCategory = categoryService.updateCategory(categoryId, categoryRequest);
         return updatedCategory != null
                 ? ResponseEntity.ok(updatedCategory)
                 : ResponseEntity.notFound().build();

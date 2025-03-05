@@ -1,6 +1,6 @@
 package com.ecommerce.backend.controller;
 
-import com.ecommerce.backend.dto.product.request.TagDto;
+import com.ecommerce.backend.dto.product.TagDto;
 import com.ecommerce.backend.service.product.TagService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

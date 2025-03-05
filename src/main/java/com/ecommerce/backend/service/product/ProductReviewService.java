@@ -1,7 +1,6 @@
 package com.ecommerce.backend.service.product;
 
-import com.ecommerce.backend.dto.product.request.ProductReviewRequestDto;
-import com.ecommerce.backend.dto.product.response.ProductReviewResponseDto;
+import com.ecommerce.backend.dto.product.ProductReviewDto;
 import com.ecommerce.backend.entity.product.ProductReview;
 import com.ecommerce.backend.repository.product.ProductReviewRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +19,7 @@ public class ProductReviewService {
 
     private final ModelMapper modelMapper;
 
-    public List<ProductReviewResponseDto> getAllReviews(UUID productId, UUID accountId) {
+    public List<ProductReviewDto> getAllReviews(UUID productId, UUID accountId) {
         List<ProductReview> reviews;
         if (productId != null) {
             reviews = reviewRepository.findByProductId(productId);
@@ -30,29 +29,29 @@ public class ProductReviewService {
             reviews = reviewRepository.findAll();
         }
         return reviews.stream()
-                .map(review -> modelMapper.map(review, ProductReviewResponseDto.class))
+                .map(review -> modelMapper.map(review, ProductReviewDto.class))
                 .collect(Collectors.toList());
     }
 
-    public ProductReviewResponseDto getReviewById(UUID reviewId) {
+    public ProductReviewDto getReviewById(UUID reviewId) {
         return reviewRepository.findById(reviewId)
-                .map(review -> modelMapper.map(review, ProductReviewResponseDto.class))
+                .map(review -> modelMapper.map(review, ProductReviewDto.class))
                 .orElse(null);
     }
 
-    public ProductReviewResponseDto createReview(ProductReviewRequestDto reviewRequest) {
+    public ProductReviewDto createReview(ProductReviewDto reviewRequest) {
         ProductReview review = modelMapper.map(reviewRequest, ProductReview.class);
         ProductReview saved = reviewRepository.save(review);
-        return modelMapper.map(saved, ProductReviewResponseDto.class);
+        return modelMapper.map(saved, ProductReviewDto.class);
     }
 
-    public ProductReviewResponseDto updateReview(UUID reviewId, ProductReviewRequestDto reviewRequest) {
+    public ProductReviewDto updateReview(UUID reviewId, ProductReviewDto reviewRequest) {
         return reviewRepository.findById(reviewId)
                 .map(existing -> {
                     existing.setRating(reviewRequest.getRating());
                     existing.setReviewText(reviewRequest.getReviewText());
                     ProductReview updated = reviewRepository.save(existing);
-                    return modelMapper.map(updated, ProductReviewResponseDto.class);
+                    return modelMapper.map(updated, ProductReviewDto.class);
                 })
                 .orElse(null);
     }

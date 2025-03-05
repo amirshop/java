@@ -1,6 +1,6 @@
 package com.ecommerce.backend.service.product;
 
-import com.ecommerce.backend.dto.product.request.TagDto;
+import com.ecommerce.backend.dto.product.TagDto;
 import com.ecommerce.backend.entity.product.Tag;
 import com.ecommerce.backend.repository.product.TagRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,6 @@
 package com.ecommerce.backend.service.product;
 
-import com.ecommerce.backend.dto.product.request.ProductCategoryRequestDto;
-import com.ecommerce.backend.dto.product.response.ProductCategoryResponseDto;
+import com.ecommerce.backend.dto.product.ProductCategoryDto;
 import com.ecommerce.backend.entity.product.ProductCategory;
 import com.ecommerce.backend.repository.product.ProductCategoryRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,32 +19,32 @@ public class ProductCategoryService {
 
     private final ModelMapper modelMapper;
 
-    public List<ProductCategoryResponseDto> getAllCategories() {
+    public List<ProductCategoryDto> getAllCategories() {
         List<ProductCategory> categories = categoryRepository.findAll();
         return categories.stream()
-                .map(category -> modelMapper.map(category, ProductCategoryResponseDto.class))
+                .map(category -> modelMapper.map(category, ProductCategoryDto.class))
                 .collect(Collectors.toList());
     }
 
-    public ProductCategoryResponseDto getCategoryById(UUID categoryId) {
+    public ProductCategoryDto getCategoryById(UUID categoryId) {
         return categoryRepository.findById(categoryId)
-                .map(category -> modelMapper.map(category, ProductCategoryResponseDto.class))
+                .map(category -> modelMapper.map(category, ProductCategoryDto.class))
                 .orElse(null);
     }
 
-    public ProductCategoryResponseDto createCategory(ProductCategoryRequestDto categoryRequest) {
+    public ProductCategoryDto createCategory(ProductCategoryDto categoryRequest) {
         ProductCategory category = modelMapper.map(categoryRequest, ProductCategory.class);
         ProductCategory saved = categoryRepository.save(category);
-        return modelMapper.map(saved, ProductCategoryResponseDto.class);
+        return modelMapper.map(saved, ProductCategoryDto.class);
     }
 
-    public ProductCategoryResponseDto updateCategory(UUID categoryId, ProductCategoryRequestDto categoryRequest) {
+    public ProductCategoryDto updateCategory(UUID categoryId, ProductCategoryDto categoryRequest) {
         return categoryRepository.findById(categoryId)
                 .map(existing -> {
                     existing.setName(categoryRequest.getName());
                     existing.setDescription(categoryRequest.getDescription());
                     ProductCategory updated = categoryRepository.save(existing);
-                    return modelMapper.map(updated, ProductCategoryResponseDto.class);
+                    return modelMapper.map(updated, ProductCategoryDto.class);
                 })
                 .orElse(null);
     }

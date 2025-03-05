@@ -4,6 +4,7 @@ import com.ecommerce.backend.jwt.AuthEntryPointJwt;
 import com.ecommerce.backend.jwt.AuthTokenFilter;
 import com.ecommerce.backend.service.auth.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -22,11 +23,16 @@ import java.util.Arrays;
 
 @Configuration
 @EnableMethodSecurity
-@RequiredArgsConstructor
 public class WebSecurityConfig{
 
     private final UserDetailsServiceImpl userDetailsService;
     private final AuthEntryPointJwt unauthorizedHandler;
+
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService
+    , AuthEntryPointJwt unauthorizedHandler) {
+        this.userDetailsService = userDetailsService;
+        this.unauthorizedHandler = unauthorizedHandler;
+    }
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {

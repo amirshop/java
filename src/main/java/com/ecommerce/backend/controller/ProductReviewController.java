@@ -1,7 +1,6 @@
 package com.ecommerce.backend.controller;
 
-import com.ecommerce.backend.dto.product.request.ProductReviewRequestDto;
-import com.ecommerce.backend.dto.product.response.ProductReviewResponseDto;
+import com.ecommerce.backend.dto.product.ProductReviewDto;
 import com.ecommerce.backend.service.product.ProductReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,31 +18,31 @@ public class ProductReviewController {
     private final ProductReviewService productReviewService;
 
     @GetMapping
-    public ResponseEntity<List<ProductReviewResponseDto>> getAllReviews(
+    public ResponseEntity<List<ProductReviewDto>> getAllReviews(
             @RequestParam(required = false) UUID productId,
             @RequestParam(required = false) UUID accountId) {
-        List<ProductReviewResponseDto> reviews = productReviewService.getAllReviews(productId, accountId);
+        List<ProductReviewDto> reviews = productReviewService.getAllReviews(productId, accountId);
         return ResponseEntity.ok(reviews);
     }
 
     @GetMapping("/{reviewId}")
-    public ResponseEntity<ProductReviewResponseDto> getReviewById(@PathVariable UUID reviewId) {
-        ProductReviewResponseDto review = productReviewService.getReviewById(reviewId);
+    public ResponseEntity<ProductReviewDto> getReviewById(@PathVariable UUID reviewId) {
+        ProductReviewDto review = productReviewService.getReviewById(reviewId);
         return review != null
                 ? ResponseEntity.ok(review)
                 : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<ProductReviewResponseDto> createReview(@RequestBody ProductReviewRequestDto reviewRequest) {
-        ProductReviewResponseDto createdReview = productReviewService.createReview(reviewRequest);
+    public ResponseEntity<ProductReviewDto> createReview(@RequestBody ProductReviewDto reviewRequest) {
+        ProductReviewDto createdReview = productReviewService.createReview(reviewRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdReview);
     }
 
     @PutMapping("/{reviewId}")
-    public ResponseEntity<ProductReviewResponseDto> updateReview(@PathVariable UUID reviewId,
-                                                                 @RequestBody ProductReviewRequestDto reviewRequest) {
-        ProductReviewResponseDto updatedReview = productReviewService.updateReview(reviewId, reviewRequest);
+    public ResponseEntity<ProductReviewDto> updateReview(@PathVariable UUID reviewId,
+                                                                 @RequestBody ProductReviewDto reviewRequest) {
+        ProductReviewDto updatedReview = productReviewService.updateReview(reviewId, reviewRequest);
         return updatedReview != null
                 ? ResponseEntity.ok(updatedReview)
                 : ResponseEntity.notFound().build();
