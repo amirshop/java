@@ -1,8 +1,6 @@
 package com.ecommerce.backend.controller;
 
-import com.ecommerce.backend.dto.order.request.OrderRequestDto;
-import com.ecommerce.backend.dto.order.response.OrderResponseDto;
-import com.ecommerce.backend.entity.order.Order;
+import com.ecommerce.backend.dto.order.OrderDto;
 import com.ecommerce.backend.service.order.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,27 +17,27 @@ public class OrderController {
     private final OrderService orderService;
 
     @GetMapping
-    public ResponseEntity<List<OrderResponseDto>> getAllOrders() {
-        List<OrderResponseDto> orders = orderService.getAllOrders();
+    public ResponseEntity<List<OrderDto>> getAllOrders() {
+        List<OrderDto> orders = orderService.getAllOrders();
         return ResponseEntity.ok(orders);
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<OrderResponseDto> getOrderById(@PathVariable UUID orderId) {
-        OrderResponseDto order = orderService.getOrderById(orderId);
+    public ResponseEntity<OrderDto> getOrderById(@PathVariable UUID orderId) {
+        OrderDto order = orderService.getOrderById(orderId);
         return order != null ? ResponseEntity.ok(order) : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<OrderResponseDto> createOrder(@RequestBody OrderRequestDto orderRequest) {
-        OrderResponseDto createdOrder = orderService.createOrder(orderRequest);
+    public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderRequest) {
+        OrderDto createdOrder = orderService.createOrder(orderRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
     }
 
     @PutMapping("/{orderId}")
-    public ResponseEntity<OrderResponseDto> updateOrder(@PathVariable UUID orderId,
-                                                        @RequestBody OrderRequestDto orderRequest) {
-        OrderResponseDto updatedOrder = orderService.updateOrder(orderId, orderRequest);
+    public ResponseEntity<OrderDto> updateOrder(@PathVariable UUID orderId,
+                                                        @RequestBody OrderDto orderRequest) {
+        OrderDto updatedOrder = orderService.updateOrder(orderId, orderRequest);
         return updatedOrder != null
                 ? ResponseEntity.ok(updatedOrder)
                 : ResponseEntity.notFound().build();

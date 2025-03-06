@@ -1,7 +1,6 @@
 package com.ecommerce.backend.controller;
 
-import com.ecommerce.backend.dto.payment.request.PaymentRequestDto;
-import com.ecommerce.backend.dto.payment.response.PaymentResponseDto;
+import com.ecommerce.backend.dto.payment.PaymentDto;
 import com.ecommerce.backend.service.payment.PaymentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,29 +18,29 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @GetMapping
-    public ResponseEntity<List<PaymentResponseDto>> getAllPayments() {
-        List<PaymentResponseDto> payments = paymentService.getAllPayments();
+    public ResponseEntity<List<PaymentDto>> getAllPayments() {
+        List<PaymentDto> payments = paymentService.getAllPayments();
         return ResponseEntity.ok(payments);
     }
 
     @GetMapping("/{paymentId}")
-    public ResponseEntity<PaymentResponseDto> getPaymentById(@PathVariable UUID paymentId) {
-        PaymentResponseDto payment = paymentService.getPaymentById(paymentId);
+    public ResponseEntity<PaymentDto> getPaymentById(@PathVariable UUID paymentId) {
+        PaymentDto payment = paymentService.getPaymentById(paymentId);
         return payment != null
                 ? ResponseEntity.ok(payment)
                 : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<PaymentResponseDto> processPayment(@RequestBody PaymentRequestDto paymentRequest) {
-        PaymentResponseDto processedPayment = paymentService.processPayment(paymentRequest);
+    public ResponseEntity<PaymentDto> processPayment(@RequestBody PaymentDto paymentRequest) {
+        PaymentDto processedPayment = paymentService.processPayment(paymentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(processedPayment);
     }
 
     @PutMapping("/{paymentId}")
-    public ResponseEntity<PaymentResponseDto> updatePayment(@PathVariable UUID paymentId,
-                                                            @RequestBody PaymentRequestDto paymentRequest) {
-        PaymentResponseDto updatedPayment = paymentService.updatePayment(paymentId, paymentRequest);
+    public ResponseEntity<PaymentDto> updatePayment(@PathVariable UUID paymentId,
+                                                            @RequestBody PaymentDto paymentRequest) {
+        PaymentDto updatedPayment = paymentService.updatePayment(paymentId, paymentRequest);
         return updatedPayment != null
                 ? ResponseEntity.ok(updatedPayment)
                 : ResponseEntity.notFound().build();

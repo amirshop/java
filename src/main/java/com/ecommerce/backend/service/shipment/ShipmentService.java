@@ -1,7 +1,6 @@
 package com.ecommerce.backend.service.shipment;
 
-import com.ecommerce.backend.dto.shipment.request.ShipmentRequestDto;
-import com.ecommerce.backend.dto.shipment.response.ShipmentResponseDto;
+import com.ecommerce.backend.dto.shipment.ShipmentDto;
 import com.ecommerce.backend.entity.shipment.Shipment;
 import com.ecommerce.backend.repository.shipment.ShipmentRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,26 +19,26 @@ public class ShipmentService {
 
     private final ModelMapper modelMapper;
 
-    public List<ShipmentResponseDto> getAllShipments() {
+    public List<ShipmentDto> getAllShipments() {
         List<Shipment> shipments = shipmentRepository.findAll();
         return shipments.stream()
-                .map(shipment -> modelMapper.map(shipment, ShipmentResponseDto.class))
+                .map(shipment -> modelMapper.map(shipment, ShipmentDto.class))
                 .collect(Collectors.toList());
     }
 
-    public ShipmentResponseDto getShipmentById(UUID shipmentId) {
+    public ShipmentDto getShipmentById(UUID shipmentId) {
         return shipmentRepository.findById(shipmentId)
-                .map(shipment -> modelMapper.map(shipment, ShipmentResponseDto.class))
+                .map(shipment -> modelMapper.map(shipment, ShipmentDto.class))
                 .orElse(null);
     }
 
-    public ShipmentResponseDto createShipment(ShipmentRequestDto shipmentRequest) {
+    public ShipmentDto createShipment(ShipmentDto shipmentRequest) {
         Shipment shipment = modelMapper.map(shipmentRequest, Shipment.class);
         Shipment saved = shipmentRepository.save(shipment);
-        return modelMapper.map(saved, ShipmentResponseDto.class);
+        return modelMapper.map(saved, ShipmentDto.class);
     }
 
-    public ShipmentResponseDto updateShipment(UUID shipmentId, ShipmentRequestDto shipmentRequest) {
+    public ShipmentDto updateShipment(UUID shipmentId, ShipmentDto shipmentRequest) {
         return shipmentRepository.findById(shipmentId)
                 .map(existing -> {
                     existing.setShipmentDate(shipmentRequest.getShipmentDate());
@@ -47,7 +46,7 @@ public class ShipmentService {
                     existing.setShipmentMethod(shipmentRequest.getShipmentMethod());
                     existing.setStatus(shipmentRequest.getStatus());
                     Shipment updated = shipmentRepository.save(existing);
-                    return modelMapper.map(updated, ShipmentResponseDto.class);
+                    return modelMapper.map(updated, ShipmentDto.class);
                 })
                 .orElse(null);
     }

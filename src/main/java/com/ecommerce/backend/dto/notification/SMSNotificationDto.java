@@ -1,11 +1,11 @@
-package com.ecommerce.backend.dto.notification.response;
+package com.ecommerce.backend.dto.notification;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SMSNotificationResponseDto extends NotificationResponseDto {
+public class SMSNotificationDto extends NotificationDto {
     private String phoneNumber;
 }
 

@@ -1,7 +1,6 @@
 package com.ecommerce.backend.controller;
 
-import com.ecommerce.backend.dto.account.request.PermissionRequestDto;
-import com.ecommerce.backend.dto.account.response.PermissionResponseDto;
+import com.ecommerce.backend.dto.account.PermissionDto;
 import com.ecommerce.backend.service.account.PermissionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,29 +18,29 @@ public class PermissionController {
     private final PermissionService permissionService;
 
     @GetMapping
-    public ResponseEntity<List<PermissionResponseDto>> getAllPermissions() {
-        List<PermissionResponseDto> permissions = permissionService.getAllPermissions();
+    public ResponseEntity<List<PermissionDto>> getAllPermissions() {
+        List<PermissionDto> permissions = permissionService.getAllPermissions();
         return ResponseEntity.ok(permissions);
     }
 
     @GetMapping("/{permissionId}")
-    public ResponseEntity<PermissionResponseDto> getPermissionById(@PathVariable UUID permissionId) {
-        PermissionResponseDto permission = permissionService.getPermissionById(permissionId);
+    public ResponseEntity<PermissionDto> getPermissionById(@PathVariable UUID permissionId) {
+        PermissionDto permission = permissionService.getPermissionById(permissionId);
         return permission != null
                 ? ResponseEntity.ok(permission)
                 : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<PermissionResponseDto> createPermission(@RequestBody PermissionRequestDto permissionRequest) {
-        PermissionResponseDto createdPermission = permissionService.createPermission(permissionRequest);
+    public ResponseEntity<PermissionDto> createPermission(@RequestBody PermissionDto permissionRequest) {
+        PermissionDto createdPermission = permissionService.createPermission(permissionRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdPermission);
     }
 
     @PutMapping("/{permissionId}")
-    public ResponseEntity<PermissionResponseDto> updatePermission(@PathVariable UUID permissionId,
-                                                                  @RequestBody PermissionRequestDto permissionRequest) {
-        PermissionResponseDto updatedPermission = permissionService.updatePermission(permissionId, permissionRequest);
+    public ResponseEntity<PermissionDto> updatePermission(@PathVariable UUID permissionId,
+                                                                  @RequestBody PermissionDto permissionRequest) {
+        PermissionDto updatedPermission = permissionService.updatePermission(permissionId, permissionRequest);
         return updatedPermission != null
                 ? ResponseEntity.ok(updatedPermission)
                 : ResponseEntity.notFound().build();

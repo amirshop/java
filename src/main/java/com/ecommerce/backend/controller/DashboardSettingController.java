@@ -1,7 +1,6 @@
 package com.ecommerce.backend.controller;
 
-import com.ecommerce.backend.dto.account.request.DashboardSettingRequestDto;
-import com.ecommerce.backend.dto.account.response.DashboardSettingResponseDto;
+import com.ecommerce.backend.dto.account.DashboardSettingDto;
 import com.ecommerce.backend.service.account.DashboardSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,19 +16,19 @@ public class DashboardSettingController {
     private final DashboardSettingService settingService;
 
     @GetMapping("/{accountId}")
-    public ResponseEntity<DashboardSettingResponseDto> getSetting(@PathVariable UUID accountId) {
+    public ResponseEntity<DashboardSettingDto> getSetting(@PathVariable UUID accountId) {
         return ResponseEntity.ok(settingService.getSettingByAccountId(accountId));
     }
 
     @PostMapping("/{accountId}")
-    public ResponseEntity<DashboardSettingResponseDto> createSetting(@PathVariable UUID accountId,
-                                                                     @RequestBody DashboardSettingRequestDto request) {
+    public ResponseEntity<DashboardSettingDto> createSetting(@PathVariable UUID accountId,
+                                                                     @RequestBody DashboardSettingDto request) {
         return ResponseEntity.ok(settingService.createSetting(accountId, request));
     }
 
     @PutMapping("/{accountId}")
-    public ResponseEntity<DashboardSettingResponseDto> updateSetting(@PathVariable UUID accountId,
-                                                                     @RequestBody DashboardSettingRequestDto request) {
+    public ResponseEntity<DashboardSettingDto> updateSetting(@PathVariable UUID accountId,
+                                                                     @RequestBody DashboardSettingDto request) {
         return ResponseEntity.ok(settingService.updateSetting(accountId, request));
     }
 

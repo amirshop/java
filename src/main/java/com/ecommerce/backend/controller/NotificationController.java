@@ -1,7 +1,6 @@
 package com.ecommerce.backend.controller;
 
-import com.ecommerce.backend.dto.notification.response.NotificationResponseDto;
-import com.ecommerce.backend.entity.notification.Notification;
+import com.ecommerce.backend.dto.notification.NotificationDto;
 import com.ecommerce.backend.service.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,22 +16,22 @@ public class NotificationController {
     private final NotificationService notificationService;
 
     @GetMapping("/account/{accountId}")
-    public ResponseEntity<List<NotificationResponseDto>> getNotificationsByAccount(@PathVariable UUID accountId) {
-        List<NotificationResponseDto> notifications = notificationService.getNotificationsForAccount(accountId);
+    public ResponseEntity<List<NotificationDto>> getNotificationsByAccount(@PathVariable UUID accountId) {
+        List<NotificationDto> notifications = notificationService.getNotificationsForAccount(accountId);
         return ResponseEntity.ok(notifications);
     }
 
     @GetMapping("/{notificationId}")
-    public ResponseEntity<NotificationResponseDto> getNotificationById(@PathVariable UUID notificationId) {
-        NotificationResponseDto notification = notificationService.getNotificationById(notificationId);
+    public ResponseEntity<NotificationDto> getNotificationById(@PathVariable UUID notificationId) {
+        NotificationDto notification = notificationService.getNotificationById(notificationId);
         return notification != null
                 ? ResponseEntity.ok(notification)
                 : ResponseEntity.notFound().build();
     }
 
     @PutMapping("/{notificationId}/read")
-    public ResponseEntity<NotificationResponseDto> markNotificationAsRead(@PathVariable UUID notificationId) {
-        NotificationResponseDto updatedNotification = notificationService.markAsRead(notificationId);
+    public ResponseEntity<NotificationDto> markNotificationAsRead(@PathVariable UUID notificationId) {
+        NotificationDto updatedNotification = notificationService.markAsRead(notificationId);
         return updatedNotification != null
                 ? ResponseEntity.ok(updatedNotification)
                 : ResponseEntity.notFound().build();

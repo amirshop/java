@@ -1,7 +1,6 @@
 package com.ecommerce.backend.service.account;
 
-import com.ecommerce.backend.dto.account.request.DashboardSettingRequestDto;
-import com.ecommerce.backend.dto.account.response.DashboardSettingResponseDto;
+import com.ecommerce.backend.dto.account.DashboardSettingDto;
 import com.ecommerce.backend.entity.account.Account;
 import com.ecommerce.backend.entity.account.DashboardSetting;
 import com.ecommerce.backend.repository.account.AccountRepository;
@@ -21,13 +20,13 @@ public class DashboardSettingService {
     private final AccountRepository accountRepository;
     private final ModelMapper modelMapper;
 
-    public DashboardSettingResponseDto getSettingByAccountId(UUID accountId) {
+    public DashboardSettingDto getSettingByAccountId(UUID accountId) {
         return settingRepository.findByAccountId(accountId)
-                .map(setting -> modelMapper.map(setting, DashboardSettingResponseDto.class))
+                .map(setting -> modelMapper.map(setting, DashboardSettingDto.class))
                 .orElse(null);
     }
 
-    public DashboardSettingResponseDto createSetting(UUID accountId, DashboardSettingRequestDto settingRequest) {
+    public DashboardSettingDto createSetting(UUID accountId, DashboardSettingDto settingRequest) {
         Optional<Account> accountOpt = accountRepository.findById(accountId);
         if (accountOpt.isEmpty()) {
             return null; // Or throw an exception
@@ -35,15 +34,15 @@ public class DashboardSettingService {
         DashboardSetting setting = modelMapper.map(settingRequest, DashboardSetting.class);
         setting.setAccount(accountOpt.get());
         DashboardSetting savedSetting = settingRepository.save(setting);
-        return modelMapper.map(savedSetting, DashboardSettingResponseDto.class);
+        return modelMapper.map(savedSetting, DashboardSettingDto.class);
     }
 
-    public DashboardSettingResponseDto updateSetting(UUID accountId, DashboardSettingRequestDto settingRequest) {
+    public DashboardSettingDto updateSetting(UUID accountId, DashboardSettingDto settingRequest) {
         return settingRepository.findByAccountId(accountId)
                 .map(existing -> {
                     modelMapper.map(settingRequest, existing);
                     DashboardSetting updated = settingRepository.save(existing);
-                    return modelMapper.map(updated, DashboardSettingResponseDto.class);
+                    return modelMapper.map(updated, DashboardSettingDto.class);
                 })
                 .orElse(null);
     }

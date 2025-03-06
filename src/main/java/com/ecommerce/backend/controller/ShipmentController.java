@@ -1,7 +1,6 @@
 package com.ecommerce.backend.controller;
 
-import com.ecommerce.backend.dto.shipment.request.ShipmentRequestDto;
-import com.ecommerce.backend.dto.shipment.response.ShipmentResponseDto;
+import com.ecommerce.backend.dto.shipment.ShipmentDto;
 import com.ecommerce.backend.service.shipment.ShipmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,29 +18,29 @@ public class ShipmentController {
     private final ShipmentService shipmentService;
 
     @GetMapping
-    public ResponseEntity<List<ShipmentResponseDto>> getAllShipments() {
-        List<ShipmentResponseDto> shipments = shipmentService.getAllShipments();
+    public ResponseEntity<List<ShipmentDto>> getAllShipments() {
+        List<ShipmentDto> shipments = shipmentService.getAllShipments();
         return ResponseEntity.ok(shipments);
     }
 
     @GetMapping("/{shipmentId}")
-    public ResponseEntity<ShipmentResponseDto> getShipmentById(@PathVariable UUID shipmentId) {
-        ShipmentResponseDto shipment = shipmentService.getShipmentById(shipmentId);
+    public ResponseEntity<ShipmentDto> getShipmentById(@PathVariable UUID shipmentId) {
+        ShipmentDto shipment = shipmentService.getShipmentById(shipmentId);
         return shipment != null
                 ? ResponseEntity.ok(shipment)
                 : ResponseEntity.notFound().build();
     }
 
     @PostMapping
-    public ResponseEntity<ShipmentResponseDto> createShipment(@RequestBody ShipmentRequestDto shipmentRequest) {
-        ShipmentResponseDto createdShipment = shipmentService.createShipment(shipmentRequest);
+    public ResponseEntity<ShipmentDto> createShipment(@RequestBody ShipmentDto shipmentRequest) {
+        ShipmentDto createdShipment = shipmentService.createShipment(shipmentRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdShipment);
     }
 
     @PutMapping("/{shipmentId}")
-    public ResponseEntity<ShipmentResponseDto> updateShipment(@PathVariable UUID shipmentId,
-                                                              @RequestBody ShipmentRequestDto shipmentRequest) {
-        ShipmentResponseDto updatedShipment = shipmentService.updateShipment(shipmentId, shipmentRequest);
+    public ResponseEntity<ShipmentDto> updateShipment(@PathVariable UUID shipmentId,
+                                                              @RequestBody ShipmentDto shipmentRequest) {
+        ShipmentDto updatedShipment = shipmentService.updateShipment(shipmentId, shipmentRequest);
         return updatedShipment != null
                 ? ResponseEntity.ok(updatedShipment)
                 : ResponseEntity.notFound().build();

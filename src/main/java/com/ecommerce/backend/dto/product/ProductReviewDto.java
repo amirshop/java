@@ -1,6 +1,5 @@
 package com.ecommerce.backend.dto.product;
 
-import com.ecommerce.backend.dto.account.response.AccountResponseDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 

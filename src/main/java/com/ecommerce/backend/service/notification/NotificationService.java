@@ -1,6 +1,6 @@
 package com.ecommerce.backend.service.notification;
 
-import com.ecommerce.backend.dto.notification.response.NotificationResponseDto;
+import com.ecommerce.backend.dto.notification.NotificationDto;
 import com.ecommerce.backend.entity.notification.Notification;
 import com.ecommerce.backend.repository.notification.NotificationRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,25 +19,25 @@ public class NotificationService {
 
     private final ModelMapper modelMapper;
 
-    public List<NotificationResponseDto> getNotificationsForAccount(UUID accountId) {
+    public List<NotificationDto> getNotificationsForAccount(UUID accountId) {
         List<Notification> notifications = notificationRepository.findByAccountId(accountId);
         return notifications.stream()
-                .map(notification -> modelMapper.map(notification, NotificationResponseDto.class))
+                .map(notification -> modelMapper.map(notification, NotificationDto.class))
                 .collect(Collectors.toList());
     }
 
-    public NotificationResponseDto getNotificationById(UUID notificationId) {
+    public NotificationDto getNotificationById(UUID notificationId) {
         return notificationRepository.findById(notificationId)
-                .map(notification -> modelMapper.map(notification, NotificationResponseDto.class))
+                .map(notification -> modelMapper.map(notification, NotificationDto.class))
                 .orElse(null);
     }
 
-    public NotificationResponseDto markAsRead(UUID notificationId) {
+    public NotificationDto markAsRead(UUID notificationId) {
         return notificationRepository.findById(notificationId)
                 .map(notification -> {
                     notification.setRead(true);
                     Notification updated = notificationRepository.save(notification);
-                    return modelMapper.map(updated, NotificationResponseDto.class);
+                    return modelMapper.map(updated, NotificationDto.class);
                 })
                 .orElse(null);
     }

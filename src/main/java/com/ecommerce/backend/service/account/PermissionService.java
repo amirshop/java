@@ -1,7 +1,6 @@
 package com.ecommerce.backend.service.account;
 
-import com.ecommerce.backend.dto.account.request.PermissionRequestDto;
-import com.ecommerce.backend.dto.account.response.PermissionResponseDto;
+import com.ecommerce.backend.dto.account.PermissionDto;
 import com.ecommerce.backend.entity.account.Permission;
 import com.ecommerce.backend.repository.account.PermissionRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,31 +18,31 @@ public class PermissionService {
     private final PermissionRepository permissionRepository;
     private final ModelMapper modelMapper;
 
-    public List<PermissionResponseDto> getAllPermissions() {
+    public List<PermissionDto> getAllPermissions() {
         List<Permission> permissions = permissionRepository.findAll();
         return permissions.stream()
-                .map(permission -> modelMapper.map(permission, PermissionResponseDto.class))
+                .map(permission -> modelMapper.map(permission, PermissionDto.class))
                 .collect(Collectors.toList());
     }
 
-    public PermissionResponseDto getPermissionById(UUID permissionId) {
+    public PermissionDto getPermissionById(UUID permissionId) {
         return permissionRepository.findById(permissionId)
-                .map(permission -> modelMapper.map(permission, PermissionResponseDto.class))
+                .map(permission -> modelMapper.map(permission, PermissionDto.class))
                 .orElse(null);
     }
 
-    public PermissionResponseDto createPermission(PermissionRequestDto permissionRequest) {
+    public PermissionDto createPermission(PermissionDto permissionRequest) {
         Permission permission = modelMapper.map(permissionRequest, Permission.class);
         Permission saved = permissionRepository.save(permission);
-        return modelMapper.map(saved, PermissionResponseDto.class);
+        return modelMapper.map(saved, PermissionDto.class);
     }
 
-    public PermissionResponseDto updatePermission(UUID permissionId, PermissionRequestDto permissionRequest) {
+    public PermissionDto updatePermission(UUID permissionId, PermissionDto permissionRequest) {
         return permissionRepository.findById(permissionId)
                 .map(existing -> {
                     existing.setValue(permissionRequest.getValue());
                     Permission updated = permissionRepository.save(existing);
-                    return modelMapper.map(updated, PermissionResponseDto.class);
+                    return modelMapper.map(updated, PermissionDto.class);
                 })
                 .orElse(null);
     }

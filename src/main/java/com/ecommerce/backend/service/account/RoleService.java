@@ -1,7 +1,6 @@
 package com.ecommerce.backend.service.account;
 
-import com.ecommerce.backend.dto.account.request.RoleRequestDto;
-import com.ecommerce.backend.dto.account.response.RoleResponseDto;
+import com.ecommerce.backend.dto.account.RoleDto;
 import com.ecommerce.backend.entity.account.Role;
 import com.ecommerce.backend.repository.account.RoleRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,32 +18,32 @@ public class RoleService {
     private final RoleRepository roleRepository;
     private final ModelMapper modelMapper;
 
-    public List<RoleResponseDto> getAllRoles() {
+    public List<RoleDto> getAllRoles() {
         List<Role> roles = roleRepository.findAll();
         return roles.stream()
-                .map(role -> modelMapper.map(role, RoleResponseDto.class))
+                .map(role -> modelMapper.map(role, RoleDto.class))
                 .collect(Collectors.toList());
     }
 
-    public RoleResponseDto getRoleById(UUID roleId) {
+    public RoleDto getRoleById(UUID roleId) {
         return roleRepository.findById(roleId)
-                .map(role -> modelMapper.map(role, RoleResponseDto.class))
+                .map(role -> modelMapper.map(role, RoleDto.class))
                 .orElse(null);
     }
 
-    public RoleResponseDto createRole(RoleRequestDto roleRequest) {
+    public RoleDto createRole(RoleDto roleRequest) {
         Role role = modelMapper.map(roleRequest, Role.class);
         Role saved = roleRepository.save(role);
-        return modelMapper.map(saved, RoleResponseDto.class);
+        return modelMapper.map(saved, RoleDto.class);
     }
 
-    public RoleResponseDto updateRole(UUID roleId, RoleRequestDto roleRequest) {
+    public RoleDto updateRole(UUID roleId, RoleDto roleRequest) {
         return roleRepository.findById(roleId)
                 .map(existing -> {
                     existing.setValue(roleRequest.getValue());
                     // Optionally update associated permissions if needed.
                     Role updated = roleRepository.save(existing);
-                    return modelMapper.map(updated, RoleResponseDto.class);
+                    return modelMapper.map(updated, RoleDto.class);
                 })
                 .orElse(null);
     }

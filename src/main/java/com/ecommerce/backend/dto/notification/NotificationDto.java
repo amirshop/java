@@ -1,12 +1,16 @@
-package com.ecommerce.backend.dto.notification.response;
+package com.ecommerce.backend.dto.notification;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import java.util.Date;
 import java.util.UUID;
 
 @Data
-public class NotificationResponseDto {
+public class NotificationDto {
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UUID id;
+
     private String title;
     private String message;
     private Date createdAt;

@@ -1,8 +1,7 @@
 package com.ecommerce.backend.service.cart;
 
-import com.ecommerce.backend.dto.cart.request.ItemRequestDto;
-import com.ecommerce.backend.dto.cart.response.CartResponseDto;
-import com.ecommerce.backend.dto.cart.response.ItemResponseDto;
+import com.ecommerce.backend.dto.cart.CartDto;
+import com.ecommerce.backend.dto.cart.ItemDto;
 import com.ecommerce.backend.entity.cart.Cart;
 import com.ecommerce.backend.entity.cart.Item;
 import com.ecommerce.backend.repository.cart.CartRepository;
@@ -22,13 +21,13 @@ public class CartService {
     private final ItemRepository itemRepository;
     private final ModelMapper modelMapper;
 
-    public CartResponseDto getCartById(UUID cartId) {
+    public CartDto getCartById(UUID cartId) {
         return cartRepository.findById(cartId)
-                .map(cart -> modelMapper.map(cart, CartResponseDto.class))
+                .map(cart -> modelMapper.map(cart, CartDto.class))
                 .orElse(null);
     }
 
-    public ItemResponseDto addItem(UUID cartId, ItemRequestDto itemRequest) {
+    public ItemDto addItem(UUID cartId, ItemDto itemRequest) {
         Optional<Cart> cartOpt = cartRepository.findById(cartId);
         if (!cartOpt.isPresent()) {
             return null; // Optionally, throw an exception
@@ -37,10 +36,10 @@ public class CartService {
         Item item = modelMapper.map(itemRequest, Item.class);
         item.setCart(cart);
         Item savedItem = itemRepository.save(item);
-        return modelMapper.map(savedItem, ItemResponseDto.class);
+        return modelMapper.map(savedItem, ItemDto.class);
     }
 
-    public ItemResponseDto updateItem(UUID cartId, UUID itemId, ItemRequestDto itemRequest) {
+    public ItemDto updateItem(UUID cartId, UUID itemId, ItemDto itemRequest) {
         Optional<Item> itemOpt = itemRepository.findById(itemId);
         if (itemOpt.isPresent()) {
             Item item = itemOpt.get();
@@ -50,7 +49,7 @@ public class CartService {
             item.setQuantity(itemRequest.getQuantity());
             item.setPrice(itemRequest.getPrice());
             Item updatedItem = itemRepository.save(item);
-            return modelMapper.map(updatedItem, ItemResponseDto.class);
+            return modelMapper.map(updatedItem, ItemDto.class);
         }
         return null;
     }

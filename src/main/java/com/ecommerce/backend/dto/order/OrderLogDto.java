@@ -1,6 +1,5 @@
 package com.ecommerce.backend.dto.order;
 
-import com.ecommerce.backend.dto.order.response.OrderResponseDto;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
