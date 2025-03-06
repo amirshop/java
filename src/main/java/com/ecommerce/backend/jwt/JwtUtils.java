@@ -20,10 +20,10 @@ import java.util.function.Function;
 public class JwtUtils {
   private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-  @Value("${tour.app.jwtSecret}")
+  @Value("${app.jwtSecret}")
   private String jwtSecret;
 
-  @Value("${tour.app.jwtExpirationMs}")
+  @Value("${app.jwtExpirationMs}")
   private long jwtExpirationMs;
 
   public String extractUsername(String token) {

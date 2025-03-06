@@ -10,6 +10,7 @@ import java.util.*;
 
 @Entity
 @Data
+@Table(name = "account")
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -41,7 +42,7 @@ public class Account {
     @OneToOne(cascade = CascadeType.ALL)
     private Cart cart;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "reviewer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductReview> accountReviews;
 
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)

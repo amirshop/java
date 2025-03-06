@@ -10,7 +10,6 @@ import java.util.UUID;
 
 @Entity
 @Data
-@Table(name = "specification")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Specification {
@@ -19,10 +18,15 @@ public class Specification {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private Date createdAt;
-    private Date updatedAt;
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt = new Date();
 
-    private String key;  // نام ویژگی (مثلاً "بلوتوث")
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt = new Date();
+
+    private String label;  // نام ویژگی (مثلاً "بلوتوث")
     private String value; // مقدار ویژگی (مثلاً "۵.۳")
 
     @ManyToOne

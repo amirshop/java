@@ -39,7 +39,7 @@ public class AuthService {
         account.setStatus(AccountStatus.UNKNOWN);  // default status before verification
 
         // Set default role (assumes a ROLE_USER exists in your database)
-        Role userRole = roleRepository.findByName("ROLE_USER")
+        Role userRole = roleRepository.findByLabel("ROLE_USER")
                 .orElseThrow(() -> new RuntimeException("Default role not found"));
         account.setRoles(Collections.singleton(userRole));
 

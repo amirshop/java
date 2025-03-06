@@ -22,7 +22,7 @@ public class Catalog {
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastUpdated;
 
-    // A catalog can contain many products
-    @OneToMany(mappedBy = "catalog", cascade = CascadeType.ALL)
-    private List<Product> products;
+//    // A catalog can contain many products
+//    @OneToMany(mappedBy = "catalog", cascade = CascadeType.ALL)
+//    private List<Product> products;
 }
