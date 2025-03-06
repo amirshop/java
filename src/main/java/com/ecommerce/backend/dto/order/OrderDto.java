@@ -1,6 +1,8 @@
 package com.ecommerce.backend.dto.order;
 
 import com.ecommerce.backend.dto.cart.ItemDto;
+import com.ecommerce.backend.dto.payment.PaymentDto;
+import com.ecommerce.backend.dto.shipment.ShipmentDto;
 import com.ecommerce.backend.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -19,8 +21,8 @@ public class OrderDto {
     private String orderProcessor;
     private OrderStatus status;
     private Date orderDate;
-    private List<PaymentResponseDto> payments;
-    private List<ShipmentResponseDto> shipments;
+    private List<PaymentDto> payments;
+    private List<ShipmentDto> shipments;
     private List<ItemDto> items;
 }
 

@@ -7,6 +7,6 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class OrderLogDto extends OrderResponseDto {
+public class OrderLogDto extends OrderDto {
     private Date updatedAt;
 }

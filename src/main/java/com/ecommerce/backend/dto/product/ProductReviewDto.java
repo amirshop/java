@@ -1,5 +1,6 @@
 package com.ecommerce.backend.dto.product;
 
+import com.ecommerce.backend.dto.account.AccountDto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -14,5 +15,5 @@ public class ProductReviewDto {
     private String reviewText;
     // You can include a subset of product and reviewer details
     private ProductDto product;
-    private AccountResponseDto reviewer;
+    private AccountDto reviewer;
 }
