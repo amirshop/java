@@ -16,12 +16,19 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private Date createdAt;
-    private Date updatedAt;
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt = new Date();
+
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt = new Date();
+
 
     @Column(unique = true)
     private String username;
 
+    @Column(nullable = false)
     private String password;
 
     @Column(unique = true)

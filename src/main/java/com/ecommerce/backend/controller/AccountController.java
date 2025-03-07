@@ -1,7 +1,9 @@
 package com.ecommerce.backend.controller;
 
+import com.ecommerce.backend.dto.account.AccountDto;
 import com.ecommerce.backend.entity.account.Account;
 import com.ecommerce.backend.service.account.AccountService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +30,7 @@ public class AccountController {
     }
 
     @PostMapping
-    public Account createAccount(@RequestBody Account account) {
+    public AccountDto createAccount(@Valid @RequestBody AccountDto account) {
         return accountService.createAccount(account);
     }
 

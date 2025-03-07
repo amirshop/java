@@ -1,12 +1,15 @@
 package com.ecommerce.backend.service.account;
 
+import com.ecommerce.backend.dto.account.AccountDto;
 import com.ecommerce.backend.entity.account.Account;
+import com.ecommerce.backend.mapper.AccountMapper;
 import com.ecommerce.backend.repository.account.AccountRepository;
 import com.ecommerce.backend.service.auth.UserDetailsImpl;
 import com.ecommerce.backend.service.auth.UserDetailsServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +21,8 @@ import java.util.UUID;
 public class AccountService {
     private final AccountRepository accountRepository;
     private final UserDetailsServiceImpl userDetailsService;
+    private final PasswordEncoder passwordEncoder;
+    private final AccountMapper accountMapper;
 
     public Optional<Account> getAccountByUsername(String userName) {
         return accountRepository.findByUsername(userName);
@@ -41,8 +46,20 @@ public class AccountService {
         return accountRepository.findById(id);
     }
 
-    public Account createAccount(Account account) {
-        return accountRepository.save(account);
+    public AccountDto createAccount(AccountDto accountDto) {
+        // Convert DTO to entity
+        Account accountEntity = accountMapper.toEntity(accountDto);
+
+        // Encode the password from DTO and set it on the entity if provided
+        if (accountDto.getPassword() != null) {
+            accountEntity.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+        }
+
+        // Save the account entity
+        Account savedAccount = accountRepository.save(accountEntity);
+
+        // Convert the saved entity back to DTO for response
+        return accountMapper.toDto(savedAccount);
     }
 
     public Account updateAccount(UUID id, Account updatedAccount) {
