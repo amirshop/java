@@ -2,6 +2,7 @@ package com.ecommerce.backend.service.account;
 
 import com.ecommerce.backend.dto.account.AccountDto;
 import com.ecommerce.backend.entity.account.Account;
+import com.ecommerce.backend.exception.ResourceAlreadyExistsException;
 import com.ecommerce.backend.mapper.AccountMapper;
 import com.ecommerce.backend.repository.account.AccountRepository;
 import com.ecommerce.backend.service.auth.UserDetailsImpl;
@@ -47,6 +48,18 @@ public class AccountService {
     }
 
     public AccountDto createAccount(AccountDto accountDto) {
+
+        // Check if email already exists
+        checkExistEmail(accountDto.getEmail());
+
+        // Check if username already exists
+        checkExistUsername(accountDto.getUsername());
+
+
+        if (accountRepository.existsByUsername(accountDto.getUsername())) {
+            throw new ResourceAlreadyExistsException("Username already exists.");
+        }
+
         // Convert DTO to entity
         Account accountEntity = accountMapper.toEntity(accountDto);
 
@@ -62,6 +75,18 @@ public class AccountService {
         return accountMapper.toDto(savedAccount);
     }
 
+    private void checkExistEmail(String email) {
+        if (accountRepository.existsByEmail(email)) {
+            throw new ResourceAlreadyExistsException("Email already exists.");
+        }
+    }
+
+    private void checkExistUsername(String username) {
+        if (accountRepository.existsByUsername(username)) {
+            throw new ResourceAlreadyExistsException("Username already exists.");
+        }
+    }
+
     public Account updateAccount(UUID id, Account updatedAccount) {
         return accountRepository.findById(id).map(account -> {
             account.setUsername(updatedAccount.getUsername());
@@ -71,6 +96,7 @@ public class AccountService {
             return accountRepository.save(account);
         }).orElseThrow(() -> new RuntimeException("Account not found"));
     }
+
 
     public void deleteAccount(UUID id) {
         accountRepository.deleteById(id);
