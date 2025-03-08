@@ -12,6 +12,7 @@ import com.ecommerce.backend.mapper.ProductMapper;
 import com.ecommerce.backend.repository.product.ProductRepository;
 import com.ecommerce.backend.repository.product.TagRepository;
 import com.ecommerce.backend.service.BaseService;
+import com.ecommerce.backend.specification.GenericSpecification;
 import com.ecommerce.backend.specification.ProductSpecification;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -105,7 +106,7 @@ public class ProductService extends BaseService<Product, ProductDto> {
 
     @Override
     protected Specification<Product> createSpecification(FilterCriteria filter) {
-        return ProductSpecification.createSpecificationForFilter(filter);
+        return new GenericSpecification<>(filter);
     }
 
     // Expose a method that calls the generic search functionality

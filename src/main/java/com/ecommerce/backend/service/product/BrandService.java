@@ -9,6 +9,7 @@ import com.ecommerce.backend.mapper.BrandMapper;
 import com.ecommerce.backend.repository.product.BrandRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.BrandSpecification;
+import com.ecommerce.backend.specification.GenericSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class BrandService extends BaseService<Brand, BrandDto> {
 
     @Override
     protected Specification<Brand> createSpecification(FilterCriteria filter) {
-        return BrandSpecification.createSpecificationForFilter(filter);
+        return new GenericSpecification<>(filter);
     }
 
     // Expose a method that calls the generic search functionality
