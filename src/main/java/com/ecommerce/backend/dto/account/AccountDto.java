@@ -62,7 +62,8 @@ public class AccountDto {
     private CartDto cart;
 
     @Schema(
-            description = "roles of the accounts", example = ""
+            description = "roles of the accounts", example = "ROLE_ADMIN"
     )
+    @NotEmpty(message = "role can not be a null or empty")
     private Set<RoleDto> roles;
 }

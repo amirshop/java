@@ -55,10 +55,8 @@ public class AccountService {
         // Check if username already exists
         checkExistUsername(accountDto.getUsername());
 
-
-        if (accountRepository.existsByUsername(accountDto.getUsername())) {
-            throw new ResourceAlreadyExistsException("Username already exists.");
-        }
+        // Check if phone already exists
+        checkExistPhone(accountDto.getPhone());
 
         // Convert DTO to entity
         Account accountEntity = accountMapper.toEntity(accountDto);
@@ -77,13 +75,19 @@ public class AccountService {
 
     private void checkExistEmail(String email) {
         if (accountRepository.existsByEmail(email)) {
-            throw new ResourceAlreadyExistsException("Email already exists.");
+            throw new ResourceAlreadyExistsException("email already exists.");
         }
     }
 
     private void checkExistUsername(String username) {
         if (accountRepository.existsByUsername(username)) {
-            throw new ResourceAlreadyExistsException("Username already exists.");
+            throw new ResourceAlreadyExistsException("username already exists.");
+        }
+    }
+
+    private void checkExistPhone(String phone) {
+        if (accountRepository.existsByPhone(phone)) {
+            throw new ResourceAlreadyExistsException("phone already exists.");
         }
     }
 
