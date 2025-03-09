@@ -5,10 +5,8 @@ import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.product.BrandDto;
 import com.ecommerce.backend.entity.product.Brand;
-import com.ecommerce.backend.mapper.BrandMapper;
 import com.ecommerce.backend.repository.product.BrandRepository;
 import com.ecommerce.backend.service.BaseService;
-import com.ecommerce.backend.specification.BrandSpecification;
 import com.ecommerce.backend.specification.GenericSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
@@ -57,7 +55,6 @@ public class BrandService extends BaseService<Brand, BrandDto> {
         return new GenericSpecification<>(filter);
     }
 
-    // Expose a method that calls the generic search functionality
     public ResponseDto searchBrands(SearchDto requestDto) {
         return search(requestDto, BrandDto.class);
     }

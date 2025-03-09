@@ -1,10 +1,20 @@
 package com.ecommerce.backend.service.product;
 
+import com.ecommerce.backend.dto.FilterCriteria;
+import com.ecommerce.backend.dto.ResponseDto;
+import com.ecommerce.backend.dto.SearchDto;
+import com.ecommerce.backend.dto.product.BrandDto;
+import com.ecommerce.backend.dto.product.ProductDto;
 import com.ecommerce.backend.dto.product.TagDto;
+import com.ecommerce.backend.entity.product.Brand;
+import com.ecommerce.backend.entity.product.Product;
 import com.ecommerce.backend.entity.product.Tag;
 import com.ecommerce.backend.repository.product.TagRepository;
+import com.ecommerce.backend.service.BaseService;
+import com.ecommerce.backend.specification.GenericSpecification;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class TagService {
+public class TagService extends BaseService<Tag, TagDto> {
 
     private final TagRepository tagRepository;
 
@@ -40,5 +50,14 @@ public class TagService {
 
     public void deleteTag(UUID tagId) {
         tagRepository.deleteById(tagId);
+    }
+
+    @Override
+    protected Specification<Tag> createSpecification(FilterCriteria filter) {
+        return new GenericSpecification<>(filter);
+    }
+
+    public ResponseDto searchTags(SearchDto requestDto) {
+        return search(requestDto, TagDto.class);
     }
 }

@@ -8,12 +8,10 @@ import com.ecommerce.backend.dto.product.TagDto;
 import com.ecommerce.backend.entity.product.Product;
 import com.ecommerce.backend.entity.product.ProductCategory;
 import com.ecommerce.backend.entity.product.Tag;
-import com.ecommerce.backend.mapper.ProductMapper;
 import com.ecommerce.backend.repository.product.ProductRepository;
 import com.ecommerce.backend.repository.product.TagRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.GenericSpecification;
-import com.ecommerce.backend.specification.ProductSpecification;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.domain.Specification;
@@ -109,7 +107,6 @@ public class ProductService extends BaseService<Product, ProductDto> {
         return new GenericSpecification<>(filter);
     }
 
-    // Expose a method that calls the generic search functionality
     public ResponseDto searchProducts(SearchDto requestDto) {
         return search(requestDto, ProductDto.class);
     }

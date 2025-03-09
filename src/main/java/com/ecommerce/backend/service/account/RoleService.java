@@ -1,10 +1,16 @@
 package com.ecommerce.backend.service.account;
 
+import com.ecommerce.backend.dto.FilterCriteria;
+import com.ecommerce.backend.dto.ResponseDto;
+import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.account.RoleDto;
 import com.ecommerce.backend.entity.account.Role;
 import com.ecommerce.backend.repository.account.RoleRepository;
+import com.ecommerce.backend.service.BaseService;
+import com.ecommerce.backend.specification.GenericSpecification;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class RoleService {
+public class RoleService extends BaseService<Role, RoleDto> {
 
     private final RoleRepository roleRepository;
     private final ModelMapper modelMapper;
@@ -50,6 +56,15 @@ public class RoleService {
 
     public void deleteRole(UUID roleId) {
         roleRepository.deleteById(roleId);
+    }
+
+    @Override
+    protected Specification<Role> createSpecification(FilterCriteria filter) {
+        return new GenericSpecification<>(filter);
+    }
+
+    public ResponseDto searchRoles(SearchDto requestDto) {
+        return search(requestDto, RoleDto.class);
     }
 }
 

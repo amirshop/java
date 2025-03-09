@@ -1,10 +1,16 @@
 package com.ecommerce.backend.service.product;
 
+import com.ecommerce.backend.dto.FilterCriteria;
+import com.ecommerce.backend.dto.ResponseDto;
+import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.product.ProductCategoryDto;
 import com.ecommerce.backend.entity.product.ProductCategory;
 import com.ecommerce.backend.repository.product.ProductCategoryRepository;
+import com.ecommerce.backend.service.BaseService;
+import com.ecommerce.backend.specification.GenericSpecification;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ProductCategoryService {
+public class ProductCategoryService extends BaseService<ProductCategory, ProductCategoryDto> {
 
     private final ProductCategoryRepository categoryRepository;
 
@@ -51,5 +57,14 @@ public class ProductCategoryService {
 
     public void deleteCategory(UUID categoryId) {
         categoryRepository.deleteById(categoryId);
+    }
+
+    @Override
+    protected Specification<ProductCategory> createSpecification(FilterCriteria filter) {
+        return new GenericSpecification<>(filter);
+    }
+
+    public ResponseDto searchProductCategories(SearchDto requestDto) {
+        return search(requestDto, ProductCategoryDto.class);
     }
 }

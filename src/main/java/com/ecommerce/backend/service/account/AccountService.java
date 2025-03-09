@@ -1,15 +1,23 @@
 package com.ecommerce.backend.service.account;
 
+import com.ecommerce.backend.dto.FilterCriteria;
+import com.ecommerce.backend.dto.ResponseDto;
+import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.account.AccountDto;
+import com.ecommerce.backend.dto.product.ProductDto;
 import com.ecommerce.backend.entity.account.Account;
+import com.ecommerce.backend.entity.product.Product;
 import com.ecommerce.backend.exception.ResourceAlreadyExistsException;
 import com.ecommerce.backend.mapper.AccountMapper;
 import com.ecommerce.backend.repository.account.AccountRepository;
+import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.service.auth.UserDetailsImpl;
 import com.ecommerce.backend.service.auth.UserDetailsServiceImpl;
+import com.ecommerce.backend.specification.GenericSpecification;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +27,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class AccountService {
+public class AccountService extends BaseService<Account, AccountDto> {
     private final AccountRepository accountRepository;
     private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
@@ -104,6 +112,15 @@ public class AccountService {
 
     public void deleteAccount(UUID id) {
         accountRepository.deleteById(id);
+    }
+
+    @Override
+    protected Specification<Account> createSpecification(FilterCriteria filter) {
+        return new GenericSpecification<>(filter);
+    }
+
+    public ResponseDto searchAccounts(SearchDto requestDto) {
+        return search(requestDto, AccountDto.class);
     }
 
 }

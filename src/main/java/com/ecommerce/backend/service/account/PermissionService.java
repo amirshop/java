@@ -1,10 +1,16 @@
 package com.ecommerce.backend.service.account;
 
+import com.ecommerce.backend.dto.FilterCriteria;
+import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.account.PermissionDto;
+import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.entity.account.Permission;
 import com.ecommerce.backend.repository.account.PermissionRepository;
+import com.ecommerce.backend.service.BaseService;
+import com.ecommerce.backend.specification.GenericSpecification;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,7 +19,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class PermissionService {
+public class PermissionService extends BaseService<Permission, PermissionDto> {
 
     private final PermissionRepository permissionRepository;
     private final ModelMapper modelMapper;
@@ -49,6 +55,16 @@ public class PermissionService {
 
     public void deletePermission(UUID permissionId) {
         permissionRepository.deleteById(permissionId);
+    }
+
+    @Override
+    protected Specification<Permission> createSpecification(FilterCriteria filter) {
+        return new GenericSpecification<>(filter);
+    }
+
+    // Expose a method that calls the generic search functionality
+    public ResponseDto searchPermissions(SearchDto requestDto) {
+        return search(requestDto, PermissionDto.class);
     }
 }
 
