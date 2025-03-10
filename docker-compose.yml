@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   mysql:
     image: mysql:latest
@@ -12,10 +10,12 @@ services:
     restart: unless-stopped
     volumes:
       - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
 
   minio:
     image: quay.io/minio/minio
-    container_name: minio
+    container_name: minio-container
     environment:
       MINIO_ROOT_USER: minioadmin
       MINIO_ROOT_PASSWORD: minioadmin
@@ -26,17 +26,26 @@ services:
     restart: unless-stopped
     volumes:
       - minio-data:/data
+    networks:
+      - app-network
 
   backend:
     image: "amirzr98/onlineshop:v1"
-    container_name: backend
+    container_name: backend-container
     ports:
       - "8080:8080"   # پورت مورد نیاز برای دسترسی به اپلیکیشن Spring Boot
     depends_on:
       - mysql
       - minio
     restart: unless-stopped
+    networks:
+      - app-network
 
 volumes:
   mysql-data:
   minio-data:
+
+
+networks:
+  app-network:
+    driver: bridge
