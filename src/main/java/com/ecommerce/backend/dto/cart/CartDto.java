@@ -15,5 +15,5 @@ public class CartDto {
 
     private Date creationDate;
     private Long accountId;
-    private List<ItemDto> items;
+    private List<UUID> items;
 }

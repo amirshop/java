@@ -19,6 +19,11 @@ public class Permission {
     @Column(length = 50, nullable = false)
     private String value;
 
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 }

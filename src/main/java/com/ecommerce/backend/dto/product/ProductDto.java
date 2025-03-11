@@ -30,6 +30,6 @@ public class ProductDto {
     private ProductCategoryDto category;
 
 
-    private List<ProductReviewDto> productReviews;
+    private List<UUID> productReviews;
     private Set<TagDto> tags;
 }

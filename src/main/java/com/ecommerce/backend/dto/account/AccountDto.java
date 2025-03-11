@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
@@ -66,4 +67,10 @@ public class AccountDto {
     )
     @NotEmpty(message = "role can not be a null or empty")
     private Set<RoleDto> roles;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date createdAt;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date updatedAt;
 }

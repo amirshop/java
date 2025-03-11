@@ -5,6 +5,7 @@ import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.account.PermissionDto;
 import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.entity.account.Permission;
+import com.ecommerce.backend.exception.ResourceNotFoundException;
 import com.ecommerce.backend.repository.account.PermissionRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.GenericSpecification;
@@ -13,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -34,11 +36,18 @@ public class PermissionService extends BaseService<Permission, PermissionDto> {
     public PermissionDto getPermissionById(UUID permissionId) {
         return permissionRepository.findById(permissionId)
                 .map(permission -> modelMapper.map(permission, PermissionDto.class))
-                .orElse(null);
+                .orElseThrow(() -> new ResourceNotFoundException("Permission", "id", permissionId.toString()));
+    }
+
+    public Permission findById(UUID permissionId) {
+        return permissionRepository.findById(permissionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Permission", "id", permissionId.toString()));
     }
 
     public PermissionDto createPermission(PermissionDto permissionRequest) {
         Permission permission = modelMapper.map(permissionRequest, Permission.class);
+        permission.setCreatedAt(new Date());
+        permission.setUpdatedAt(new Date());
         Permission saved = permissionRepository.save(permission);
         return modelMapper.map(saved, PermissionDto.class);
     }
@@ -47,6 +56,8 @@ public class PermissionService extends BaseService<Permission, PermissionDto> {
         return permissionRepository.findById(permissionId)
                 .map(existing -> {
                     existing.setValue(permissionRequest.getValue());
+                    existing.setLabel(permissionRequest.getLabel());
+                    existing.setUpdatedAt(new Date());
                     Permission updated = permissionRepository.save(existing);
                     return modelMapper.map(updated, PermissionDto.class);
                 })
