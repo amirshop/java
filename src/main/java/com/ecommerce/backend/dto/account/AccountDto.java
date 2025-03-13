@@ -66,7 +66,7 @@ public class AccountDto {
             description = "roles of the accounts", example = "ROLE_ADMIN"
     )
     @NotEmpty(message = "role can not be a null or empty")
-    private Set<RoleDto> roles;
+    private Set<UUID> roles;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createdAt;

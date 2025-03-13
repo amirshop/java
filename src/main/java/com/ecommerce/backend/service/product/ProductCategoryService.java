@@ -5,10 +5,10 @@ import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.product.ProductCategoryDto;
 import com.ecommerce.backend.entity.product.ProductCategory;
+import com.ecommerce.backend.mapper.ProductCategoryMapper;
 import com.ecommerce.backend.repository.product.ProductCategoryRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.GenericSpecification;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -18,12 +18,19 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class ProductCategoryService extends BaseService<ProductCategory, ProductCategoryDto> {
 
     private final ProductCategoryRepository categoryRepository;
-
     private final ModelMapper modelMapper;
+    private final ProductCategoryMapper productCategoryMapper;
+
+    public ProductCategoryService(ProductCategoryRepository categoryRepository,
+                                  ModelMapper modelMapper, ProductCategoryMapper productCategoryMapper) {
+        super(categoryRepository, productCategoryMapper::toDto);
+        this.categoryRepository = categoryRepository;
+        this.modelMapper = modelMapper;
+        this.productCategoryMapper = productCategoryMapper;
+    }
 
     public List<ProductCategoryDto> getAllCategories() {
         List<ProductCategory> categories = categoryRepository.findAll();

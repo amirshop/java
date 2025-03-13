@@ -1,5 +1,7 @@
 package com.ecommerce.backend.controller;
 
+import com.ecommerce.backend.dto.ResponseDto;
+import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.account.PermissionDto;
 import com.ecommerce.backend.service.account.PermissionService;
 import lombok.RequiredArgsConstructor;
@@ -50,6 +52,11 @@ public class PermissionController {
     public ResponseEntity<Void> deletePermission(@PathVariable UUID permissionId) {
         permissionService.deletePermission(permissionId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/search")
+    public ResponseDto searchBrands(@RequestBody SearchDto requestDto) {
+        return permissionService.searchPermissions(requestDto);
     }
 }
 

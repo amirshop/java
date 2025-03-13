@@ -8,6 +8,8 @@ import com.ecommerce.backend.dto.product.TagDto;
 import com.ecommerce.backend.entity.product.Product;
 import com.ecommerce.backend.entity.product.ProductCategory;
 import com.ecommerce.backend.entity.product.Tag;
+import com.ecommerce.backend.mapper.ProductMapper;
+import com.ecommerce.backend.repository.product.ProductCategoryRepository;
 import com.ecommerce.backend.repository.product.ProductRepository;
 import com.ecommerce.backend.repository.product.TagRepository;
 import com.ecommerce.backend.service.BaseService;
@@ -24,12 +26,21 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class ProductService extends BaseService<Product, ProductDto> {
 
     private final ProductRepository productRepository;
     private final TagRepository tagRepository;
     private final ModelMapper modelMapper;
+    private final ProductMapper productMapper;
+
+    public ProductService(ProductRepository productRepository, TagRepository tagRepository,
+                          ModelMapper modelMapper, ProductMapper productMapper) {
+        super(productRepository, productMapper::toDto);
+        this.productRepository = productRepository;
+        this.tagRepository = tagRepository;
+        this.modelMapper = modelMapper;
+        this.productMapper = productMapper;
+    }
 
     public List<ProductDto> getAllProducts(String name, UUID categoryId) {
         List<Product> products;

@@ -18,20 +18,31 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
 
 @Service
-@RequiredArgsConstructor
 public class AccountService extends BaseService<Account, AccountDto> {
     private final AccountRepository accountRepository;
     private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final AccountMapper accountMapper;
+
+    public AccountService(JpaSpecificationExecutor<Account> repository, AccountRepository accountRepository,
+                          UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder,
+                          AccountMapper accountMapper) {
+        super(repository, accountMapper::toDto);
+        this.accountRepository = accountRepository;
+        this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
+        this.accountMapper = accountMapper;
+    }
 
     public Optional<Account> getAccountByUsername(String userName) {
         return accountRepository.findByUsername(userName);

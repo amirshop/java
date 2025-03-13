@@ -6,6 +6,7 @@ import com.ecommerce.backend.dto.account.PermissionDto;
 import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.entity.account.Permission;
 import com.ecommerce.backend.exception.ResourceNotFoundException;
+import com.ecommerce.backend.mapper.ProductMapper;
 import com.ecommerce.backend.repository.account.PermissionRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.GenericSpecification;
@@ -20,11 +21,18 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class PermissionService extends BaseService<Permission, PermissionDto> {
 
     private final PermissionRepository permissionRepository;
     private final ModelMapper modelMapper;
+    private final ProductMapper productMapper;
+
+    public PermissionService(PermissionRepository permissionRepository, ModelMapper modelMapper, ProductMapper productMapper) {
+        super(permissionRepository, permission -> modelMapper.map(permission, PermissionDto.class));
+        this.permissionRepository = permissionRepository;
+        this.modelMapper = modelMapper;
+        this.productMapper = productMapper;
+    }
 
     public List<PermissionDto> getAllPermissions() {
         List<Permission> permissions = permissionRepository.findAll();

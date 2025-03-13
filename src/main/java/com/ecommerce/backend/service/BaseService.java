@@ -4,6 +4,7 @@ import com.ecommerce.backend.dto.FilterCriteria;
 import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.utils.FilterUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,11 @@ public abstract class BaseService<T, D> {
     protected JpaSpecificationExecutor<T> repository;
     // Mapper to convert entity to its DTO
     protected Function<T, D> mapper;
+
+    public BaseService(JpaSpecificationExecutor<T> repository, Function<T, D> mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
+    }
 
     /**
      * Each service should implement its own filter specification creation.

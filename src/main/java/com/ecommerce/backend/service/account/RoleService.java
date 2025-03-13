@@ -25,13 +25,21 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class RoleService extends BaseService<Role, RoleDto> {
 
     private final RoleRepository roleRepository;
     private final ModelMapper modelMapper;
     private final RoleMapper roleMapper;
     private final PermissionService permissionService;
+
+    public RoleService(RoleRepository roleRepository, ModelMapper modelMapper, RoleMapper roleMapper,
+                       PermissionService permissionService) {
+        super(roleRepository, role -> modelMapper.map(role, RoleDto.class));
+        this.roleRepository = roleRepository;
+        this.modelMapper = modelMapper;
+        this.roleMapper = roleMapper;
+        this.permissionService = permissionService;
+    }
 
     public List<RoleDto> getAllRoles() {
         List<Role> roles = roleRepository.findAll();

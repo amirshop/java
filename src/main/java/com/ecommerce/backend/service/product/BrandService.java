@@ -5,6 +5,7 @@ import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.product.BrandDto;
 import com.ecommerce.backend.entity.product.Brand;
+import com.ecommerce.backend.mapper.BrandMapper;
 import com.ecommerce.backend.repository.product.BrandRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.GenericSpecification;
@@ -17,10 +18,16 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@RequiredArgsConstructor
 public class BrandService extends BaseService<Brand, BrandDto> {
 
     private final BrandRepository brandRepository;
+    private final BrandMapper brandMapper;
+
+    public BrandService(BrandRepository brandRepository, BrandMapper brandMapper) {
+        super(brandRepository, brandMapper::toDto);
+        this.brandRepository = brandRepository;
+        this.brandMapper = brandMapper;
+    }
 
     public List<Brand> findAll() {
         return brandRepository.findAll();
