@@ -1,5 +1,7 @@
 package com.ecommerce.backend.controller;
 
+import com.ecommerce.backend.dto.ResponseDto;
+import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.account.AccountDto;
 import com.ecommerce.backend.entity.account.Account;
 import com.ecommerce.backend.service.account.AccountService;
@@ -47,6 +49,11 @@ public class AccountController {
     public ResponseEntity<Void> deleteAccount(@PathVariable UUID id) {
         accountService.deleteAccount(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/search")
+    public ResponseDto searchAccounts(@RequestBody SearchDto requestDto) {
+        return accountService.searchAccounts(requestDto);
     }
 }
 

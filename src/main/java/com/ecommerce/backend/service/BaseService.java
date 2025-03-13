@@ -51,9 +51,9 @@ public abstract class BaseService<T, D> {
     }
 
     private Pageable getPageable(SearchDto requestDto) {
-        if (requestDto.getSortField() != null && !requestDto.getSortField().isEmpty()) {
-            Sort sort = Sort.by("asc".equalsIgnoreCase(requestDto.getSortDirection())
-                    ? Sort.Direction.ASC : Sort.Direction.DESC, requestDto.getSortField());
+        if (requestDto.getSort().getField() != null && !requestDto.getSort().getField().isEmpty()) {
+            Sort sort = Sort.by("asc".equalsIgnoreCase(requestDto.getSort().getDirection())
+                    ? Sort.Direction.ASC : Sort.Direction.DESC, requestDto.getSort().getField());
             return PageRequest.of(requestDto.getPage(), requestDto.getSize(), sort);
         } else {
             return PageRequest.of(requestDto.getPage(), requestDto.getSize());
@@ -66,8 +66,8 @@ public abstract class BaseService<T, D> {
         List<String> allowedFields = FilterUtils.getAllowedFilterFields(dtoClass);
         if (requestDto.getFilters() != null) {
             for (FilterCriteria filter : requestDto.getFilters()) {
-                if (!allowedFields.contains(filter.getCol())) {
-                    throw new IllegalArgumentException("Field " + filter.getCol() + " is not allowed.");
+                if (!allowedFields.contains(filter.getField())) {
+                    throw new IllegalArgumentException("Field " + filter.getField() + " is not allowed.");
                 }
                 Specification<T> filterSpec = createSpecification(filter);
                 if (filterSpec != null) {

@@ -55,7 +55,7 @@ public class PermissionController {
     }
 
     @PostMapping("/search")
-    public ResponseDto searchBrands(@RequestBody SearchDto requestDto) {
+    public ResponseDto searchPermissions(@RequestBody SearchDto requestDto) {
         return permissionService.searchPermissions(requestDto);
     }
 }

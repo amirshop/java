@@ -19,9 +19,9 @@ public class GenericSpecification<T> implements Specification<T> {
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
-        String field = filter.getCol();
-        FilterType operator = filter.getFilter();
-        Object value = filter.getValue();
+        String field = filter.getField();
+        FilterType operator = filter.getOperator();
+        Object value = filter.getCriteria();
 
         switch (operator) {
             case LESS_THAN:

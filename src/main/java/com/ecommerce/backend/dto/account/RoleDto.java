@@ -1,5 +1,6 @@
 package com.ecommerce.backend.dto.account;
 
+import com.ecommerce.backend.annotaions.AllowedFilter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotEmpty;
@@ -21,6 +22,7 @@ public class RoleDto {
     )
     @NotEmpty(message = "label can not be a null or empty")
     @Size(min = 3, max = 50, message = "The length of the label should be between 3 and 50")
+    @AllowedFilter
     private String label;
 
     @Schema(
@@ -28,6 +30,7 @@ public class RoleDto {
     )
     @NotEmpty(message = "value can not be a null or empty")
     @Size(min = 3, max = 50, message = "The length of the value should be between 3 and 50")
+    @AllowedFilter
     private String value;
 
     private Set<UUID> permissions;

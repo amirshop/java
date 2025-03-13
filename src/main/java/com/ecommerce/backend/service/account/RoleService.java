@@ -34,7 +34,7 @@ public class RoleService extends BaseService<Role, RoleDto> {
 
     public RoleService(RoleRepository roleRepository, ModelMapper modelMapper, RoleMapper roleMapper,
                        PermissionService permissionService) {
-        super(roleRepository, role -> modelMapper.map(role, RoleDto.class));
+        super(roleRepository, roleMapper::toDto);
         this.roleRepository = roleRepository;
         this.modelMapper = modelMapper;
         this.roleMapper = roleMapper;

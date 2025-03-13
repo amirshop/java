@@ -3,6 +3,8 @@ package com.ecommerce.backend.controller;
 import java.util.List;
 import java.util.UUID;
 
+import com.ecommerce.backend.dto.ResponseDto;
+import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.account.RoleDto;
 import com.ecommerce.backend.service.account.RoleService;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +51,11 @@ public class RoleController {
     public ResponseEntity<Void> deleteRole(@PathVariable UUID roleId) {
         roleService.deleteRole(roleId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/search")
+    public ResponseDto searchRoles(@RequestBody SearchDto requestDto) {
+        return roleService.searchRoles(requestDto);
     }
 }
 
