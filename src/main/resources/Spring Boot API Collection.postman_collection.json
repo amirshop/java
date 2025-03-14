@@ -700,6 +700,125 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Search Roles",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"page\": 0,\r\n  \"size\": 2,\r\n  \"sort\":{\r\n    \"field\":\"label\",\r\n    \"direction\":\"asc\"\r\n  },\r\n  \"filters\": [\r\n    {\r\n      \"field\": \"label\",\r\n      \"operator\": \"CONTAINS\",\r\n      \"criteria\": \"ادم\"\r\n    }\r\n    // {\r\n    //   \"field\": \"careatedAt\",\r\n    //   \"operator\": \"CONTAINS\",\r\n    //   \"criteria\": \"دسترسی\"\r\n    // }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/roles/search",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"roles",
+								"search"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"page\": 0,\r\n  \"size\": 2,\r\n  \"sort\":{\r\n    \"field\":\"label\",\r\n    \"direction\":\"asc\"\r\n  },\r\n  \"filters\": [\r\n    {\r\n      \"field\": \"label\",\r\n      \"operator\": \"CONTAINS\",\r\n      \"criteria\": \"ادم\"\r\n    }\r\n    // {\r\n    //   \"field\": \"careatedAt\",\r\n    //   \"operator\": \"CONTAINS\",\r\n    //   \"criteria\": \"دسترسی\"\r\n    // }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/roles/search",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"roles",
+										"search"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 13 Mar 2025 20:34:16 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": \"22f289a4-1725-496e-af24-11bae8c3db6d\",\n            \"label\": \"ادمین\",\n            \"value\": \"ROLE_ADMIN\",\n            \"permissions\": [\n                \"8bd9b4ac-3cdc-4c97-8aa3-1cf1bce7db7a\",\n                \"7f7aa299-41c9-43b9-b9cc-6f852f040517\",\n                \"96c0dce3-cd8c-4507-981e-615aebc62185\"\n            ],\n            \"createdAt\": \"2025-03-11T19:30:47.825+00:00\",\n            \"updatedAt\": \"2025-03-11T19:30:47.825+00:00\"\n        }\n    ],\n    \"page\": 0,\n    \"size\": 2,\n    \"totalElements\": 1,\n    \"totalPages\": 1\n}"
+						}
+					]
 				}
 			]
 		},
@@ -1447,6 +1566,125 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Search Permissions",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"page\": 0,\r\n  \"size\": 2,\r\n  \"sortField\": \"label\",\r\n  \"sortDirection\": \"asc\",\r\n  \"filters\": [\r\n    {\r\n      \"col\": \"label\",\r\n      \"filter\": \"CONTAINS\",\r\n      \"value\": \"دسترسی\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/permissions/search",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"permissions",
+								"search"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "New Request",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"page\": 0,\r\n  \"size\": 2,\r\n  \"sort\":{\r\n    \"field\":\"label\",\r\n    \"direction\":\"asc\"\r\n  },\r\n  \"filters\": [\r\n    {\r\n      \"field\": \"label\",\r\n      \"operator\": \"CONTAINS\",\r\n      \"criteria\": \"دسترسی\"\r\n    }\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/permissions/search",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"permissions",
+										"search"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 13 Mar 2025 20:22:18 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": \"8bd9b4ac-3cdc-4c97-8aa3-1cf1bce7db7a\",\n            \"label\": \"دسترسی به حذف اطلاعات\",\n            \"value\": \"DELETE_PERMISSION\",\n            \"createdAt\": \"2025-03-11T14:31:12.895+00:00\",\n            \"updatedAt\": \"2025-03-11T14:31:12.895+00:00\"\n        },\n        {\n            \"id\": \"7f7aa299-41c9-43b9-b9cc-6f852f040517\",\n            \"label\": \"دسترسی تغییر اطلاعات\",\n            \"value\": \"WRITE_PERMISSION\",\n            \"createdAt\": \"2025-03-11T14:32:00.150+00:00\",\n            \"updatedAt\": \"2025-03-11T14:32:00.150+00:00\"\n        }\n    ],\n    \"page\": 0,\n    \"size\": 2,\n    \"totalElements\": 3,\n    \"totalPages\": 2\n}"
+						}
+					]
 				}
 			]
 		},
@@ -1587,32 +1825,6 @@
 					"response": []
 				},
 				{
-					"name": "Search Brands",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							},
-							{
-								"key": "Accept",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"page\": 0,\n  \"size\": 10,\n  \"sortField\": \"name\",\n  \"sortDirection\": \"asc\",\n  \"filters\": [\n    {\n      \"col\": \"name\",\n      \"operator\": \"LIKE\",\n      \"value\": \"Nike\"\n    }\n  ]\n}"
-						},
-						"url": {
-							"raw": "{{baseUrl}}/api/brands/search",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "brands", "search"]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Create Brand",
 					"request": {
 						"method": "POST",
@@ -1681,6 +1893,34 @@
 								"api",
 								"brands",
 								"{{brandId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Brands",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"page\": 0,\r\n  \"size\": 10,\r\n  \"sortField\": \"name\",\r\n  \"sortDirection\": \"asc\",\r\n  \"filters\": [\r\n    {\r\n      \"col\": \"name\",\r\n      \"operator\": \"LIKE\",\r\n      \"value\": \"Nike\"\r\n    }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/brands/search",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"brands",
+								"search"
 							]
 						}
 					},
