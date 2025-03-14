@@ -1,52 +1,42 @@
 package com.ecommerce.backend.entity.account;
 
 import com.ecommerce.backend.enums.ColorsEnum;
-import com.ecommerce.backend.enums.ComponentsSizesEnum;
-import com.ecommerce.backend.enums.DirectionsEnum;
-import com.ecommerce.backend.enums.LanguagesEnum;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-@Table(name = "dashboard_setting")
-public class DashboardSetting {
+@Table(name = "shop_setting")
+public class ShopSetting {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(nullable = false, unique = true)
-    private String name;
+    private String title;
 
     @Column(nullable = false, unique = true)
     private String slug;
 
     private String description;
+
     private String logo;
+
     private String favicon;
+
+    private String currency;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ColorsEnum primaryColor;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private DirectionsEnum direction;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private LanguagesEnum language;
-
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ComponentsSizesEnum size;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

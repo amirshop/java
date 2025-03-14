@@ -1,5 +1,7 @@
 package com.ecommerce.backend.controller;
 
+import com.ecommerce.backend.dto.ResponseDto;
+import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.entity.product.Brand;
 import com.ecommerce.backend.service.product.BrandService;
 import org.springframework.http.HttpStatus;
@@ -54,6 +56,11 @@ public class BrandController {
     public ResponseEntity<Void> deleteBrand(@PathVariable UUID id) {
         brandService.deleteBrand(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/search")
+    public ResponseDto searchBrands(@RequestBody SearchDto requestDto) {
+        return brandService.searchBrands(requestDto);
     }
 }
 

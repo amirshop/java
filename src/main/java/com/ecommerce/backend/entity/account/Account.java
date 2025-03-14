@@ -53,7 +53,7 @@ public class Account {
     private List<ProductReview> accountReviews;
 
     @OneToOne(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
-    private DashboardSetting dashboardSetting;
+    private ShopSetting shopSetting;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "account_roles",
