@@ -1,4 +1,4 @@
-package com.ecommerce.backend.controller;
+package com.ecommerce.backend.controller.account;
 
 import com.ecommerce.backend.dto.account.ShopSettingDto;
 import com.ecommerce.backend.service.account.ShopSettingService;

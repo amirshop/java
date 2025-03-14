@@ -1,4 +1,4 @@
-package com.ecommerce.backend.controller;
+package com.ecommerce.backend.controller.cart;
 
 import com.ecommerce.backend.dto.cart.CartDto;
 import com.ecommerce.backend.dto.cart.ItemDto;

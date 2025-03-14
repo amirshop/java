@@ -1,4 +1,4 @@
-package com.ecommerce.backend.controller;
+package com.ecommerce.backend.controller.shipment;
 
 import com.ecommerce.backend.dto.shipment.ShipmentDto;
 import com.ecommerce.backend.service.shipment.ShipmentService;

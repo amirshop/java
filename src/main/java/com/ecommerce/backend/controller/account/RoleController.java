@@ -1,4 +1,4 @@
-package com.ecommerce.backend.controller;
+package com.ecommerce.backend.controller.account;
 
 import java.util.List;
 import java.util.UUID;

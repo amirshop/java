@@ -1,4 +1,4 @@
-package com.ecommerce.backend.controller;
+package com.ecommerce.backend.controller.product;
 
 import com.ecommerce.backend.dto.product.ProductCategoryDto;
 import com.ecommerce.backend.service.product.ProductCategoryService;

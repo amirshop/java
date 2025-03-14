@@ -1,4 +1,4 @@
-package com.ecommerce.backend.controller;
+package com.ecommerce.backend.controller.payment;
 
 import com.ecommerce.backend.dto.payment.PaymentDto;
 import com.ecommerce.backend.service.payment.PaymentService;

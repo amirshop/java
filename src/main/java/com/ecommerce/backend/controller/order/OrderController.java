@@ -1,4 +1,4 @@
-package com.ecommerce.backend.controller;
+package com.ecommerce.backend.controller.order;
 
 import com.ecommerce.backend.dto.order.OrderDto;
 import com.ecommerce.backend.service.order.OrderService;

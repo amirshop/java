@@ -1,4 +1,4 @@
-package com.ecommerce.backend.controller;
+package com.ecommerce.backend.controller.notification;
 
 import com.ecommerce.backend.dto.notification.NotificationDto;
 import com.ecommerce.backend.service.notification.NotificationService;

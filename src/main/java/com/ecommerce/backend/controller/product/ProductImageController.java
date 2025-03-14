@@ -1,4 +1,4 @@
-package com.ecommerce.backend.controller;
+package com.ecommerce.backend.controller.product;
 
 import com.ecommerce.backend.service.product.ProductImageService;
 import org.springframework.http.ResponseEntity;
