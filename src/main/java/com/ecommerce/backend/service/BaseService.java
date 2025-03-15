@@ -66,12 +66,11 @@ public abstract class BaseService<T, D> {
         List<String> allowedFields = FilterUtils.getAllowedFilterFields(dtoClass);
         if (requestDto.getFilters() != null) {
             for (FilterCriteria filter : requestDto.getFilters()) {
-                if (!allowedFields.contains(filter.getField())) {
-                    throw new IllegalArgumentException("Field " + filter.getField() + " is not allowed.");
-                }
-                Specification<T> filterSpec = createSpecification(filter);
-                if (filterSpec != null) {
-                    spec = spec.and(filterSpec);
+                if (allowedFields.contains(filter.getField())) {
+                    Specification<T> filterSpec = createSpecification(filter);
+                    if (filterSpec != null) {
+                        spec = spec.and(filterSpec);
+                    }
                 }
             }
         }
