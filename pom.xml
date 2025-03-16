@@ -139,8 +139,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <excludes>
-                    </excludes>
+                    <mainClass>com.ecommerce.backend.BackendApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
