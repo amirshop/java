@@ -41,10 +41,10 @@ public class Account {
     private String lastname;
 
     @Enumerated(EnumType.STRING)
-    private AccountStatus status = AccountStatus.UNKNOWN;
+    private AccountStatus status;
 
     @Embedded
-    private Address shippingAddress;
+    private Address address;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Cart cart;

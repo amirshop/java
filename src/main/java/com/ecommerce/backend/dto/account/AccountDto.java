@@ -1,10 +1,10 @@
 package com.ecommerce.backend.dto.account;
 
 import com.ecommerce.backend.annotaions.AllowedFilter;
-import com.ecommerce.backend.dto.cart.CartDto;
 import com.ecommerce.backend.enums.AccountStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -66,8 +66,11 @@ public class AccountDto {
     @AllowedFilter
     private AccountStatus status;
 
-    private AddressDto shippingAddress;
-    private CartDto cart;
+    @NotNull
+    @Valid
+    private AddressDto address;
+
+//    private CartDto cart;
 
     @Schema(
             description = "roles of the accounts", example = "ROLE_ADMIN"

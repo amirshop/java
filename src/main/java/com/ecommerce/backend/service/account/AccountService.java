@@ -4,28 +4,31 @@ import com.ecommerce.backend.dto.FilterCriteria;
 import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.account.AccountDto;
-import com.ecommerce.backend.dto.product.ProductDto;
+import com.ecommerce.backend.dto.account.PermissionDto;
+import com.ecommerce.backend.dto.account.RoleDto;
 import com.ecommerce.backend.entity.account.Account;
-import com.ecommerce.backend.entity.product.Product;
+import com.ecommerce.backend.entity.account.Role;
+import com.ecommerce.backend.enums.AccountStatus;
 import com.ecommerce.backend.exception.ResourceAlreadyExistsException;
+import com.ecommerce.backend.exception.ResourceNotFoundException;
 import com.ecommerce.backend.mapper.AccountMapper;
+import com.ecommerce.backend.mapper.AddressMapper;
 import com.ecommerce.backend.repository.account.AccountRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.service.auth.UserDetailsImpl;
 import com.ecommerce.backend.service.auth.UserDetailsServiceImpl;
 import com.ecommerce.backend.specification.GenericSpecification;
-import lombok.RequiredArgsConstructor;
 import org.hibernate.service.spi.ServiceException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class AccountService extends BaseService<Account, AccountDto> {
@@ -33,15 +36,17 @@ public class AccountService extends BaseService<Account, AccountDto> {
     private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final AccountMapper accountMapper;
+    private final AddressMapper addressMapper;
 
     public AccountService(JpaSpecificationExecutor<Account> repository, AccountRepository accountRepository,
                           UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder,
-                          AccountMapper accountMapper) {
+                          AccountMapper accountMapper, AddressMapper addressMapper) {
         super(repository, accountMapper::toDto);
         this.accountRepository = accountRepository;
         this.userDetailsService = userDetailsService;
         this.passwordEncoder = passwordEncoder;
         this.accountMapper = accountMapper;
+        this.addressMapper = addressMapper;
     }
 
     public Optional<Account> getAccountByUsername(String userName) {
@@ -58,12 +63,17 @@ public class AccountService extends BaseService<Account, AccountDto> {
                 () -> new ServiceException("user not found"));
     }
 
-    public List<Account> getAllAccounts() {
-        return accountRepository.findAll();
+    public List<AccountDto> getAllAccounts() {
+        List<Account> accounts = accountRepository.findAll();
+        return accounts.stream()
+                .map(accountMapper::toDto)
+                .collect(Collectors.toList());
     }
 
-    public Optional<Account> getAccountById(UUID id) {
-        return accountRepository.findById(id);
+    public AccountDto getAccountById(UUID id) {
+        return accountRepository.findById(id)
+                .map(accountMapper::toDto)
+                .orElseThrow(() -> new ResourceNotFoundException("Account", "id", id.toString()));
     }
 
     public AccountDto createAccount(AccountDto accountDto) {
@@ -85,6 +95,12 @@ public class AccountService extends BaseService<Account, AccountDto> {
             accountEntity.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         }
 
+        if(accountDto.getStatus() == null) {
+            accountEntity.setStatus(AccountStatus.UNKNOWN);
+        }
+
+        accountEntity.setCreatedAt(new Date());
+        accountEntity.setUpdatedAt(new Date());
         // Save the account entity
         Account savedAccount = accountRepository.save(accountEntity);
 
@@ -110,12 +126,14 @@ public class AccountService extends BaseService<Account, AccountDto> {
         }
     }
 
-    public Account updateAccount(UUID id, Account updatedAccount) {
+    public Account updateAccount(UUID id, AccountDto updatedAccount) {
         return accountRepository.findById(id).map(account -> {
-            account.setUsername(updatedAccount.getUsername());
-            account.setPassword(updatedAccount.getPassword());
+            account.setPhone(updatedAccount.getPhone());
             account.setStatus(updatedAccount.getStatus());
-            account.setEmail(updatedAccount.getEmail());
+            account.setUpdatedAt(new Date());
+            account.setAddress(addressMapper.toEntity(updatedAccount.getAddress()));
+            account.setFirstname(updatedAccount.getFirstname());
+            account.setLastname(updatedAccount.getLastname());
             return accountRepository.save(account);
         }).orElseThrow(() -> new RuntimeException("Account not found"));
     }

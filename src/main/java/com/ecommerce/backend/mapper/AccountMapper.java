@@ -23,10 +23,12 @@ public interface AccountMapper {
 ////            @Mapping(target = "password", ignore = true)
 //    })
     @Mapping(target = "roles", source = "roles", qualifiedByName = "mapUUIDsToRoles")
+    @Mapping(target = "address", source = "address")
     Account toEntity(AccountDto accountDto);
 
     // Mapping from Account entity to AccountDto (response)
     @Mapping(target = "roles", source = "roles", qualifiedByName = "mapRolesToUUIDs")
+    @Mapping(target = "address", source = "address")
     AccountDto toDto(Account account);
 
 

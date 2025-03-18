@@ -20,15 +20,13 @@ public class AccountController {
     private final AccountService accountService;
 
     @GetMapping
-    public List<Account> getAllAccounts() {
+    public List<AccountDto> getAllAccounts() {
         return accountService.getAllAccounts();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Account> getAccountById(@PathVariable UUID id) {
-        return accountService.getAccountById(id)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> ResponseEntity.notFound().build());
+    public AccountDto getAccountById(@PathVariable UUID id) {
+        return accountService.getAccountById(id);
     }
 
     @PostMapping
@@ -37,7 +35,7 @@ public class AccountController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Account> updateAccount(@PathVariable UUID id, @RequestBody Account updatedAccount) {
+    public ResponseEntity<Account> updateAccount(@PathVariable UUID id, @RequestBody AccountDto updatedAccount) {
         try {
             return ResponseEntity.ok(accountService.updateAccount(id, updatedAccount));
         } catch (RuntimeException e) {
