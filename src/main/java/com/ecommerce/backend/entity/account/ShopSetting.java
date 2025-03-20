@@ -47,7 +47,7 @@ public class ShopSetting {
     private Date updatedAt = new Date();
 
     @OneToOne
-    @JoinColumn(name = "account_id", referencedColumnName = "id", unique = true)
-    private Account account;
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserAccount user;
 }
 

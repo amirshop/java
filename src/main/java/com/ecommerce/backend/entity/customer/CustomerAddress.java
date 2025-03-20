@@ -3,13 +3,16 @@ package com.ecommerce.backend.entity.customer;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Entity
-@Table(name = "customer_addresses")
+@Table(name = "customer_addresse")
 @Data
 public class CustomerAddress {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
