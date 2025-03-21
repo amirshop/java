@@ -25,8 +25,8 @@ public class CustomerService extends BaseService<Customer, CustomerDto> {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
 
-    public CustomerService(JpaSpecificationExecutor<Customer> repository, CustomerRepository customerRepository, CustomerMapper customerMapper) {
-        super(repository, customerMapper::toDto);
+    public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper) {
+        super(customerRepository, customerMapper::toDto);
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
     }
@@ -60,7 +60,7 @@ public class CustomerService extends BaseService<Customer, CustomerDto> {
                     existing.setPassword(customerRequest.getPassword());
                     existing.setFirstName(customerRequest.getFirstName());
                     existing.setLastName(customerRequest.getLastName());
-                    // update additional fields if needed
+                    existing.setUpdatedAt(new Date());
                     Customer updated = customerRepository.save(existing);
                     return customerMapper.toDto(updated);
         }).orElseThrow(() -> new RuntimeException("Customer not found with id " + customerId));
@@ -75,7 +75,6 @@ public class CustomerService extends BaseService<Customer, CustomerDto> {
         return new GenericSpecification<>(filter);
     }
 
-    // Expose a method that calls the generic search functionality
     public ResponseDto searchCustomers(SearchDto requestDto) {
         return search(requestDto, CustomerDto.class);
     }
