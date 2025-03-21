@@ -3,6 +3,7 @@ package com.ecommerce.backend.entity.customer;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -23,5 +24,13 @@ public class CustomerAddress {
     private String street;
     private String postalCode;
     private String phoneNumber;
-    private boolean isDefault; // آیا این آدرس، پیش‌فرض است؟
+    private Boolean isDefault; // آیا این آدرس، پیش‌فرض است؟
+
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
 }

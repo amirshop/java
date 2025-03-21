@@ -1,44 +1,59 @@
 package com.ecommerce.backend.controller.customer;
 
+import com.ecommerce.backend.dto.ResponseDto;
+import com.ecommerce.backend.dto.SearchDto;
+import com.ecommerce.backend.dto.customer.CustomerAddressDto;
+import com.ecommerce.backend.service.customer.CustomerAddressService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.UUID;
 
-import com.ecommerce.backend.entity.customer.CustomerAddress;
-import com.ecommerce.backend.service.customer.CustomerAddressService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 @RestController
 @RequestMapping("/api/customer-addresses")
+@RequiredArgsConstructor
 public class CustomerAddressController {
 
-    @Autowired
-    private CustomerAddressService addressService;
+    private final CustomerAddressService addressService;
 
     @GetMapping
-    public List<CustomerAddress> getAll() {
-        return addressService.findAll();
+    public ResponseEntity<List<CustomerAddressDto>> getAllCustomerAddresses() {
+        List<CustomerAddressDto> customerAddresses = addressService.getAllCustomerAddresses();
+        return ResponseEntity.ok(customerAddresses);
     }
 
-    @GetMapping("/{id}")
-    public CustomerAddress getById(@PathVariable UUID id) {
-        return addressService.findById(id)
-                .orElseThrow(() -> new RuntimeException("CustomerAddress not found with id " + id));
+    @GetMapping("/{customerAddressId}")
+    public CustomerAddressDto getCustomerAddressById(@PathVariable UUID customerAddressId) {
+        return addressService.getCustomerAddressById(customerAddressId);
     }
 
     @PostMapping
-    public CustomerAddress create(@RequestBody CustomerAddress address) {
-        return addressService.create(address);
+    public ResponseEntity<CustomerAddressDto> createCustomerAddress(@RequestBody CustomerAddressDto customerAddressRequest) {
+        CustomerAddressDto createdCustomerAddress = addressService.createCustomerAddress(customerAddressRequest);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdCustomerAddress);
     }
 
-    @PutMapping("/{id}")
-    public CustomerAddress update(@PathVariable UUID id, @RequestBody CustomerAddress address) {
-        return addressService.update(id, address);
+    @PutMapping("/{customerAddressId}")
+    public ResponseEntity<CustomerAddressDto> updateCustomerAddress(@PathVariable UUID customerAddressId,
+                                                                    @RequestBody CustomerAddressDto customerAddressRequest) {
+        CustomerAddressDto updatedCustomerAddress = addressService.updateCustomerAddress(customerAddressId, customerAddressRequest);
+        return updatedCustomerAddress != null
+                ? ResponseEntity.ok(updatedCustomerAddress)
+                : ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable UUID id) {
-        addressService.delete(id);
+    @DeleteMapping("/{customerAddressId}")
+    public ResponseEntity<Void> deleteCustomerAddress(@PathVariable UUID customerAddressId) {
+        addressService.deleteCustomerAddress(customerAddressId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/search")
+    public ResponseDto searchCustomerAddresses(@RequestBody SearchDto requestDto) {
+        return addressService.searchCustomerAddresses(requestDto);
     }
 }
 
