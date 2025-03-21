@@ -1,6 +1,6 @@
 package com.ecommerce.backend.entity.cart;
 
-import com.ecommerce.backend.entity.account.Account;
+import com.ecommerce.backend.entity.customer.Customer;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,8 +24,8 @@ public class Cart {
     private Date creationDate;
 
     @OneToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     // A shopping cart can have many items
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)

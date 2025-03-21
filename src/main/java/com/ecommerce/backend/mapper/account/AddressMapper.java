@@ -1,4 +1,4 @@
-package com.ecommerce.backend.mapper;
+package com.ecommerce.backend.mapper.account;
 
 import com.ecommerce.backend.dto.account.AddressDto;
 import com.ecommerce.backend.entity.account.Address;

@@ -4,6 +4,7 @@ import com.ecommerce.backend.enums.Gender;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -29,6 +30,14 @@ public class UserProfile {
     private Address address;
 
     private String profilePictureUrl;
+
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt = new Date();
+
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt = new Date();
 
 }
 

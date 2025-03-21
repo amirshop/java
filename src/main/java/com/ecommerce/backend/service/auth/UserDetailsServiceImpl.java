@@ -1,8 +1,7 @@
 package com.ecommerce.backend.service.auth;
 
-import com.ecommerce.backend.entity.account.Account;
-import com.ecommerce.backend.repository.account.AccountRepository;
-import lombok.RequiredArgsConstructor;
+import com.ecommerce.backend.entity.account.UserAccount;
+import com.ecommerce.backend.repository.account.UserAccountRepository;
 import org.hibernate.service.spi.ServiceException;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,16 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-  private final AccountRepository userRepository;
+  private final UserAccountRepository userRepository;
 
-    public UserDetailsServiceImpl(AccountRepository userRepository) {
+    public UserDetailsServiceImpl(UserAccountRepository userRepository) {
         this.userRepository = userRepository;
     }
 
     @Override
   @Transactional
   public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    Account user = userRepository.findByUsername(username)
+      UserAccount user = userRepository.findByUsername(username)
         .orElseThrow(() -> new ServiceException("user not found"));
     return UserDetailsImpl.build(user);
   }

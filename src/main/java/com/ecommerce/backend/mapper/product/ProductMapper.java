@@ -1,8 +1,6 @@
-package com.ecommerce.backend.mapper;
+package com.ecommerce.backend.mapper.product;
 
-import com.ecommerce.backend.dto.cart.CartDto;
 import com.ecommerce.backend.dto.product.ProductDto;
-import com.ecommerce.backend.entity.cart.Cart;
 import com.ecommerce.backend.entity.product.Product;
 import com.ecommerce.backend.entity.product.ProductReview;
 import org.mapstruct.Mapper;

@@ -1,6 +1,6 @@
 package com.ecommerce.backend.entity.product;
 
-import com.ecommerce.backend.entity.account.Account;
+import com.ecommerce.backend.entity.customer.Customer;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -25,6 +25,6 @@ public class ProductReview {
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false)
-    private Account reviewer;
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer reviewer;
 }

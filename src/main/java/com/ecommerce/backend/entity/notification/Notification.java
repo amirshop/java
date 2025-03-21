@@ -1,6 +1,6 @@
 package com.ecommerce.backend.entity.notification;
 
-import com.ecommerce.backend.entity.account.Account;
+import com.ecommerce.backend.entity.customer.Customer;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -24,6 +24,6 @@ public abstract class Notification {
     private boolean isRead = false;
 
     @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 }

@@ -1,4 +1,4 @@
-package com.ecommerce.backend.mapper;
+package com.ecommerce.backend.mapper.cart;
 
 import com.ecommerce.backend.dto.cart.CartDto;
 import com.ecommerce.backend.entity.cart.Cart;

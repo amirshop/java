@@ -5,11 +5,10 @@ import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.product.BrandDto;
 import com.ecommerce.backend.entity.product.Brand;
-import com.ecommerce.backend.mapper.BrandMapper;
+import com.ecommerce.backend.mapper.product.BrandMapper;
 import com.ecommerce.backend.repository.product.BrandRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.GenericSpecification;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 

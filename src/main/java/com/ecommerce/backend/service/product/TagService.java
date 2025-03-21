@@ -3,25 +3,18 @@ package com.ecommerce.backend.service.product;
 import com.ecommerce.backend.dto.FilterCriteria;
 import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
-import com.ecommerce.backend.dto.product.BrandDto;
-import com.ecommerce.backend.dto.product.ProductDto;
 import com.ecommerce.backend.dto.product.TagDto;
-import com.ecommerce.backend.entity.product.Brand;
-import com.ecommerce.backend.entity.product.Product;
 import com.ecommerce.backend.entity.product.Tag;
-import com.ecommerce.backend.mapper.TagMapper;
+import com.ecommerce.backend.mapper.product.TagMapper;
 import com.ecommerce.backend.repository.product.TagRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.GenericSpecification;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service

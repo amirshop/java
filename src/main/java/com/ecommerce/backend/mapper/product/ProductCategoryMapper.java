@@ -1,4 +1,4 @@
-package com.ecommerce.backend.mapper;
+package com.ecommerce.backend.mapper.product;
 
 import com.ecommerce.backend.dto.product.ProductCategoryDto;
 import com.ecommerce.backend.entity.product.ProductCategory;

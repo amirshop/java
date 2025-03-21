@@ -5,7 +5,7 @@ import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.product.ProductCategoryDto;
 import com.ecommerce.backend.entity.product.ProductCategory;
-import com.ecommerce.backend.mapper.ProductCategoryMapper;
+import com.ecommerce.backend.mapper.product.ProductCategoryMapper;
 import com.ecommerce.backend.repository.product.ProductCategoryRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.GenericSpecification;

@@ -3,17 +3,14 @@ package com.ecommerce.backend.service.account;
 import com.ecommerce.backend.dto.FilterCriteria;
 import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
-import com.ecommerce.backend.dto.account.AccountDto;
-import com.ecommerce.backend.dto.account.PermissionDto;
-import com.ecommerce.backend.dto.account.RoleDto;
-import com.ecommerce.backend.entity.account.Account;
-import com.ecommerce.backend.entity.account.Role;
+import com.ecommerce.backend.dto.account.UserAccountDto;
+import com.ecommerce.backend.entity.account.UserAccount;
 import com.ecommerce.backend.enums.AccountStatus;
 import com.ecommerce.backend.exception.ResourceAlreadyExistsException;
 import com.ecommerce.backend.exception.ResourceNotFoundException;
-import com.ecommerce.backend.mapper.AccountMapper;
-import com.ecommerce.backend.mapper.AddressMapper;
-import com.ecommerce.backend.repository.account.AccountRepository;
+import com.ecommerce.backend.mapper.account.AddressMapper;
+import com.ecommerce.backend.mapper.account.UserAccountMapper;
+import com.ecommerce.backend.repository.account.UserAccountRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.service.auth.UserDetailsImpl;
 import com.ecommerce.backend.service.auth.UserDetailsServiceImpl;
@@ -31,16 +28,16 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class AccountService extends BaseService<Account, AccountDto> {
-    private final AccountRepository accountRepository;
+public class UserAccountService extends BaseService<UserAccount, UserAccountDto> {
+    private final UserAccountRepository accountRepository;
     private final UserDetailsServiceImpl userDetailsService;
     private final PasswordEncoder passwordEncoder;
-    private final AccountMapper accountMapper;
+    private final UserAccountMapper accountMapper;
     private final AddressMapper addressMapper;
 
-    public AccountService(JpaSpecificationExecutor<Account> repository, AccountRepository accountRepository,
+    public UserAccountService(JpaSpecificationExecutor<UserAccount> repository, UserAccountRepository accountRepository,
                           UserDetailsServiceImpl userDetailsService, PasswordEncoder passwordEncoder,
-                          AccountMapper accountMapper, AddressMapper addressMapper) {
+                          UserAccountMapper accountMapper, AddressMapper addressMapper) {
         super(repository, accountMapper::toDto);
         this.accountRepository = accountRepository;
         this.userDetailsService = userDetailsService;
@@ -49,34 +46,34 @@ public class AccountService extends BaseService<Account, AccountDto> {
         this.addressMapper = addressMapper;
     }
 
-    public Optional<Account> getAccountByUsername(String userName) {
+    public Optional<UserAccount> getAccountByUsername(String userName) {
         return accountRepository.findByUsername(userName);
     }
 
-    public Optional<Account> getAccountByEmail(String email) {
+    public Optional<UserAccount> getAccountByEmail(String email) {
         return accountRepository.findByEmail(email);
     }
 
-    public Account getAccount() {
+    public UserAccount getAccount() {
         UserDetailsImpl userDetails = userDetailsService.getPrincipal();
         return accountRepository.findById(userDetails.getId()).orElseThrow(
                 () -> new ServiceException("user not found"));
     }
 
-    public List<AccountDto> getAllAccounts() {
-        List<Account> accounts = accountRepository.findAll();
+    public List<UserAccountDto> getAllAccounts() {
+        List<UserAccount> accounts = accountRepository.findAll();
         return accounts.stream()
                 .map(accountMapper::toDto)
                 .collect(Collectors.toList());
     }
 
-    public AccountDto getAccountById(UUID id) {
+    public UserAccountDto getAccountById(UUID id) {
         return accountRepository.findById(id)
                 .map(accountMapper::toDto)
                 .orElseThrow(() -> new ResourceNotFoundException("Account", "id", id.toString()));
     }
 
-    public AccountDto createAccount(AccountDto accountDto) {
+    public UserAccountDto createAccount(UserAccountDto accountDto) {
 
         // Check if email already exists
         checkExistEmail(accountDto.getEmail());
@@ -88,7 +85,7 @@ public class AccountService extends BaseService<Account, AccountDto> {
         checkExistPhone(accountDto.getPhone());
 
         // Convert DTO to entity
-        Account accountEntity = accountMapper.toEntity(accountDto);
+        UserAccount accountEntity = accountMapper.toEntity(accountDto);
 
         // Encode the password from DTO and set it on the entity if provided
         if (accountDto.getPassword() != null) {
@@ -102,7 +99,7 @@ public class AccountService extends BaseService<Account, AccountDto> {
         accountEntity.setCreatedAt(new Date());
         accountEntity.setUpdatedAt(new Date());
         // Save the account entity
-        Account savedAccount = accountRepository.save(accountEntity);
+        UserAccount savedAccount = accountRepository.save(accountEntity);
 
         // Convert the saved entity back to DTO for response
         return accountMapper.toDto(savedAccount);
@@ -126,14 +123,14 @@ public class AccountService extends BaseService<Account, AccountDto> {
         }
     }
 
-    public Account updateAccount(UUID id, AccountDto updatedAccount) {
+    public UserAccount updateAccount(UUID id, UserAccountDto updatedAccount) {
         return accountRepository.findById(id).map(account -> {
             account.setPhone(updatedAccount.getPhone());
             account.setStatus(updatedAccount.getStatus());
             account.setUpdatedAt(new Date());
-            account.setAddress(addressMapper.toEntity(updatedAccount.getAddress()));
-            account.setFirstname(updatedAccount.getFirstname());
-            account.setLastname(updatedAccount.getLastname());
+//            account.setAddress(addressMapper.toEntity(updatedAccount.getAddress()));
+//            account.setFirstname(updatedAccount.getFirstname());
+//            account.setLastname(updatedAccount.getLastname());
             return accountRepository.save(account);
         }).orElseThrow(() -> new RuntimeException("Account not found"));
     }
@@ -144,12 +141,12 @@ public class AccountService extends BaseService<Account, AccountDto> {
     }
 
     @Override
-    protected Specification<Account> createSpecification(FilterCriteria filter) {
+    protected Specification<UserAccount> createSpecification(FilterCriteria filter) {
         return new GenericSpecification<>(filter);
     }
 
     public ResponseDto searchAccounts(SearchDto requestDto) {
-        return search(requestDto, AccountDto.class);
+        return search(requestDto, UserAccountDto.class);
     }
 
 }

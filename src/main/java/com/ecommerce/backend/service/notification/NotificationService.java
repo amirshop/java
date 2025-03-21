@@ -20,7 +20,7 @@ public class NotificationService {
     private final ModelMapper modelMapper;
 
     public List<NotificationDto> getNotificationsForAccount(UUID accountId) {
-        List<Notification> notifications = notificationRepository.findByAccountId(accountId);
+        List<Notification> notifications = notificationRepository.findByCustomerId(accountId);
         return notifications.stream()
                 .map(notification -> modelMapper.map(notification, NotificationDto.class))
                 .collect(Collectors.toList());

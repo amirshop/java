@@ -1,5 +1,6 @@
 package com.ecommerce.backend.entity.order;
 
+import com.ecommerce.backend.entity.customer.Customer;
 import com.ecommerce.backend.entity.payment.Payment;
 import com.ecommerce.backend.entity.shipment.Shipment;
 import com.ecommerce.backend.entity.cart.Item;
@@ -45,4 +46,8 @@ public class Order {
     @OneToMany
     @JoinColumn(name = "order_id")
     private List<Item> items;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 }

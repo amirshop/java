@@ -48,6 +48,6 @@ public class ShopSetting {
 
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private UserAccount user;
+    private UserAccount userAccount;
 }
 

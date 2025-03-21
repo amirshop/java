@@ -2,12 +2,12 @@ package com.ecommerce.backend.service.auth;
 
 import com.ecommerce.backend.dto.auth.LoginRequest;
 import com.ecommerce.backend.dto.auth.RegisterRequest;
-import com.ecommerce.backend.entity.account.Account;
 import com.ecommerce.backend.entity.account.Role;
+import com.ecommerce.backend.entity.account.UserAccount;
 import com.ecommerce.backend.enums.AccountStatus;
 import com.ecommerce.backend.jwt.JwtUtils;
-import com.ecommerce.backend.repository.account.AccountRepository;
 import com.ecommerce.backend.repository.account.RoleRepository;
+import com.ecommerce.backend.repository.account.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class AuthService {
 
-    private final AccountRepository accountRepository;
+    private final UserAccountRepository accountRepository;
     private final RoleRepository roleRepository;
     private final VerificationTokenService verificationTokenService;
     private final JwtUtils jwtTokenProvider;
@@ -31,7 +31,7 @@ public class AuthService {
         }
 
         // Create and save account
-        Account account = new Account();
+        UserAccount account = new UserAccount();
         account.setUsername(request.getUserName());
         account.setEmail(request.getEmail());
         account.setPhone(request.getPhone());
@@ -59,7 +59,7 @@ public class AuthService {
             throw new RuntimeException("Invalid or expired token");
         }
         // Retrieve the account by username
-        Account account = accountRepository.findByUsername(accountIdentifier)
+        UserAccount account = accountRepository.findByUsername(accountIdentifier)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         // Update status to ACTIVE upon successful verification
@@ -69,7 +69,7 @@ public class AuthService {
     }
 
     public String login(LoginRequest request) {
-        Account account = accountRepository.findByUsername(request.getUserName())
+        UserAccount account = accountRepository.findByUsername(request.getUserName())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         if (!passwordEncoder.matches(request.getPassword(), account.getPassword())) {

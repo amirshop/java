@@ -1,8 +1,8 @@
-package com.ecommerce.backend.mapper;
+package com.ecommerce.backend.mapper.account;
 
-import com.ecommerce.backend.dto.account.AccountDto;
-import com.ecommerce.backend.entity.account.Account;
+import com.ecommerce.backend.dto.account.UserAccountDto;
 import com.ecommerce.backend.entity.account.Role;
+import com.ecommerce.backend.entity.account.UserAccount;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -12,8 +12,8 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring", uses = {AddressMapper.class, CartMapper.class, RoleMapper.class})
-public interface AccountMapper {
+@Mapper(componentModel = "spring", uses = {AddressMapper.class, RoleMapper.class})
+public interface UserAccountMapper {
 
     // Mapping from AccountDto to Account entity
 //    @Mappings({
@@ -23,13 +23,13 @@ public interface AccountMapper {
 ////            @Mapping(target = "password", ignore = true)
 //    })
     @Mapping(target = "roles", source = "roles", qualifiedByName = "mapUUIDsToRoles")
-    @Mapping(target = "address", source = "address")
-    Account toEntity(AccountDto accountDto);
+//    @Mapping(target = "address", source = "address")
+    UserAccount toEntity(UserAccountDto userAccountDto);
 
     // Mapping from Account entity to AccountDto (response)
     @Mapping(target = "roles", source = "roles", qualifiedByName = "mapRolesToUUIDs")
-    @Mapping(target = "address", source = "address")
-    AccountDto toDto(Account account);
+//    @Mapping(target = "address", source = "address")
+    UserAccountDto toDto(UserAccount userAccount);
 
 
     @Named("mapRolesToUUIDs")

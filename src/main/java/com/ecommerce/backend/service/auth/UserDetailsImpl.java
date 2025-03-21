@@ -1,6 +1,6 @@
 package com.ecommerce.backend.service.auth;
 
-import com.ecommerce.backend.entity.account.Account;
+import com.ecommerce.backend.entity.account.UserAccount;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,7 +33,7 @@ public class UserDetailsImpl implements UserDetails {
 
   private Collection<? extends GrantedAuthority> authorities;
 
-  public static UserDetailsImpl build(Account user) {
+  public static UserDetailsImpl build(UserAccount user) {
     List<GrantedAuthority> authorities = user.getRoles().stream()
         .map(role -> new SimpleGrantedAuthority(role.getValue()))
         .collect(Collectors.toList());

@@ -1,4 +1,4 @@
-package com.ecommerce.backend.mapper;
+package com.ecommerce.backend.mapper.product;
 
 import com.ecommerce.backend.dto.product.TagDto;
 import com.ecommerce.backend.entity.product.Tag;

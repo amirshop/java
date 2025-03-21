@@ -1,4 +1,4 @@
-package com.ecommerce.backend.mapper;
+package com.ecommerce.backend.mapper.account;
 
 import com.ecommerce.backend.dto.account.RoleDto;
 import com.ecommerce.backend.entity.account.Permission;

@@ -7,5 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ShopSettingRepository  extends JpaRepository<ShopSetting, UUID> {
-    Optional<ShopSetting> findByAccountId(UUID accountId);
+    Optional<ShopSetting> findByUserAccountId(UUID accountId);
 }

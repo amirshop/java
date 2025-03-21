@@ -2,9 +2,9 @@ package com.ecommerce.backend.controller.account;
 
 import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
-import com.ecommerce.backend.dto.account.AccountDto;
-import com.ecommerce.backend.entity.account.Account;
-import com.ecommerce.backend.service.account.AccountService;
+import com.ecommerce.backend.dto.account.UserAccountDto;
+import com.ecommerce.backend.entity.account.UserAccount;
+import com.ecommerce.backend.service.account.UserAccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,25 +17,25 @@ import java.util.UUID;
 @RequestMapping("/api/accounts")
 @RequiredArgsConstructor
 public class AccountController {
-    private final AccountService accountService;
+    private final UserAccountService accountService;
 
     @GetMapping
-    public List<AccountDto> getAllAccounts() {
+    public List<UserAccountDto> getAllAccounts() {
         return accountService.getAllAccounts();
     }
 
     @GetMapping("/{id}")
-    public AccountDto getAccountById(@PathVariable UUID id) {
+    public UserAccountDto getAccountById(@PathVariable UUID id) {
         return accountService.getAccountById(id);
     }
 
     @PostMapping
-    public AccountDto createAccount(@Valid @RequestBody AccountDto account) {
+    public UserAccountDto createAccount(@Valid @RequestBody UserAccountDto account) {
         return accountService.createAccount(account);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Account> updateAccount(@PathVariable UUID id, @RequestBody AccountDto updatedAccount) {
+    public ResponseEntity<UserAccount> updateAccount(@PathVariable UUID id, @RequestBody UserAccountDto updatedAccount) {
         try {
             return ResponseEntity.ok(accountService.updateAccount(id, updatedAccount));
         } catch (RuntimeException e) {

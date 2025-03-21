@@ -7,7 +7,7 @@ import com.ecommerce.backend.dto.account.RoleDto;
 import com.ecommerce.backend.entity.account.Permission;
 import com.ecommerce.backend.entity.account.Role;
 import com.ecommerce.backend.exception.ResourceAlreadyExistsException;
-import com.ecommerce.backend.mapper.RoleMapper;
+import com.ecommerce.backend.mapper.account.RoleMapper;
 import com.ecommerce.backend.repository.account.RoleRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.GenericSpecification;

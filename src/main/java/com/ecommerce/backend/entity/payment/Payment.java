@@ -1,5 +1,6 @@
 package com.ecommerce.backend.entity.payment;
 
+import com.ecommerce.backend.entity.customer.Customer;
 import com.ecommerce.backend.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -26,4 +27,8 @@ public abstract class Payment {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date paymentDate;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
 }
