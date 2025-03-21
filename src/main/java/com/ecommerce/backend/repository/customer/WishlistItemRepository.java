@@ -5,7 +5,8 @@ import java.util.UUID;
 
 import com.ecommerce.backend.entity.customer.WishlistItem;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-public interface WishlistItemRepository extends JpaRepository<WishlistItem, UUID> {
+public interface WishlistItemRepository extends JpaRepository<WishlistItem, UUID>, JpaSpecificationExecutor<WishlistItem> {
 }
 

@@ -11,7 +11,6 @@ import com.ecommerce.backend.repository.customer.CustomerRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.GenericSpecification;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -25,7 +24,8 @@ public class CustomerService extends BaseService<Customer, CustomerDto> {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
 
-    public CustomerService(CustomerRepository customerRepository, CustomerMapper customerMapper) {
+    public CustomerService(CustomerRepository customerRepository,
+                           CustomerMapper customerMapper) {
         super(customerRepository, customerMapper::toDto);
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
@@ -57,6 +57,7 @@ public class CustomerService extends BaseService<Customer, CustomerDto> {
                 .map(existing -> {
                     existing.setEmail(customerRequest.getEmail());
                     existing.setPhone(customerRequest.getPhone());
+                    //TODO:add passwordEncoder
                     existing.setPassword(customerRequest.getPassword());
                     existing.setFirstName(customerRequest.getFirstName());
                     existing.setLastName(customerRequest.getLastName());

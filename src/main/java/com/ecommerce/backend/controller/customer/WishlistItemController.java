@@ -1,43 +1,57 @@
 package com.ecommerce.backend.controller.customer;
 
+import com.ecommerce.backend.dto.ResponseDto;
+import com.ecommerce.backend.dto.SearchDto;
+import com.ecommerce.backend.dto.customer.WishlistItemDto;
+import com.ecommerce.backend.service.customer.WishlistItemService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.UUID;
 
-import com.ecommerce.backend.entity.customer.WishlistItem;
-import com.ecommerce.backend.service.customer.WishlistItemService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
 @RestController
 @RequestMapping("/api/wishlist-items")
+@RequiredArgsConstructor
 public class WishlistItemController {
 
-    @Autowired
-    private WishlistItemService wishlistItemService;
+    private final WishlistItemService wishlistItemService;
 
     @GetMapping
-    public List<WishlistItem> getAll() {
-        return wishlistItemService.findAll();
+    public ResponseEntity<List<WishlistItemDto>> getAllWishlistItems() {
+        List<WishlistItemDto> wishlistItems = wishlistItemService.getAllWishlistItems();
+        return ResponseEntity.ok(wishlistItems);
     }
 
     @GetMapping("/{id}")
-    public WishlistItem getById(@PathVariable UUID id) {
-        return wishlistItemService.findById(id)
-                .orElseThrow(() -> new RuntimeException("WishlistItem not found with id " + id));
+    public WishlistItemDto getWishlistItemById(@PathVariable UUID id) {
+        return wishlistItemService.getWishlistItemById(id);
     }
 
     @PostMapping
-    public WishlistItem create(@RequestBody WishlistItem item) {
-        return wishlistItemService.create(item);
+    public ResponseEntity<WishlistItemDto> createWishlistItem(@RequestBody WishlistItemDto request) {
+        WishlistItemDto createdWishlistItem = wishlistItemService.createWishlistItem(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdWishlistItem);
     }
 
     @PutMapping("/{id}")
-    public WishlistItem update(@PathVariable UUID id, @RequestBody WishlistItem item) {
-        return wishlistItemService.update(id, item);
+    public ResponseEntity<WishlistItemDto> updateWishlistItem(@PathVariable UUID id, @RequestBody WishlistItemDto request) {
+        WishlistItemDto updatedWishlistItem = wishlistItemService.updateWishlistItem(id, request);
+        return updatedWishlistItem != null
+                ? ResponseEntity.ok(updatedWishlistItem)
+                : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable UUID id) {
-        wishlistItemService.delete(id);
+    public ResponseEntity<Void> deleteWishlistItem(@PathVariable UUID id) {
+        wishlistItemService.deleteWishlistItem(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/search")
+    public ResponseDto searchWishlistItems(@RequestBody SearchDto requestDto) {
+        return wishlistItemService.searchWishlistItems(requestDto);
     }
 }
