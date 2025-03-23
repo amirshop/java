@@ -123,15 +123,19 @@ public class UserAccountService extends BaseService<UserAccount, UserAccountDto>
         }
     }
 
-    public UserAccount updateAccount(UUID id, UserAccountDto updatedAccount) {
+    public UserAccountDto updateAccount(UUID id, UserAccountDto updatedAccount) {
         return accountRepository.findById(id).map(account -> {
-            account.setPhone(updatedAccount.getPhone());
-            account.setStatus(updatedAccount.getStatus());
+            //TODO: تعیین تکلیف آپدیت رول ، ایمیل و یوزرنیم
+            Optional.ofNullable(updatedAccount.getPhone())
+                    .filter(phone -> !phone.isBlank())
+                    .ifPresent(account::setPhone);
+            Optional.ofNullable(updatedAccount.getStatus()).ifPresent(account::setStatus);
+            Optional.ofNullable(updatedAccount.getPassword())
+                    .filter(password -> !password.isBlank())
+                    .ifPresent(password -> account.setPassword(passwordEncoder.encode(password)));
             account.setUpdatedAt(new Date());
-//            account.setAddress(addressMapper.toEntity(updatedAccount.getAddress()));
-//            account.setFirstname(updatedAccount.getFirstname());
-//            account.setLastname(updatedAccount.getLastname());
-            return accountRepository.save(account);
+            UserAccount savedAccount = accountRepository.save(account);
+            return accountMapper.toDto(savedAccount);
         }).orElseThrow(() -> new RuntimeException("Account not found"));
     }
 

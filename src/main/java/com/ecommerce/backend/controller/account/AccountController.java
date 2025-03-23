@@ -35,7 +35,7 @@ public class AccountController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserAccount> updateAccount(@PathVariable UUID id, @RequestBody UserAccountDto updatedAccount) {
+    public ResponseEntity<UserAccountDto> updateAccount(@PathVariable UUID id, @RequestBody UserAccountDto updatedAccount) {
         try {
             return ResponseEntity.ok(accountService.updateAccount(id, updatedAccount));
         } catch (RuntimeException e) {
