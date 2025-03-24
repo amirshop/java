@@ -13,6 +13,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ShopSettingController {
 
+    //TODO: add getShopSettingByUserId rest
+
     private final ShopSettingService shopSettingService;
 
     @GetMapping("/{accountId}")
@@ -32,10 +34,10 @@ public class ShopSettingController {
         return ResponseEntity.ok(shopSettingService.updateShopSetting(accountId, request));
     }
 
-    @DeleteMapping("/{accountId}")
-    public ResponseEntity<Void> deleteShopSetting(@PathVariable UUID accountId) {
-        shopSettingService.deleteShopSetting(accountId);
-        return ResponseEntity.noContent().build();
-    }
+//    @DeleteMapping("/{accountId}")
+//    public ResponseEntity<Void> deleteShopSetting(@PathVariable UUID accountId) {
+//        shopSettingService.deleteShopSetting(accountId);
+//        return ResponseEntity.noContent().build();
+//    }
 }
 

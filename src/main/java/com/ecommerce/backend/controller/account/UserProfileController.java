@@ -18,6 +18,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserProfileController {
 
+    //TODO: add getProfileByUserId rest
+
     private final UserProfileService userProfileService;
 
     @GetMapping
