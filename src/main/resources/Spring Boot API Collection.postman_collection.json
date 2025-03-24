@@ -32,7 +32,93 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get All Accounts",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/accounts",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"accounts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 07:27:49 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"8dfb388b-46ab-4597-ace8-aab2b3682f75\",\n        \"username\": \"johndoe1\",\n        \"password\": \"$2a$10$8nP/DQ6gNO0P4lX.l2TanuXgoUBVhmD.fWnv47SG6QOtSbFzNwdoK\",\n        \"email\": \"johndoe1@example.com\",\n        \"phone\": \"1234567811\",\n        \"status\": \"UNKNOWN\",\n        \"roles\": [\n            \"f156b2e7-7597-4540-8c2d-0ed581ff8bc1\"\n        ],\n        \"createdAt\": \"2025-03-21T05:34:50.839+00:00\",\n        \"updatedAt\": \"2025-03-21T05:34:50.839+00:00\"\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "Get Account by ID",
@@ -56,7 +142,94 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Account by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/accounts/{{accountId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"{{accountId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 07:27:10 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"8dfb388b-46ab-4597-ace8-aab2b3682f75\",\n    \"username\": \"johndoe1\",\n    \"password\": \"$2a$10$8nP/DQ6gNO0P4lX.l2TanuXgoUBVhmD.fWnv47SG6QOtSbFzNwdoK\",\n    \"email\": \"johndoe1@example.com\",\n    \"phone\": \"1234567811\",\n    \"status\": \"UNKNOWN\",\n    \"roles\": [\n        \"f156b2e7-7597-4540-8c2d-0ed581ff8bc1\"\n    ],\n    \"createdAt\": \"2025-03-21T05:34:50.839+00:00\",\n    \"updatedAt\": \"2025-03-21T05:34:50.839+00:00\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Create Account",
@@ -83,7 +256,97 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create Account",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"johndoe1\",\n  \"email\": \"johndoe1@example.com\",\n  \"phone\": \"1234567811\",\n  \"firstname\": \"John\",\n  \"lastname\": \"Doe\",\n//   \"status\": \"ACTIVE\",\n  \"password\":\"vknlknsdfns;lk\",\n  \"roles\":[\"f156b2e7-7597-4540-8c2d-0ed581ff8bc1\"],\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/accounts",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"accounts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 21 Mar 2025 05:34:50 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"8dfb388b-46ab-4597-ace8-aab2b3682f75\",\n    \"username\": \"johndoe1\",\n    \"password\": \"$2a$10$8nP/DQ6gNO0P4lX.l2TanuXgoUBVhmD.fWnv47SG6QOtSbFzNwdoK\",\n    \"email\": \"johndoe1@example.com\",\n    \"phone\": \"1234567811\",\n    \"status\": \"UNKNOWN\",\n    \"roles\": [\n        \"f156b2e7-7597-4540-8c2d-0ed581ff8bc1\"\n    ],\n    \"createdAt\": \"2025-03-21T05:34:50.839+00:00\",\n    \"updatedAt\": \"2025-03-21T05:34:50.839+00:00\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Update Account",
@@ -111,7 +374,98 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update Account",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n        \"id\": \"8dfb388b-46ab-4597-ace8-aab2b3682f75\",\n        \"username\": \"johndoe2\",\n        \"password\": \"$2a$10$8nP/DQ6gNO0P4lX.l2TanuXgoUBVhmD.fWnv47SG6QOtSbFzNwdoK\",\n        \"email\": \"johndoe1@example.com\",\n        \"phone\": \"1234567811\",\n        \"status\": \"ACTIVE\",\n        \"roles\": [\n            \"f156b2e7-7597-4540-8c2d-0ed581ff8bc1\"\n        ],\n        \"createdAt\": \"2025-03-21T05:34:50.839+00:00\",\n        \"updatedAt\": \"2025-03-21T05:34:50.839+00:00\"\n    }"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/accounts/{{accountId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"accounts",
+										"{{accountId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 23 Mar 2025 07:34:03 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"8dfb388b-46ab-4597-ace8-aab2b3682f75\",\n    \"username\": \"johndoe1\",\n    \"password\": \"$2a$10$8nP/DQ6gNO0P4lX.l2TanuXgoUBVhmD.fWnv47SG6QOtSbFzNwdoK\",\n    \"email\": \"johndoe1@example.com\",\n    \"phone\": \"1234567811\",\n    \"status\": \"ACTIVE\",\n    \"roles\": [\n        \"f156b2e7-7597-4540-8c2d-0ed581ff8bc1\"\n    ],\n    \"createdAt\": \"2025-03-21T05:34:50.839+00:00\",\n    \"updatedAt\": \"2025-03-23T07:34:03.606+00:00\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Delete Account",
@@ -128,6 +482,111 @@
 								"accounts",
 								"{{accountId}}"
 							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User Profiles",
+			"item": [
+				{
+					"name": "Get All Profiles",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/user-profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user-profile"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Profile by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{ "key": "Accept", "value": "application/json" }
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/user-profile/{{profileId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user-profile", "{{profileId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Profile",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"userId\": \"123e4567-e89b-12d3-a456-426614174000\",\n  \"firstname\": \"John\",\n  \"lastname\": \"Doe\",\n  \"gender\": \"MALE\",\n  \"address\": {\n    \"street\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"zipCode\": \"10001\"\n  },\n  \"profilePictureUrl\": \"https://example.com/profile.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user-profile",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user-profile"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"firstname\": \"Jane\",\n  \"lastname\": \"Doe\",\n  \"gender\": \"FEMALE\",\n  \"address\": {\n    \"street\": \"456 Elm St\",\n    \"city\": \"Los Angeles\",\n    \"state\": \"CA\",\n    \"zipCode\": \"90001\"\n  },\n  \"profilePictureUrl\": \"https://example.com/profile-updated.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user-profile/{{profileId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user-profile", "{{profileId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Profile",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/user-profile/{{profileId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user-profile", "{{profileId}}"]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Profiles",
+					"request": {
+						"method": "POST",
+						"header": [
+							{ "key": "Content-Type", "value": "application/json" }
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"searchCriteria\": {\n    \"firstname\": \"John\",\n    \"lastname\": \"Doe\",\n    \"gender\": \"MALE\"\n  },\n  \"sortBy\": \"createdAt\",\n  \"sortDir\": \"desc\",\n  \"page\": 1,\n  \"size\": 10\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/user-profile/search",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "user-profile", "search"]
 						}
 					},
 					"response": []

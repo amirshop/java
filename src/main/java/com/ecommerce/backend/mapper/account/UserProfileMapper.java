@@ -11,6 +11,7 @@ public interface UserProfileMapper {
     @Mapping(target = "address", source = "address")
     UserProfile toEntity(UserProfileDto userProfileDto);
 
+    @Mapping(target = "userId", source = "user.id")
     @Mapping(target = "address", source = "address")
     UserProfileDto toDto(UserProfile userProfile);
 }

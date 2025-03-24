@@ -20,8 +20,9 @@ public class UserProfile {
     @JoinColumn(name = "user_id", nullable = false)
     private UserAccount user;
 
-    private String firstName;
-    private String lastName;
+    private String firstname;
+
+    private String lastname;
 
     @Enumerated(EnumType.STRING)
     private Gender gender; // مرد/زن/نامشخص

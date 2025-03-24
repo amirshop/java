@@ -14,24 +14,24 @@ import lombok.Data;
 public class AddressDto {
 
     @Schema(
-            description = "streetAddress of the account", example = "خیابان ..."
+            description = "street of the account", example = "خیابان ..."
     )
-    @NotEmpty(message = "streetAddress can not be a null or empty")
-    @Size(min = 3, max = 255, message = "The length of the streetAddress should be between 3 and 30")
-    private String streetAddress;
+    @NotEmpty(message = "street can not be a null or empty")
+    @Size(min = 2, max = 255, message = "The length of the street should be between 2 and 50")
+    private String street;
 
     @Schema(
             description = "city of the account", example = "تهران"
     )
     @NotEmpty(message = "city can not be a null or empty")
-    @Size(min = 3, max = 50, message = "The length of the city should be between 3 and 30")
+    @Size(min = 2, max = 50, message = "The length of the city should be between 2 and 50")
     private String city;
 
     @Schema(
             description = "state of the account", example = "تهران"
     )
     @NotEmpty(message = "state can not be a null or empty")
-    @Size(min = 3, max = 50, message = "The length of the state should be between 3 and 30")
+    @Size(min = 2, max = 50, message = "The length of the state should be between 2 and 50")
     private String state;
 
     @Schema(
@@ -45,6 +45,6 @@ public class AddressDto {
             description = "country of the account", example = "ایران"
     )
     @NotEmpty(message = "country can not be a null or empty")
-    @Size(min = 3, max = 50, message = "The length of the country should be between 3 and 30")
+    @Size(min = 2, max = 50, message = "The length of the country should be between 2 and 50")
     private String country;
 }

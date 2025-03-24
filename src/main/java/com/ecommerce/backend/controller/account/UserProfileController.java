@@ -36,7 +36,7 @@ public class UserProfileController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserProfile> updateProfile(@PathVariable UUID id, @RequestBody UserProfileDto updatedAccount) {
+    public ResponseEntity<UserProfileDto> updateProfile(@PathVariable UUID id, @RequestBody UserProfileDto updatedAccount) {
         try {
             return ResponseEntity.ok(userProfileService.updateProfile(id, updatedAccount));
         } catch (RuntimeException e) {

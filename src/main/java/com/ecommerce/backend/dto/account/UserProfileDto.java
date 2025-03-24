@@ -32,7 +32,7 @@ public class UserProfileDto {
     @AllowedFilter
     private UUID userId;
 
-    @Schema(description = "firstname of the UserAccount", example = "امیر"
+    @Schema(description = "firstname of the UserProfile", example = "امیر"
     )
     @NotEmpty(message = "firstname can not be a null or empty")
     @Size(min = 3, max = 50, message = "The length of the firstname should be between 3 and 50")
@@ -40,7 +40,7 @@ public class UserProfileDto {
     private String firstname;
 
     @Schema(
-            description = "firstname of the UserAccount", example = "مقامی"
+            description = "firstname of the UserProfile", example = "مقامی"
     )
     @NotEmpty(message = "firstname can not be a null or empty")
     @Size(min = 3, max = 50, message = "The length of the firstname should be between 3 and 50")

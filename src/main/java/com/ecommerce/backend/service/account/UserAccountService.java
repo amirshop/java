@@ -73,6 +73,11 @@ public class UserAccountService extends BaseService<UserAccount, UserAccountDto>
                 .orElseThrow(() -> new ResourceNotFoundException("Account", "id", id.toString()));
     }
 
+    public UserAccount findById(UUID id) {
+        return accountRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Account", "id", id.toString()));
+    }
+
     public UserAccountDto createAccount(UserAccountDto accountDto) {
 
         // Check if email already exists
