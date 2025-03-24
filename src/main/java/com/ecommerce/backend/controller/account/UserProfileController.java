@@ -32,6 +32,11 @@ public class UserProfileController {
         return userProfileService.getProfileById(id);
     }
 
+    @GetMapping("/findByAccountId/{accountId}")
+    public UserProfileDto getProfileByAccountId(@PathVariable UUID accountId) {
+        return userProfileService.getProfileByAccountId(accountId);
+    }
+
     @PostMapping
     public UserProfileDto createProfile(@Valid @RequestBody UserProfileDto account) {
         return userProfileService.createProfile(account);

@@ -56,6 +56,12 @@ public class UserProfileService extends BaseService<UserProfile, UserProfileDto>
                 .orElseThrow(() -> new ResourceNotFoundException("profile", "id", id.toString()));
     }
 
+    public UserProfileDto getProfileByAccountId(UUID accountId) {
+        return userProfileRepository.findByUserId(accountId)
+                .map(userProfileMapper::toDto)
+                .orElseThrow(() -> new ResourceNotFoundException("profile", "id", accountId.toString()));
+    }
+
     public UserProfileDto createProfile(UserProfileDto accountDto) {
 
         UserAccount userAccount = userAccountService.findById(accountDto.getUserId());
