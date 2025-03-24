@@ -16,8 +16,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ShopSettingController {
 
-    //TODO: add getShopSettingByUserId rest
-
     private final ShopSettingService shopSettingService;
 
     @GetMapping("/findByAccountId/{accountId}")
