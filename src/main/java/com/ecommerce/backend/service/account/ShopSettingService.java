@@ -3,12 +3,13 @@ package com.ecommerce.backend.service.account;
 import com.ecommerce.backend.dto.account.ShopSettingDto;
 import com.ecommerce.backend.entity.account.ShopSetting;
 import com.ecommerce.backend.entity.account.UserAccount;
+import com.ecommerce.backend.exception.ResourceNotFoundException;
+import com.ecommerce.backend.mapper.account.ShopSettingMapper;
 import com.ecommerce.backend.repository.account.ShopSettingRepository;
-import com.ecommerce.backend.repository.account.UserAccountRepository;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -17,34 +18,62 @@ import java.util.UUID;
 public class ShopSettingService {
 
     private final ShopSettingRepository shopSettingRepository;
-    private final UserAccountRepository accountRepository;
-    private final ModelMapper modelMapper;
+    private final UserAccountService userAccountService;
+    private final ShopSettingMapper shopSettingMapper;
 
     public ShopSettingDto getShopSettingByAccountId(UUID accountId) {
         return shopSettingRepository.findByUserAccountId(accountId)
-                .map(setting -> modelMapper.map(setting, ShopSettingDto.class))
-                .orElse(null);
+                .map(shopSettingMapper::toDto)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("UserAccount", "id", accountId.toString()));
+    }
+
+    public ShopSettingDto getShopSettingById(UUID shopId) {
+        return shopSettingRepository.findById(shopId).map(shopSettingMapper::toDto)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException("ShopSetting", "id", shopId.toString()));
     }
 
     public ShopSettingDto createShopSetting(UUID accountId, ShopSettingDto settingRequest) {
-        Optional<UserAccount> accountOpt = accountRepository.findById(accountId);
-        if (accountOpt.isEmpty()) {
-            return null; // Or throw an exception
-        }
-        ShopSetting shopSetting = modelMapper.map(settingRequest, ShopSetting.class);
-        shopSetting.setUserAccount(accountOpt.get());
+        UserAccount accountOpt = userAccountService.findById(accountId);
+        ShopSetting shopSetting = shopSettingMapper.toEntity(settingRequest);
+        shopSetting.setUserAccount(accountOpt);
+        shopSetting.setCreatedAt(new Date());
+        shopSetting.setUpdatedAt(new Date());
         ShopSetting savedSetting = shopSettingRepository.save(shopSetting);
-        return modelMapper.map(savedSetting, ShopSettingDto.class);
+        return shopSettingMapper.toDto(savedSetting);
     }
 
     public ShopSettingDto updateShopSetting(UUID accountId, ShopSettingDto settingRequest) {
         return shopSettingRepository.findByUserAccountId(accountId)
-                .map(existing -> {
-                    modelMapper.map(settingRequest, existing);
-                    ShopSetting updated = shopSettingRepository.save(existing);
-                    return modelMapper.map(updated, ShopSettingDto.class);
+                .map(shopSetting -> {
+                    Optional.ofNullable(settingRequest.getColor())
+                            .filter(color -> !color.isBlank())
+                            .ifPresent(shopSetting::setColor);
+                    Optional.ofNullable(settingRequest.getFavicon())
+                            .filter(favicon -> !favicon.isBlank())
+                            .ifPresent(shopSetting::setFavicon);
+                    Optional.ofNullable(settingRequest.getDescription())
+                            .filter(description -> !description.isBlank())
+                            .ifPresent(shopSetting::setDescription);
+                    Optional.ofNullable(settingRequest.getCurrency())
+                            .filter(currency -> !currency.isBlank())
+                            .ifPresent(shopSetting::setCurrency);
+                    Optional.ofNullable(settingRequest.getLogo())
+                            .filter(logo -> !logo.isBlank())
+                            .ifPresent(shopSetting::setLogo);
+                    Optional.ofNullable(settingRequest.getSlug())
+                            .filter(slug -> !slug.isBlank())
+                            .ifPresent(shopSetting::setSlug);
+                    Optional.ofNullable(settingRequest.getTitle())
+                            .filter(title -> !title.isBlank())
+                            .ifPresent(shopSetting::setTitle);
+                    shopSetting.setUpdatedAt(new Date());
+                    ShopSetting updated = shopSettingRepository.save(shopSetting);
+                    return shopSettingMapper.toDto(updated);
                 })
-                .orElse(null);
+                .orElseThrow(() -> new ResourceNotFoundException("UserAccount", "id", accountId.toString()
+                ));
     }
 
     public void deleteShopSetting(UUID accountId) {

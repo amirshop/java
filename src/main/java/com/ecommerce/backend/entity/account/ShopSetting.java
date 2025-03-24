@@ -34,9 +34,7 @@ public class ShopSetting {
 
     private String currency;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ColorsEnum primaryColor;
+    private String color;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

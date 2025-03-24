@@ -1,6 +1,9 @@
 package com.ecommerce.backend.controller.account;
 
-import com.ecommerce.backend.dto.account.ShopSettingDto;
+import
+
+
+        com.ecommerce.backend.dto.account.ShopSettingDto;
 import com.ecommerce.backend.service.account.ShopSettingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +20,14 @@ public class ShopSettingController {
 
     private final ShopSettingService shopSettingService;
 
-    @GetMapping("/{accountId}")
-    public ResponseEntity<ShopSettingDto> getShopSetting(@PathVariable UUID accountId) {
+    @GetMapping("/findByAccountId/{accountId}")
+    public ResponseEntity<ShopSettingDto> getShopSettingByUserId(@PathVariable UUID accountId) {
         return ResponseEntity.ok(shopSettingService.getShopSettingByAccountId(accountId));
+    }
+
+    @GetMapping("/findById/{shopSettingId}")
+    public ResponseEntity<ShopSettingDto> getShopSettingById(@PathVariable UUID shopSettingId) {
+        return ResponseEntity.ok(shopSettingService.getShopSettingById(shopSettingId));
     }
 
     @PostMapping("/{accountId}")
@@ -34,10 +42,10 @@ public class ShopSettingController {
         return ResponseEntity.ok(shopSettingService.updateShopSetting(accountId, request));
     }
 
-//    @DeleteMapping("/{accountId}")
-//    public ResponseEntity<Void> deleteShopSetting(@PathVariable UUID accountId) {
-//        shopSettingService.deleteShopSetting(accountId);
-//        return ResponseEntity.noContent().build();
-//    }
+    @DeleteMapping("/{accountId}")
+    public ResponseEntity<Void> deleteShopSetting(@PathVariable UUID accountId) {
+        shopSettingService.deleteShopSetting(accountId);
+        return ResponseEntity.noContent().build();
+    }
 }
 

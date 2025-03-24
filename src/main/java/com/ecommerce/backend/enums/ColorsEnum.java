@@ -1,8 +1,8 @@
 package com.ecommerce.backend.enums;
 
-import lombok.Getter;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Getter
+@JsonFormat(shape = JsonFormat.Shape.STRING)
 public enum ColorsEnum {
     PRIMARY("var(--primary-color)");
 

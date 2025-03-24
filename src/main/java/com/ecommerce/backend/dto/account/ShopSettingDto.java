@@ -1,8 +1,10 @@
 package com.ecommerce.backend.dto.account;
 
+import com.ecommerce.backend.enums.ColorsEnum;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.awt.*;
 import java.util.Date;
 import java.util.UUID;
 
@@ -10,7 +12,7 @@ import java.util.UUID;
 public class ShopSettingDto {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long id;
+    private UUID id;
 
     private String title;
     private String slug;
@@ -18,6 +20,7 @@ public class ShopSettingDto {
     private String logo;
     private String favicon;
     private String currency;
+    private String color;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date createdAt;

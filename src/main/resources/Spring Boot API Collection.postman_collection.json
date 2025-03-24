@@ -1,11 +1,11 @@
 {
 	"info": {
-		"_postman_id": "385c6dfa-6c02-4785-b91e-cd374e6a376b",
+		"_postman_id": "e18ac9ff-ea55-47cd-9266-93d73c4b844d",
 		"name": "Spring Boot API Collection",
 		"description": "Collection of all API endpoints for the Spring Boot project.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "12086211",
-		"_collection_link": "https://onlineshop-team.postman.co/workspace/onlineshop-team-Workspace~f9d95331-03c3-4961-af8e-98d4591c57ba/collection/12086211-385c6dfa-6c02-4785-b91e-cd374e6a376b?action=share&source=collection_link&creator=12086211"
+		"_collection_link": "https://onlineshop-team.postman.co/workspace/onlineshop-team-Workspace~f9d95331-03c3-4961-af8e-98d4591c57ba/collection/12086211-e18ac9ff-ea55-47cd-9266-93d73c4b844d?action=share&source=collection_link&creator=12086211"
 	},
 	"item": [
 		{
@@ -345,6 +345,95 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"id\": \"8dfb388b-46ab-4597-ace8-aab2b3682f75\",\n    \"username\": \"johndoe1\",\n    \"password\": \"$2a$10$8nP/DQ6gNO0P4lX.l2TanuXgoUBVhmD.fWnv47SG6QOtSbFzNwdoK\",\n    \"email\": \"johndoe1@example.com\",\n    \"phone\": \"1234567811\",\n    \"status\": \"UNKNOWN\",\n    \"roles\": [\n        \"f156b2e7-7597-4540-8c2d-0ed581ff8bc1\"\n    ],\n    \"createdAt\": \"2025-03-21T05:34:50.839+00:00\",\n    \"updatedAt\": \"2025-03-21T05:34:50.839+00:00\"\n}"
+						},
+						{
+							"name": "Create Account",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"johndoe\",\n  \"email\": \"johndoe@example.com\",\n  \"phone\": \"1234567890\",\n  \"firstname\": \"John\",\n  \"lastname\": \"Doe\",\n  \"status\": \"ACTIVE\",\n  \"password\":\"vknlknsdfns;lk\",\n  \"roles\":[\"f156b2e7-7597-4540-8c2d-0ed581ff8bc1\"]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/accounts",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"accounts"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 01:07:31 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"fc36d70c-e9ae-4e06-a2b3-ee7009359875\",\n    \"username\": \"johndoe\",\n    \"password\": \"$2a$10$0YOzru62dKlDpi4K75YKSOCIv8dQ/yNi2Yt2e1.E.1fO9ULg1a/V6\",\n    \"email\": \"johndoe@example.com\",\n    \"phone\": \"1234567890\",\n    \"status\": \"ACTIVE\",\n    \"roles\": [\n        \"f156b2e7-7597-4540-8c2d-0ed581ff8bc1\"\n    ],\n    \"createdAt\": \"2025-03-24T01:07:31.317+00:00\",\n    \"updatedAt\": \"2025-03-24T01:07:31.317+00:00\"\n}"
 						}
 					]
 				},
@@ -496,37 +585,230 @@
 					"request": {
 						"method": "GET",
 						"header": [
-							{ "key": "Accept", "value": "application/json" }
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
 						],
 						"url": {
 							"raw": "{{baseUrl}}/api/user-profile",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "user-profile"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user-profile"
+							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get All Profiles",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/user-profile",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user-profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 01:37:44 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"4f57ee66-0db8-4ff3-9ae4-454c2bb25170\",\n        \"createdAt\": \"2025-03-24T01:27:28.699+00:00\",\n        \"updatedAt\": \"2025-03-24T01:27:28.699+00:00\",\n        \"userId\": \"fc36d70c-e9ae-4e06-a2b3-ee7009359875\",\n        \"firstname\": null,\n        \"lastname\": null,\n        \"gender\": \"MALE\",\n        \"address\": {\n            \"street\": \"123 Main St\",\n            \"city\": \"New York\",\n            \"state\": \"NY\",\n            \"postalCode\": \"1000112358\",\n            \"country\": \"United State\"\n        },\n        \"profilePictureUrl\": \"https://example.com/profile.jpg\"\n    },\n    {\n        \"id\": \"5e57c7f6-784e-404d-a79f-d88e5b17420e\",\n        \"createdAt\": \"2025-03-24T01:36:53.785+00:00\",\n        \"updatedAt\": \"2025-03-24T01:36:53.785+00:00\",\n        \"userId\": \"efd96394-c30f-43d3-b641-e5b993b75ee6\",\n        \"firstname\": \"John\",\n        \"lastname\": \"Doe\",\n        \"gender\": \"MALE\",\n        \"address\": {\n            \"street\": \"123 Main St\",\n            \"city\": \"New York\",\n            \"state\": \"NY\",\n            \"postalCode\": \"1000112358\",\n            \"country\": \"United State\"\n        },\n        \"profilePictureUrl\": \"https://example.com/profile.jpg\"\n    },\n    {\n        \"id\": \"dbcc3a5c-7b25-4877-b54d-3cdc3763ec6f\",\n        \"createdAt\": \"2025-03-24T01:03:44.790+00:00\",\n        \"updatedAt\": \"2025-03-24T01:03:44.790+00:00\",\n        \"userId\": \"8dfb388b-46ab-4597-ace8-aab2b3682f75\",\n        \"firstname\": null,\n        \"lastname\": null,\n        \"gender\": \"MALE\",\n        \"address\": {\n            \"street\": \"123 Main St\",\n            \"city\": \"New York\",\n            \"state\": \"NY\",\n            \"postalCode\": \"1000112358\",\n            \"country\": \"United State\"\n        },\n        \"profilePictureUrl\": \"https://example.com/profile.jpg\"\n    },\n    {\n        \"id\": \"e95385e6-f5dd-4446-be40-fe7d0183dde4\",\n        \"createdAt\": \"2025-03-24T01:32:11.110+00:00\",\n        \"updatedAt\": \"2025-03-24T01:32:11.525+00:00\",\n        \"userId\": \"f4acf440-f626-4052-b891-c3cda1c2c643\",\n        \"firstname\": \"John\",\n        \"lastname\": \"Doe\",\n        \"gender\": \"MALE\",\n        \"address\": {\n            \"street\": \"123 Main St\",\n            \"city\": \"New York\",\n            \"state\": \"NY\",\n            \"postalCode\": \"1000112358\",\n            \"country\": \"United State\"\n        },\n        \"profilePictureUrl\": \"https://example.com/profile.jpg\"\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "Get Profile by ID",
 					"request": {
 						"method": "GET",
 						"header": [
-							{ "key": "Accept", "value": "application/json" }
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
 						],
 						"url": {
 							"raw": "{{baseUrl}}/api/user-profile/{{profileId}}",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "user-profile", "{{profileId}}"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user-profile",
+								"{{profileId}}"
+							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Profile by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/user-profile/{{profileId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user-profile",
+										"{{profileId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 01:37:34 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"5e57c7f6-784e-404d-a79f-d88e5b17420e\",\n    \"createdAt\": \"2025-03-24T01:36:53.785+00:00\",\n    \"updatedAt\": \"2025-03-24T01:36:53.785+00:00\",\n    \"userId\": \"efd96394-c30f-43d3-b641-e5b993b75ee6\",\n    \"firstname\": \"John\",\n    \"lastname\": \"Doe\",\n    \"gender\": \"MALE\",\n    \"address\": {\n        \"street\": \"123 Main St\",\n        \"city\": \"New York\",\n        \"state\": \"NY\",\n        \"postalCode\": \"1000112358\",\n        \"country\": \"United State\"\n    },\n    \"profilePictureUrl\": \"https://example.com/profile.jpg\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Create Profile",
 					"request": {
 						"method": "POST",
 						"header": [
-							{ "key": "Content-Type", "value": "application/json" }
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
 						],
 						"body": {
 							"mode": "raw",
@@ -534,18 +816,116 @@
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/user-profile",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "user-profile"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user-profile"
+							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create Profile",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"userId\": \"efd96394-c30f-43d3-b641-e5b993b75ee6\",\n  \"firstname\": \"John\",\n  \"lastname\": \"Doe\",\n  \"gender\": \"MALE\",\n  \"address\": {\n    \"street\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"postalCode\": \"1000112358\",\n    \"country\":\"United State\"\n  },\n  \"profilePictureUrl\": \"https://example.com/profile.jpg\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/user-profile",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user-profile"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 01:36:53 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"5e57c7f6-784e-404d-a79f-d88e5b17420e\",\n    \"createdAt\": \"2025-03-24T01:36:53.785+00:00\",\n    \"updatedAt\": \"2025-03-24T01:36:53.785+00:00\",\n    \"userId\": \"efd96394-c30f-43d3-b641-e5b993b75ee6\",\n    \"firstname\": \"John\",\n    \"lastname\": \"Doe\",\n    \"gender\": \"MALE\",\n    \"address\": {\n        \"street\": \"123 Main St\",\n        \"city\": \"New York\",\n        \"state\": \"NY\",\n        \"postalCode\": \"1000112358\",\n        \"country\": \"United State\"\n    },\n    \"profilePictureUrl\": \"https://example.com/profile.jpg\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Update Profile",
 					"request": {
 						"method": "PUT",
 						"header": [
-							{ "key": "Content-Type", "value": "application/json" }
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
 						],
 						"body": {
 							"mode": "raw",
@@ -553,11 +933,108 @@
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/user-profile/{{profileId}}",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "user-profile", "{{profileId}}"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user-profile",
+								"{{profileId}}"
+							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update Profile",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"firstname\": \"Jane\",\n  \"lastname\": \"Doe\",\n  \"gender\": \"FEMALE\",\n  \"address\": {\n    \"street\": \"456 Elm St\",\n    \"city\": \"Los Angeles\",\n    \"state\": \"CA\",\n    \"postalCode\": \"9000125896\",\n    \"country\":\"United State\"\n  },\n  \"profilePictureUrl\": \"https://example1.com/profile-updated.jpg\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/user-profile/{{profileId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user-profile",
+										"{{profileId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 02:02:30 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"5e57c7f6-784e-404d-a79f-d88e5b17420e\",\n    \"createdAt\": \"2025-03-24T01:36:53.785+00:00\",\n    \"updatedAt\": \"2025-03-24T02:02:30.193+00:00\",\n    \"userId\": \"efd96394-c30f-43d3-b641-e5b993b75ee6\",\n    \"firstname\": \"Jane\",\n    \"lastname\": \"Doe\",\n    \"gender\": \"FEMALE\",\n    \"address\": {\n        \"street\": \"456 Elm St\",\n        \"city\": \"Los Angeles\",\n        \"state\": \"CA\",\n        \"postalCode\": \"9000125896\",\n        \"country\": \"United State\"\n    },\n    \"profilePictureUrl\": \"https://example1.com/profile-updated.jpg\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Delete Profile",
@@ -566,8 +1043,14 @@
 						"header": [],
 						"url": {
 							"raw": "{{baseUrl}}/api/user-profile/{{profileId}}",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "user-profile", "{{profileId}}"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user-profile",
+								"{{profileId}}"
+							]
 						}
 					},
 					"response": []
@@ -577,7 +1060,10 @@
 					"request": {
 						"method": "POST",
 						"header": [
-							{ "key": "Content-Type", "value": "application/json" }
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
 						],
 						"body": {
 							"mode": "raw",
@@ -585,11 +1071,108 @@
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/user-profile/search",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "user-profile", "search"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"user-profile",
+								"search"
+							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Search Profiles",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"filters\": [\n        {\n        \"field\": \"gender\",\n        \"operator\": \"EQUALS\",\n        \"criteria\": \"FEMALE\"\n        }\n    ],\n    \"sort\":{\n        \"field\":\"createdAt\",\n        \"direction\":\"desc\"\n    },\n    \"page\": 0,\n    \"size\": 10\n}\n"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/user-profile/search",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"user-profile",
+										"search"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 01:43:41 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": \"e95385e6-f5dd-4446-be40-fe7d0183dde4\",\n            \"createdAt\": \"2025-03-24T01:32:11.110+00:00\",\n            \"updatedAt\": \"2025-03-24T01:32:11.525+00:00\",\n            \"userId\": \"f4acf440-f626-4052-b891-c3cda1c2c643\",\n            \"firstname\": \"John\",\n            \"lastname\": \"Doe\",\n            \"gender\": \"FEMALE\",\n            \"address\": {\n                \"street\": \"123 Main St\",\n                \"city\": \"New York\",\n                \"state\": \"NY\",\n                \"postalCode\": \"1000112358\",\n                \"country\": \"United State\"\n            },\n            \"profilePictureUrl\": \"https://example.com/profile.jpg\"\n        }\n    ],\n    \"page\": 0,\n    \"size\": 10,\n    \"totalElements\": 1,\n    \"totalPages\": 1\n}"
+						}
+					]
 				}
 			]
 		},
@@ -2144,6 +2727,82 @@
 							"body": "{\n    \"content\": [\n        {\n            \"id\": \"8bd9b4ac-3cdc-4c97-8aa3-1cf1bce7db7a\",\n            \"label\": \"دسترسی به حذف اطلاعات\",\n            \"value\": \"DELETE_PERMISSION\",\n            \"createdAt\": \"2025-03-11T14:31:12.895+00:00\",\n            \"updatedAt\": \"2025-03-11T14:31:12.895+00:00\"\n        },\n        {\n            \"id\": \"7f7aa299-41c9-43b9-b9cc-6f852f040517\",\n            \"label\": \"دسترسی تغییر اطلاعات\",\n            \"value\": \"WRITE_PERMISSION\",\n            \"createdAt\": \"2025-03-11T14:32:00.150+00:00\",\n            \"updatedAt\": \"2025-03-11T14:32:00.150+00:00\"\n        }\n    ],\n    \"page\": 0,\n    \"size\": 2,\n    \"totalElements\": 3,\n    \"totalPages\": 2\n}"
 						}
 					]
+				}
+			]
+		},
+		{
+			"name": "Shop Settings",
+			"item": [
+				{
+					"name": "Get Shop Setting",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/settings/{{accountId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "settings", "{{accountId}}"]
+						}
+					}
+				},
+				{
+					"name": "Create Shop Setting",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"My Shop\",\n  \"slug\": \"my-shop\",\n  \"description\": \"Best shop online\",\n  \"logo\": \"logo.png\",\n  \"favicon\": \"favicon.ico\",\n  \"currency\": \"USD\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/settings/{{accountId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "settings", "{{accountId}}"]
+						}
+					}
+				},
+				{
+					"name": "Update Shop Setting",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Updated Shop\",\n  \"slug\": \"updated-shop\",\n  \"description\": \"Updated description\",\n  \"logo\": \"updated_logo.png\",\n  \"favicon\": \"updated_favicon.ico\",\n  \"currency\": \"EUR\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/settings/{{accountId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "settings", "{{accountId}}"]
+						}
+					}
+				},
+				{
+					"name": "Delete Shop Setting",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/settings/{{accountId}}",
+							"host": ["{{baseUrl}}"],
+							"path": ["api", "settings", "{{accountId}}"]
+						}
+					}
 				}
 			]
 		},
