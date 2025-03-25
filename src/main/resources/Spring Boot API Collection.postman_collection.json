@@ -1,11 +1,11 @@
 {
 	"info": {
-		"_postman_id": "e18ac9ff-ea55-47cd-9266-93d73c4b844d",
+		"_postman_id": "afba65de-8fa7-44f9-9906-46dae4104882",
 		"name": "Spring Boot API Collection",
 		"description": "Collection of all API endpoints for the Spring Boot project.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "12086211",
-		"_collection_link": "https://onlineshop-team.postman.co/workspace/onlineshop-team-Workspace~f9d95331-03c3-4961-af8e-98d4591c57ba/collection/12086211-e18ac9ff-ea55-47cd-9266-93d73c4b844d?action=share&source=collection_link&creator=12086211"
+		"_collection_link": "https://onlineshop-team.postman.co/workspace/onlineshop-team-Workspace~f9d95331-03c3-4961-af8e-98d4591c57ba/collection/12086211-afba65de-8fa7-44f9-9906-46dae4104882?action=share&source=collection_link&creator=12086211"
 	},
 	"item": [
 		{
@@ -2734,7 +2734,7 @@
 			"name": "Shop Settings",
 			"item": [
 				{
-					"name": "Get Shop Setting",
+					"name": "Get ShopSetting By Account ID",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -2744,11 +2744,218 @@
 							}
 						],
 						"url": {
-							"raw": "{{baseUrl}}/api/settings/{{accountId}}",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "settings", "{{accountId}}"]
+							"raw": "{{baseUrl}}/api/settings/findByAccountId/{{accountId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"findByAccountId",
+								"{{accountId}}"
+							]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Get Shop Setting",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/settings/{{accountId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"settings",
+										"{{accountId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 19:01:48 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"a91c0b11-5e5d-4fda-8530-56996c91609a\",\n    \"title\": \"My Shop\",\n    \"slug\": \"my-shop\",\n    \"description\": \"Best shop online\",\n    \"logo\": \"logo.png\",\n    \"favicon\": \"favicon.ico\",\n    \"currency\": \"IRR\",\n    \"color\": null,\n    \"createdAt\": \"2025-03-24T17:45:47.183+00:00\",\n    \"updatedAt\": \"2025-03-24T17:45:50.173+00:00\",\n    \"accountId\": \"fc36d70c-e9ae-4e06-a2b3-ee7009359875\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Get ShopSetting By ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/settings/findById/{{accountId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"findById",
+								"{{accountId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Shop Setting",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/settings/{{accountId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"settings",
+										"{{accountId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 19:01:48 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"a91c0b11-5e5d-4fda-8530-56996c91609a\",\n    \"title\": \"My Shop\",\n    \"slug\": \"my-shop\",\n    \"description\": \"Best shop online\",\n    \"logo\": \"logo.png\",\n    \"favicon\": \"favicon.ico\",\n    \"currency\": \"IRR\",\n    \"color\": null,\n    \"createdAt\": \"2025-03-24T17:45:47.183+00:00\",\n    \"updatedAt\": \"2025-03-24T17:45:50.173+00:00\",\n    \"accountId\": \"fc36d70c-e9ae-4e06-a2b3-ee7009359875\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Create Shop Setting",
@@ -2766,10 +2973,198 @@
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/settings/{{accountId}}",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "settings", "{{accountId}}"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"{{accountId}}"
+							]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "404",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"My Shop\",\n  \"slug\": \"my-shop\",\n  \"description\": \"Best shop online\",\n  \"logo\": \"logo.png\",\n  \"favicon\": \"favicon.ico\",\n  \"currency\": \"IRR\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/settings/{{accountId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"settings",
+										"{{accountId}}"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 17:18:49 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"apiPath\": \"uri=/api/settings/fc36d70c-e9ae-4e06-a2b3-ee7009359876\",\n    \"errorCode\": \"NOT_FOUND\",\n    \"statusCode\": 404,\n    \"errorMessage\": \"UserAccount not found with the given input data id : 'fc36d70c-e9ae-4e06-a2b3-ee7009359876'\",\n    \"errorTime\": \"2025-03-24T20:48:49.4678644\"\n}"
+						},
+						{
+							"name": "Create Shop Setting",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"My Shop\",\n  \"slug\": \"my-shop\",\n  \"description\": \"Best shop online\",\n  \"logo\": \"logo.png\",\n  \"favicon\": \"favicon.ico\",\n  \"currency\": \"IRR\",\n  \"color\":\"#ffffff\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/settings/{{accountId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"settings",
+										"{{accountId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 17:45:58 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"a91c0b11-5e5d-4fda-8530-56996c91609a\",\n    \"title\": \"My Shop\",\n    \"slug\": \"my-shop\",\n    \"description\": \"Best shop online\",\n    \"logo\": \"logo.png\",\n    \"favicon\": \"favicon.ico\",\n    \"currency\": \"IRR\",\n    \"color\": null,\n    \"createdAt\": \"2025-03-24T17:45:47.183+00:00\",\n    \"updatedAt\": \"2025-03-24T17:45:50.173+00:00\",\n    \"accountId\": \"fc36d70c-e9ae-4e06-a2b3-ee7009359875\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Update Shop Setting",
@@ -2787,10 +3182,108 @@
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/settings/{{accountId}}",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "settings", "{{accountId}}"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"{{accountId}}"
+							]
 						}
-					}
+					},
+					"response": [
+						{
+							"name": "Update Shop Setting",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"title\": \"Updated Shop\",\n  \"slug\": \"updated-shop\",\n  \"description\": \"Updated description\",\n  \"logo\": \"updated_logo.png\",\n  \"favicon\": \"updated_favicon.ico\",\n  \"currency\": \"EUR\",\n  \"color\":\"#fffffff\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/settings/{{accountId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"settings",
+										"{{accountId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Mar 2025 19:11:34 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"a91c0b11-5e5d-4fda-8530-56996c91609a\",\n    \"title\": \"Updated Shop\",\n    \"slug\": \"updated-shop\",\n    \"description\": \"Updated description\",\n    \"logo\": \"updated_logo.png\",\n    \"favicon\": \"updated_favicon.ico\",\n    \"currency\": \"EUR\",\n    \"color\": \"#fffffff\",\n    \"createdAt\": \"2025-03-24T17:45:47.183+00:00\",\n    \"updatedAt\": \"2025-03-24T19:11:34.393+00:00\",\n    \"accountId\": \"fc36d70c-e9ae-4e06-a2b3-ee7009359875\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Delete Shop Setting",
@@ -2799,10 +3292,17 @@
 						"header": [],
 						"url": {
 							"raw": "{{baseUrl}}/api/settings/{{accountId}}",
-							"host": ["{{baseUrl}}"],
-							"path": ["api", "settings", "{{accountId}}"]
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"settings",
+								"{{accountId}}"
+							]
 						}
-					}
+					},
+					"response": []
 				}
 			]
 		},
@@ -2885,6 +3385,160 @@
 								"api",
 								"auth",
 								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "Get All Customers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/customers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Customer by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/customers/{{customerId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customers",
+								"{{customerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"johndoe\",\n  \"password\": \"password12345\",\n  \"email\": \"johndoe@example.com\",\n  \"phone\": \"9198881400\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"phoneVerified\": false,\n  \"emailVerified\": false\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/customers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Customer",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"username\": \"john_updated\",\n  \"password\": \"newpassword123\",\n  \"email\": \"john_updated@example.com\",\n  \"phone\": \"9198881411\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"phoneVerified\": true,\n  \"emailVerified\": true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/customers/{{customerId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customers",
+								"{{customerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Customer",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/customers/{{customerId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customers",
+								"{{customerId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Customers",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"filters\": {\r\n    \"email\": \"johndoe@example.com\"\r\n  },\r\n  \"sortBy\": \"createdAt\",\r\n  \"sortDir\": \"asc\",\r\n  \"page\": 0,\r\n  \"size\": 10\r\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/customers/search",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customers",
+								"search"
 							]
 						}
 					},

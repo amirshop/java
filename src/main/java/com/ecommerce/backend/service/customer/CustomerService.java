@@ -5,12 +5,17 @@ import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.customer.CustomerDto;
 import com.ecommerce.backend.entity.customer.Customer;
+import com.ecommerce.backend.exception.ResourceAlreadyExistsException;
 import com.ecommerce.backend.exception.ResourceNotFoundException;
 import com.ecommerce.backend.mapper.customer.CustomerMapper;
 import com.ecommerce.backend.repository.customer.CustomerRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.GenericSpecification;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -23,12 +28,14 @@ public class CustomerService extends BaseService<Customer, CustomerDto> {
 
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public CustomerService(CustomerRepository customerRepository,
-                           CustomerMapper customerMapper) {
+                           CustomerMapper customerMapper, PasswordEncoder passwordEncoder) {
         super(customerRepository, customerMapper::toDto);
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public List<CustomerDto> getAllCustomers() {
@@ -45,11 +52,42 @@ public class CustomerService extends BaseService<Customer, CustomerDto> {
     }
 
     public CustomerDto createCustomer(CustomerDto customerRequest) {
+
+        // Check if email already exists
+        checkExistEmail(customerRequest.getEmail());
+
+        // Check if username already exists
+        checkExistUsername(customerRequest.getUsername());
+
+        // Check if phone already exists
+        checkExistPhone(customerRequest.getPhone());
+
         Customer customer = customerMapper.toEntity(customerRequest);
+        customer.setPassword(passwordEncoder.encode(customerRequest.getPassword()));
         customer.setCreatedAt(new Date());
         customer.setUpdatedAt(new Date());
+        customer.setEmailVerified(false);
+        customer.setPhoneVerified(false);
         Customer savedCustomer = customerRepository.save(customer);
         return customerMapper.toDto(savedCustomer);
+    }
+
+    private void checkExistPhone(String phone) {
+        if (customerRepository.existsByPhone(phone)) {
+            throw new ResourceAlreadyExistsException("phone already exists");
+        }
+    }
+
+    private void checkExistUsername(String username) {
+        if (customerRepository.existsByUsername(username)) {
+            throw new ResourceAlreadyExistsException("username already exists");
+        }
+    }
+
+    private void checkExistEmail(String email) {
+        if (customerRepository.existsByEmail(email)) {
+            throw new ResourceAlreadyExistsException("email already exists");
+        }
     }
 
     public CustomerDto updateCustomer(UUID customerId, CustomerDto customerRequest) {
@@ -59,8 +97,8 @@ public class CustomerService extends BaseService<Customer, CustomerDto> {
                     existing.setPhone(customerRequest.getPhone());
                     //TODO:add passwordEncoder
                     existing.setPassword(customerRequest.getPassword());
-                    existing.setFirstName(customerRequest.getFirstName());
-                    existing.setLastName(customerRequest.getLastName());
+                    existing.setFirstname(customerRequest.getFirstname());
+                    existing.setLastname(customerRequest.getLastname());
                     existing.setUpdatedAt(new Date());
                     Customer updated = customerRepository.save(existing);
                     return customerMapper.toDto(updated);

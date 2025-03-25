@@ -21,13 +21,19 @@ public class Customer {
     @Column(nullable = false, unique = true)
     private String phone;
 
-    private boolean isVerified = false; // آیا ایمیل یا شماره تأیید شده است؟
+    @Column(nullable = false, unique = true)
+    private String username;
+
+    private Boolean phoneVerified;
+
+    @Column
+    private Boolean emailVerified;
 
     @Column(nullable = false)
     private String password;
 
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
 
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)

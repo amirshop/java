@@ -1,15 +1,6 @@
 package com.ecommerce.backend.dto.customer;
 
 import com.ecommerce.backend.annotaions.AllowedFilter;
-import com.ecommerce.backend.dto.order.OrderDto;
-import com.ecommerce.backend.dto.payment.PaymentDto;
-import com.ecommerce.backend.entity.cart.Cart;
-import com.ecommerce.backend.entity.customer.CustomerAddress;
-import com.ecommerce.backend.entity.customer.CustomerProfile;
-import com.ecommerce.backend.entity.customer.WishlistItem;
-import com.ecommerce.backend.entity.order.Order;
-import com.ecommerce.backend.entity.payment.Payment;
-import com.ecommerce.backend.entity.product.ProductReview;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
@@ -19,7 +10,6 @@ import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -59,20 +49,15 @@ public class CustomerDto {
     @AllowedFilter
     private String phone;
 
-    private String firstName;
-    private String lastName;
+    @AllowedFilter
+    private String firstname;
 
-    private CustomerProfile profile;
+    @AllowedFilter
+    private String lastname;
 
-    private List<CustomerAddress> addresses;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Boolean phoneVerified;
 
-    private List<PaymentDto> paymentMethods;
-
-    private List<OrderDto> orders;
-
-    private List<WishlistItem> wishlist;
-
-    private List<ProductReview> accountReviews;
-
-    private Cart cart;
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Boolean emailVerified;
 }
