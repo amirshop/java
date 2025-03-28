@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -92,17 +93,29 @@ public class CustomerService extends BaseService<Customer, CustomerDto> {
 
     public CustomerDto updateCustomer(UUID customerId, CustomerDto customerRequest) {
         return customerRepository.findById(customerId)
-                .map(existing -> {
-                    existing.setEmail(customerRequest.getEmail());
-                    existing.setPhone(customerRequest.getPhone());
-                    //TODO:add passwordEncoder
-                    existing.setPassword(customerRequest.getPassword());
-                    existing.setFirstname(customerRequest.getFirstname());
-                    existing.setLastname(customerRequest.getLastname());
-                    existing.setUpdatedAt(new Date());
-                    Customer updated = customerRepository.save(existing);
+                .map(customer -> {
+                    Optional.ofNullable(customerRequest.getUsername())
+                            .filter(username -> !username.isBlank())
+                            .ifPresent(customer::setUsername);
+                    Optional.ofNullable(customerRequest.getEmail())
+                            .filter(email -> !email.isBlank())
+                            .ifPresent(customer::setEmail);
+                    Optional.ofNullable(customerRequest.getPhone())
+                            .filter(phone -> !phone.isBlank())
+                            .ifPresent(customer::setPhone);
+                    Optional.ofNullable(customerRequest.getFirstname())
+                            .filter(firstname -> !firstname.isBlank())
+                            .ifPresent(customer::setFirstname);
+                    Optional.ofNullable(customerRequest.getLastname())
+                            .filter(lastname -> !lastname.isBlank())
+                            .ifPresent(customer::setLastname);
+                    Optional.ofNullable(customerRequest.getPassword())
+                            .filter(password -> !password.isBlank())
+                            .ifPresent(password -> customer.setPassword(passwordEncoder.encode(password)));
+                    customer.setUpdatedAt(new Date());
+                    Customer updated = customerRepository.save(customer);
                     return customerMapper.toDto(updated);
-        }).orElseThrow(() -> new RuntimeException("Customer not found with id " + customerId));
+        }).orElseThrow(() -> new ResourceNotFoundException("customer", "id", customerId.toString()));
     }
 
     public void deleteCustomer(UUID id) {
