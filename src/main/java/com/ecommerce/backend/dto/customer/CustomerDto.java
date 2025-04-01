@@ -16,6 +16,7 @@ import java.util.UUID;
 public class CustomerDto {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @AllowedFilter
     private UUID id;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
@@ -56,8 +57,10 @@ public class CustomerDto {
     private String lastname;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @AllowedFilter
     private Boolean phoneVerified;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @AllowedFilter
     private Boolean emailVerified;
 }

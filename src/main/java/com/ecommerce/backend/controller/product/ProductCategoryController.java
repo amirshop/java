@@ -1,5 +1,7 @@
 package com.ecommerce.backend.controller.product;
 
+import com.ecommerce.backend.dto.ResponseDto;
+import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.product.ProductCategoryDto;
 import com.ecommerce.backend.service.product.ProductCategoryService;
 import lombok.RequiredArgsConstructor;
@@ -50,5 +52,10 @@ public class ProductCategoryController {
     public ResponseEntity<Void> deleteCategory(@PathVariable UUID categoryId) {
         categoryService.deleteCategory(categoryId);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/search")
+    public ResponseDto searchProductCategories(@RequestBody SearchDto requestDto) {
+        return categoryService.searchProductCategories(requestDto);
     }
 }
