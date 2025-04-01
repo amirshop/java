@@ -7,6 +7,7 @@ import com.ecommerce.backend.dto.customer.CustomerDto;
 import com.ecommerce.backend.dto.customer.CustomerProfileDto;
 import com.ecommerce.backend.entity.customer.Customer;
 import com.ecommerce.backend.entity.customer.CustomerProfile;
+import com.ecommerce.backend.exception.ResourceAlreadyExistsException;
 import com.ecommerce.backend.exception.ResourceNotFoundException;
 import com.ecommerce.backend.mapper.customer.CustomerProfileMapper;
 import com.ecommerce.backend.repository.customer.CustomerProfileRepository;
@@ -26,11 +27,15 @@ public class CustomerProfileService extends BaseService<CustomerProfile, Custome
 
     private final CustomerProfileRepository profileRepository;
     private final CustomerProfileMapper customerProfileMapper;
+    private final CustomerService customerService;
 
-    public CustomerProfileService(CustomerProfileRepository profileRepository, CustomerProfileMapper customerProfileMapper) {
+    public CustomerProfileService(CustomerProfileRepository profileRepository,
+                                  CustomerProfileMapper customerProfileMapper,
+                                  CustomerService customerService) {
         super(profileRepository, customerProfileMapper::toDto);
         this.profileRepository = profileRepository;
         this.customerProfileMapper = customerProfileMapper;
+        this.customerService = customerService;
     }
 
     public List<CustomerProfileDto> getAllCustomerProfiles() {
@@ -46,27 +51,36 @@ public class CustomerProfileService extends BaseService<CustomerProfile, Custome
                 .orElseThrow(() -> new ResourceNotFoundException("CustomerProfile", "id", customerProfileId.toString()));
     }
 
-    public CustomerProfile create(CustomerProfile profile) {
-        return profileRepository.save(profile);
-    }
-
     public CustomerProfileDto createCustomerProfile(CustomerProfileDto customerProfileRequest) {
+        Customer customer = customerService.findById(customerProfileRequest.getCustomerId());
+        checkExistCustomer(customerProfileRequest.getCustomerId());
         CustomerProfile customerProfile = customerProfileMapper.toEntity(customerProfileRequest);
+        customerProfile.setCustomer(customer);
         customerProfile.setCreatedAt(new Date());
         customerProfile.setUpdatedAt(new Date());
         CustomerProfile savedCustomerProfile = profileRepository.save(customerProfile);
         return customerProfileMapper.toDto(savedCustomerProfile);
     }
 
-    public CustomerProfile updateCustomerProfile(UUID id, CustomerProfileDto profileRequest) {
+    private void checkExistCustomer(UUID customerId) {
+        if (profileRepository.existsByCustomerId(customerId)) {
+            throw new ResourceAlreadyExistsException("Customer id in Customer Profile already exists");
+        }
+    }
+
+    public CustomerProfileDto updateCustomerProfile(UUID id, CustomerProfileDto updatedProfile) {
         return profileRepository.findById(id)
-                .map(existing -> {
-                    existing.setGender(profileRequest.getGender());
-                    existing.setBirthDate(profileRequest.getBirthDate());
-                    existing.setProfilePictureUrl(profileRequest.getProfilePictureUrl());
-                    existing.setUpdatedAt(new Date());
-                    CustomerProfile savedCustomerProfile = profileRepository.save(existing);
-            return profileRepository.save(savedCustomerProfile);
+                .map(profile -> {
+                    Optional.ofNullable(updatedProfile.getBirthDate())
+                            .ifPresent(profile::setBirthDate);
+                    Optional.ofNullable(updatedProfile.getProfilePictureUrl())
+                            .filter(profilePictureUrl -> !profilePictureUrl.isBlank())
+                            .ifPresent(profile::setProfilePictureUrl);
+                    Optional.ofNullable(updatedProfile.getGender()).ifPresent(profile::setGender);
+                    profile.setUpdatedAt(new Date());
+                    CustomerProfile savedCustomerProfile = profileRepository.save(profile);
+                CustomerProfile savedProfile = profileRepository.save(savedCustomerProfile);
+                return customerProfileMapper.toDto(savedProfile);
         }).orElseThrow(() -> new RuntimeException("CustomerProfile not found with id " + id));
     }
 

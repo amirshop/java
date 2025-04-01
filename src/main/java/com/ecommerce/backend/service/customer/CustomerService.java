@@ -52,6 +52,11 @@ public class CustomerService extends BaseService<Customer, CustomerDto> {
                 .orElseThrow(() -> new ResourceNotFoundException("customer", "id", customerId.toString()));
     }
 
+    public Customer findById(UUID customerId) {
+        return customerRepository.findById(customerId)
+                .orElseThrow(() -> new ResourceNotFoundException("customer", "id", customerId.toString()));
+    }
+
     public CustomerDto createCustomer(CustomerDto customerRequest) {
 
         // Check if email already exists

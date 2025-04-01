@@ -38,7 +38,7 @@ public class CustomerProfileController {
     }
 
     @PutMapping("/{customerProfileId}")
-    public CustomerProfile update(@PathVariable UUID customerProfileId, @RequestBody CustomerProfileDto profile) {
+    public CustomerProfileDto update(@PathVariable UUID customerProfileId, @RequestBody CustomerProfileDto profile) {
         return profileService.updateCustomerProfile(customerProfileId, profile);
     }
 
