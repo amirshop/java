@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name = "customer_addresse")
+@Table(name = "customer_addresses")
 @Data
 public class CustomerAddress {
 
@@ -23,7 +23,8 @@ public class CustomerAddress {
     private String city;
     private String street;
     private String postalCode;
-    private String phoneNumber;
+    private String state;
+    private String phone;
     private Boolean isDefault; // آیا این آدرس، پیش‌فرض است؟
 
     @Column(nullable = false, updatable = false)

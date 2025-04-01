@@ -4,7 +4,9 @@ import com.ecommerce.backend.dto.FilterCriteria;
 import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.customer.CustomerAddressDto;
+import com.ecommerce.backend.entity.customer.Customer;
 import com.ecommerce.backend.entity.customer.CustomerAddress;
+import com.ecommerce.backend.exception.ResourceAlreadyExistsException;
 import com.ecommerce.backend.exception.ResourceNotFoundException;
 import com.ecommerce.backend.mapper.customer.CustomerAddressMapper;
 import com.ecommerce.backend.repository.customer.CustomerAddressRepository;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -23,12 +26,14 @@ public class CustomerAddressService extends BaseService<CustomerAddress, Custome
 
     private final CustomerAddressRepository addressRepository;
     private final CustomerAddressMapper customerAddressMapper;
+    private final CustomerService customerService;
 
     public CustomerAddressService(CustomerAddressRepository addressRepository,
-                                  CustomerAddressMapper customerAddressMapper) {
+                                  CustomerAddressMapper customerAddressMapper, CustomerService customerService) {
         super(addressRepository, customerAddressMapper::toDto);
         this.addressRepository = addressRepository;
         this.customerAddressMapper = customerAddressMapper;
+        this.customerService = customerService;
     }
 
     public List<CustomerAddressDto> getAllCustomerAddresses() {
@@ -46,21 +51,44 @@ public class CustomerAddressService extends BaseService<CustomerAddress, Custome
 
 
     public CustomerAddressDto createCustomerAddress(CustomerAddressDto request) {
+        Customer customer = customerService.findById(request.getCustomerId());
+        checkExistCustomer(request.getCustomerId());
         CustomerAddress customerAddress = customerAddressMapper.toEntity(request);
+        customerAddress.setCustomer(customer);
         customerAddress.setCreatedAt(new Date());
         customerAddress.setUpdatedAt(new Date());
         CustomerAddress savedAddress = addressRepository.save(customerAddress);
         return customerAddressMapper.toDto(savedAddress);
     }
 
+    private void checkExistCustomer(UUID customerId) {
+        if (addressRepository.existsByCustomerId(customerId)) {
+            throw new ResourceAlreadyExistsException("Customer id in Customer Address already exists");
+        }
+    }
+
     public CustomerAddressDto updateCustomerAddress(UUID id, CustomerAddressDto request) {
         return addressRepository.findById(id).map(address -> {
-            address.setCountry(request.getCountry());
-            address.setCity(request.getCity());
-            address.setStreet(request.getStreet());
-            address.setPostalCode(request.getPostalCode());
-            address.setPhoneNumber(request.getPhone());
-            address.setIsDefault(request.getIsDefault());
+            Optional.ofNullable(request.getPhone())
+                    .filter(phone -> !phone.isBlank())
+                    .ifPresent(address::setPhone);
+            Optional.ofNullable(request.getCountry())
+                    .filter(country -> !country.isBlank())
+                    .ifPresent(address::setCountry);
+            Optional.ofNullable(request.getCity())
+                    .filter(city -> !city.isBlank())
+                    .ifPresent(address::setCity);
+            Optional.ofNullable(request.getStreet())
+                    .filter(street -> !street.isBlank())
+                    .ifPresent(address::setStreet);
+            Optional.ofNullable(request.getPostalCode())
+                    .filter(postalCode -> !postalCode.isBlank())
+                    .ifPresent(address::setPostalCode);
+            Optional.ofNullable(request.getState())
+                    .filter(state -> !state.isBlank())
+                    .ifPresent(address::setState);
+            Optional.ofNullable(request.getIsDefault())
+                    .ifPresent(address::setIsDefault);
             address.setUpdatedAt(new Date());
             CustomerAddress savedAddress = addressRepository.save(address);
             return customerAddressMapper.toDto(savedAddress);

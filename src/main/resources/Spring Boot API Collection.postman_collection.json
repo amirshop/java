@@ -1,11 +1,11 @@
 {
 	"info": {
-		"_postman_id": "13401b63-0005-4c5d-8c0f-bfa1d14d7f18",
+		"_postman_id": "acdd8c77-9fb5-4989-92f1-53965ddc37b3",
 		"name": "Spring Boot API Collection",
 		"description": "Collection of all API endpoints for the Spring Boot project.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "12086211",
-		"_collection_link": "https://onlineshop-team.postman.co/workspace/onlineshop-team-Workspace~f9d95331-03c3-4961-af8e-98d4591c57ba/collection/12086211-13401b63-0005-4c5d-8c0f-bfa1d14d7f18?action=share&source=collection_link&creator=12086211"
+		"_collection_link": "https://onlineshop-team.postman.co/workspace/onlineshop-team-Workspace~f9d95331-03c3-4961-af8e-98d4591c57ba/collection/12086211-acdd8c77-9fb5-4989-92f1-53965ddc37b3?action=share&source=collection_link&creator=12086211"
 	},
 	"item": [
 		{
@@ -1067,7 +1067,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"searchCriteria\": {\n    \"firstname\": \"John\",\n    \"lastname\": \"Doe\",\n    \"gender\": \"MALE\"\n  },\n  \"sortBy\": \"createdAt\",\n  \"sortDir\": \"desc\",\n  \"page\": 1,\n  \"size\": 10\n}"
+							"raw": "{\n    \"filters\": [\n        {\n        \"field\": \"gender\",\n        \"operator\": \"EQUALS\",\n        \"criteria\": \"FEMALE\"\n        }\n    ],\n    \"sort\":{\n        \"field\":\"createdAt\",\n        \"direction\":\"desc\"\n    },\n    \"page\": 0,\n    \"size\": 10\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/user-profile/search",
@@ -2616,7 +2616,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"page\": 0,\r\n  \"size\": 2,\r\n  \"sortField\": \"label\",\r\n  \"sortDirection\": \"asc\",\r\n  \"filters\": [\r\n    {\r\n      \"col\": \"label\",\r\n      \"filter\": \"CONTAINS\",\r\n      \"value\": \"دسترسی\"\r\n    }\r\n  ]\r\n}",
+							"raw": "{\r\n  \"page\": 0,\r\n  \"size\": 2,\r\n  \"sort\":{\r\n    \"field\":\"label\",\r\n    \"direction\":\"asc\"\r\n  },\r\n  \"filters\": [\r\n    {\r\n      \"field\": \"label\",\r\n      \"operator\": \"CONTAINS\",\r\n      \"criteria\": \"دسترسی\"\r\n    }\r\n  ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3882,7 +3882,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"filters\": {\r\n    \"email\": \"johndoe@example.com\"\r\n  },\r\n  \"sortBy\": \"createdAt\",\r\n  \"sortDir\": \"asc\",\r\n  \"page\": 0,\r\n  \"size\": 10\r\n}"
+							"raw": "{\r\n    \"filters\": [\r\n        {\r\n        \"field\": \"email\",\r\n        \"operator\": \"CONTAINS\",\r\n        \"criteria\": \"john_updated\"\r\n        }\r\n    ],\r\n    \"sort\":{\r\n        \"field\":\"createdAt\",\r\n        \"direction\":\"desc\"\r\n    },\r\n    \"page\": 0,\r\n    \"size\": 10\r\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/customers/search",
@@ -4015,7 +4015,93 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get All Customer Profiles",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customer-profiles",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"customer-profiles"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 29 Mar 2025 00:26:03 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"1112ea93-fc21-4131-bbc5-86b41a5733a0\",\n        \"createdAt\": \"2025-03-29T00:25:38.540+00:00\",\n        \"updatedAt\": \"2025-03-29T00:25:38.540+00:00\",\n        \"customerId\": \"a9be81d4-a48c-4e3f-a910-832397e78685\",\n        \"gender\": \"FEMALE\",\n        \"birthDate\": \"2022-03-28T23:30:49.186+00:00\",\n        \"profilePictureUrl\": \"https://example.com/profile1.jpg\"\n    },\n    {\n        \"id\": \"1c40b29c-920e-4c78-ae13-9e6b7a1abc07\",\n        \"createdAt\": \"2025-03-29T00:23:26.068+00:00\",\n        \"updatedAt\": \"2025-03-29T00:23:26.466+00:00\",\n        \"customerId\": \"56bb7e60-9db6-42cc-8965-bdacfa2a6f8f\",\n        \"gender\": \"MALE\",\n        \"birthDate\": \"2025-03-28T23:30:49.186+00:00\",\n        \"profilePictureUrl\": \"https://example.com/profile.jpg\"\n    }\n]"
+						}
+					]
 				},
 				{
 					"name": "Get Customer Profile by ID",
@@ -4039,7 +4125,94 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get Customer Profile by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customer-profiles/{{customerProfileId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"customer-profiles",
+										"{{customerProfileId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 29 Mar 2025 00:25:56 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"1112ea93-fc21-4131-bbc5-86b41a5733a0\",\n    \"createdAt\": \"2025-03-29T00:25:38.540+00:00\",\n    \"updatedAt\": \"2025-03-29T00:25:38.540+00:00\",\n    \"customerId\": \"a9be81d4-a48c-4e3f-a910-832397e78685\",\n    \"gender\": \"FEMALE\",\n    \"birthDate\": \"2022-03-28T23:30:49.186+00:00\",\n    \"profilePictureUrl\": \"https://example.com/profile1.jpg\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Create Customer Profile",
@@ -4066,7 +4239,97 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create Customer Profile",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"customerId\": \"a9be81d4-a48c-4e3f-a910-832397e78685\",\n  \"gender\": \"FEMALE\",\n  \"birthDate\": \"2022-03-28T23:30:49.186+00:00\",\n  \"profilePictureUrl\": \"https://example.com/profile1.jpg\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customer-profiles",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"customer-profiles"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 29 Mar 2025 00:25:38 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"1112ea93-fc21-4131-bbc5-86b41a5733a0\",\n    \"createdAt\": \"2025-03-29T00:25:38.540+00:00\",\n    \"updatedAt\": \"2025-03-29T00:25:38.540+00:00\",\n    \"customerId\": \"a9be81d4-a48c-4e3f-a910-832397e78685\",\n    \"gender\": \"FEMALE\",\n    \"birthDate\": \"2022-03-28T23:30:49.186+00:00\",\n    \"profilePictureUrl\": \"https://example.com/profile1.jpg\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Update Customer Profile",
@@ -4094,7 +4357,98 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update Customer Profile",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"gender\": \"FEMALE\",\n  \"birthDate\": \"1995-06-15\",\n  \"profilePictureUrl\": \"https://example.com/new-profile.jpg\"\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customer-profiles/{{customerProfileId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"customer-profiles",
+										"{{customerProfileId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 01 Apr 2025 04:41:00 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"1112ea93-fc21-4131-bbc5-86b41a5733a0\",\n    \"createdAt\": \"2025-03-29T00:25:38.540+00:00\",\n    \"updatedAt\": \"2025-04-01T04:41:00.017+00:00\",\n    \"customerId\": \"a9be81d4-a48c-4e3f-a910-832397e78685\",\n    \"gender\": \"FEMALE\",\n    \"birthDate\": \"1995-06-15T00:00:00.000+00:00\",\n    \"profilePictureUrl\": \"https://example.com/new-profile.jpg\"\n}"
+						}
+					]
 				},
 				{
 					"name": "Delete Customer Profile",
@@ -4141,7 +4495,697 @@
 							]
 						}
 					},
+					"response": [
+						{
+							"name": "Search Customer Profiles",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"filters\": [\r\n        {\r\n        \"field\": \"gender\",\r\n        \"operator\": \"EQUALS\",\r\n        \"criteria\": \"FEMALE\"\r\n        }\r\n    ],\r\n    \"sort\":{\r\n        \"field\":\"createdAt\",\r\n        \"direction\":\"desc\"\r\n    },\r\n    \"page\": 0,\r\n    \"size\": 10\r\n}\r\n"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customer-profiles/search",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"customer-profiles",
+										"search"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 01 Apr 2025 04:41:56 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": \"1112ea93-fc21-4131-bbc5-86b41a5733a0\",\n            \"createdAt\": \"2025-03-29T00:25:38.540+00:00\",\n            \"updatedAt\": \"2025-03-29T00:25:38.540+00:00\",\n            \"customerId\": \"a9be81d4-a48c-4e3f-a910-832397e78685\",\n            \"gender\": \"FEMALE\",\n            \"birthDate\": \"1995-06-15T00:00:00.000+00:00\",\n            \"profilePictureUrl\": \"https://example.com/new-profile.jpg\"\n        },\n        {\n            \"id\": \"1c40b29c-920e-4c78-ae13-9e6b7a1abc07\",\n            \"createdAt\": \"2025-03-29T00:23:26.068+00:00\",\n            \"updatedAt\": \"2025-03-29T00:23:26.466+00:00\",\n            \"customerId\": \"56bb7e60-9db6-42cc-8965-bdacfa2a6f8f\",\n            \"gender\": \"MALE\",\n            \"birthDate\": \"2025-03-28T23:30:49.186+00:00\",\n            \"profilePictureUrl\": \"https://example.com/profile.jpg\"\n        }\n    ],\n    \"page\": 0,\n    \"size\": 10,\n    \"totalElements\": 2,\n    \"totalPages\": 1\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Customer Addresses",
+			"item": [
+				{
+					"name": "Get All Customer Address",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/customer-addresses",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customer-addresses"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get All Customer Address",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customer-addresses",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"customer-addresses"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 01 Apr 2025 05:19:01 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"080b6785-ded8-4347-98e0-67685c8bfe0e\",\n        \"createdAt\": \"2025-04-01T05:16:27.894+00:00\",\n        \"updatedAt\": \"2025-04-01T05:16:50.963+00:00\",\n        \"customerId\": \"56bb7e60-9db6-42cc-8965-bdacfa2a6f8f\",\n        \"street\": \"123 Main St\",\n        \"city\": \"New York\",\n        \"state\": \"NY\",\n        \"postalCode\": \"1000112358\",\n        \"country\": \"United State\",\n        \"phone\": null,\n        \"isDefault\": true\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get Customer Address by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/customer-addresses/{{customerProfileId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customer-addresses",
+								"{{customerProfileId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Customer Address by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/customer-addresses/{{customerProfileId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"customer-addresses",
+										"{{customerProfileId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 01 Apr 2025 05:21:00 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"080b6785-ded8-4347-98e0-67685c8bfe0e\",\n    \"createdAt\": \"2025-04-01T05:16:27.894+00:00\",\n    \"updatedAt\": \"2025-04-01T05:16:50.963+00:00\",\n    \"customerId\": \"56bb7e60-9db6-42cc-8965-bdacfa2a6f8f\",\n    \"street\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"postalCode\": \"1000112358\",\n    \"country\": \"United State\",\n    \"phone\": null,\n    \"isDefault\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Customer Address",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"customerId\": \"56bb7e60-9db6-42cc-8965-bdacfa2a6f8f\",\n    \"street\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"postalCode\": \"1000112358\",\n    \"country\":\"United State\",\n    \"phone\": \"1234567890\",\n    \"isDefault\":true\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/customer-addresses",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customer-addresses"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Customer Address",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"customerId\": \"56bb7e60-9db6-42cc-8965-bdacfa2a6f8f\",\n    \"street\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"postalCode\": \"1000112358\",\n    \"country\":\"United State\",\n    \"phone\": \"1234567890\",\n    \"isDefault\":true\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customer-addresses",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"customer-addresses"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 01 Apr 2025 05:16:51 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"080b6785-ded8-4347-98e0-67685c8bfe0e\",\n    \"createdAt\": \"2025-04-01T05:16:27.894+00:00\",\n    \"updatedAt\": \"2025-04-01T05:16:50.963+00:00\",\n    \"customerId\": \"56bb7e60-9db6-42cc-8965-bdacfa2a6f8f\",\n    \"street\": \"123 Main St\",\n    \"city\": \"New York\",\n    \"state\": \"NY\",\n    \"postalCode\": \"1000112358\",\n    \"country\": \"United State\",\n    \"phone\": null,\n    \"isDefault\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Customer Address",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"customerId\": \"UUID_VALUE\",\n  \"gender\": \"FEMALE\",\n  \"birthDate\": \"1995-06-15\",\n  \"profilePictureUrl\": \"https://example.com/new-profile.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/customer-addresses/{{customerProfileId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customer-addresses",
+								"{{customerProfileId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Customer Address",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"street\": \"123 Main St-\",\n    \"city\": \"New York-\",\n    \"state\": \"NY-\",\n    \"postalCode\": \"1000112359\",\n    \"country\":\"United State-\",\n    \"phone\": \"1234567890\",\n    \"isDefault\":true\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customer-addresses/{{customerProfileId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"customer-addresses",
+										"{{customerProfileId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 01 Apr 2025 05:29:45 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"080b6785-ded8-4347-98e0-67685c8bfe0e\",\n    \"createdAt\": \"2025-04-01T05:16:27.894+00:00\",\n    \"updatedAt\": \"2025-04-01T05:29:45.584+00:00\",\n    \"customerId\": \"56bb7e60-9db6-42cc-8965-bdacfa2a6f8f\",\n    \"street\": \"123 Main St-\",\n    \"city\": \"New York-\",\n    \"state\": \"NY-\",\n    \"postalCode\": \"1000112359\",\n    \"country\": \"United State-\",\n    \"phone\": \"1234567890\",\n    \"isDefault\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Customer Address",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/customer-addresses/{{customerProfileId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customer-addresses",
+								"{{customerProfileId}}"
+							]
+						}
+					},
 					"response": []
+				},
+				{
+					"name": "Search Customer Address",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"page\": 0,\r\n  \"size\": 10,\r\n  \"sortField\": \"createdAt\",\r\n  \"sortDirection\": \"desc\",\r\n  \"filters\": [\r\n    {\r\n      \"col\": \"gender\",\r\n      \"operator\": \"EQUALS\",\r\n      \"value\": \"MALE\"\r\n    }\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/customer-addresses/search",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"customer-addresses",
+								"search"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Search Customer Address",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"filters\": [\r\n        {\r\n        \"field\": \"phone\",\r\n        \"operator\": \"CONTAINS\",\r\n        \"criteria\": \"0\"\r\n        }\r\n    ],\r\n    \"sort\":{\r\n        \"field\":\"createdAt\",\r\n        \"direction\":\"desc\"\r\n    },\r\n    \"page\": 0,\r\n    \"size\": 10\r\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/customer-addresses/search",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"customer-addresses",
+										"search"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 01 Apr 2025 05:32:07 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": \"080b6785-ded8-4347-98e0-67685c8bfe0e\",\n            \"createdAt\": \"2025-04-01T05:16:27.894+00:00\",\n            \"updatedAt\": \"2025-04-01T05:16:50.963+00:00\",\n            \"customerId\": \"56bb7e60-9db6-42cc-8965-bdacfa2a6f8f\",\n            \"street\": \"123 Main St-\",\n            \"city\": \"New York-\",\n            \"state\": \"NY-\",\n            \"postalCode\": \"1000112359\",\n            \"country\": \"United State-\",\n            \"phone\": \"1234567890\",\n            \"isDefault\": true\n        }\n    ],\n    \"page\": 0,\n    \"size\": 10,\n    \"totalElements\": 1,\n    \"totalPages\": 1\n}"
+						}
+					]
 				}
 			]
 		},
