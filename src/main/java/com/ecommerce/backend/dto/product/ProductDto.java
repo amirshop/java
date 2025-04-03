@@ -12,12 +12,15 @@ import java.util.UUID;
 public class ProductDto {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    @AllowedFilter
     private UUID id;
 
     @AllowedFilter
     private String name;
 
+    @AllowedFilter
     private String slug;
+
     private String description;
 
     @AllowedFilter
@@ -26,10 +29,10 @@ public class ProductDto {
     @AllowedFilter
     private int availableItemCount;
 
-    @AllowedFilter
-    private ProductCategoryDto category;
-
-
+    private Set<UUID> categories;
     private List<UUID> productReviews;
-    private Set<TagDto> tags;
+    private Set<UUID> tags;
+
+    // Variants for this product
+    private List<ProductVariantDTO> variants;
 }

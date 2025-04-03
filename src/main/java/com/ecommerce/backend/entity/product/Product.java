@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.IOException;
 import java.util.*;
 
 @Entity
@@ -18,7 +17,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
     private String name;
@@ -27,17 +31,12 @@ public class Product {
     private String slug;
 
     private String description;
-    private double price;
-    private int availableItemCount;
-
-    @ManyToOne
-    private ProductCategory category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductReview> productReviews;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Specification> specifications; // مشخصات فنی
+    private List<Attribute> attributes; // مشخصات
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductImage> images; // لیست تصاویر محصول
@@ -53,4 +52,30 @@ public class Product {
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     private Set<Tag> tags = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "product_categories",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private Set<ProductCategory> categories = new HashSet<>();
+
+
+    // Association to product variants
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductVariant> variants;
+
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = new Date();
+    }
 }
+

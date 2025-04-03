@@ -10,8 +10,4 @@ import java.util.UUID;
 
 public interface ProductRepository extends JpaRepository<Product, UUID>, JpaSpecificationExecutor<Product> {
 
-    List<Product> findByCategory(ProductCategory category);
-    List<Product> findByNameContainingIgnoreCase(String name);
-
-    List<Product> findByNameContainingAndCategoryId(String name, UUID categoryId);
 }

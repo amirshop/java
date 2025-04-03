@@ -5,14 +5,16 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Specification {
+public class Attribute {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -27,7 +29,7 @@ public class Specification {
     private Date updatedAt = new Date();
 
     private String label;  // نام ویژگی (مثلاً "بلوتوث")
-    private String value; // مقدار ویژگی (مثلاً "۵.۳")
+    private List<String> value; // مقدار ویژگی (مثلاً "۵.۳")
 
     @ManyToOne
     @JoinColumn(name = "product_id")
