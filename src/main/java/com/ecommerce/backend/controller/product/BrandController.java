@@ -2,8 +2,11 @@ package com.ecommerce.backend.controller.product;
 
 import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
+import com.ecommerce.backend.dto.product.BrandDto;
+import com.ecommerce.backend.dto.product.TagDto;
 import com.ecommerce.backend.entity.product.Brand;
 import com.ecommerce.backend.service.product.BrandService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,44 +17,38 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/brands")
+@RequiredArgsConstructor
 public class BrandController {
 
     private final BrandService brandService;
 
-    public BrandController(BrandService brandService) {
-        this.brandService = brandService;
-    }
-
-    // دریافت لیست تمام برندها
     @GetMapping
-    public ResponseEntity<List<Brand>> getAllBrands() {
-        List<Brand> brands = brandService.findAll();
-        return new ResponseEntity<>(brands, HttpStatus.OK);
+    public ResponseEntity<List<BrandDto>> getAllBrands() {
+        return ResponseEntity.ok(brandService.getAllBrands());
     }
 
-    // دریافت یک برند بر اساس شناسه
-    @GetMapping("/{id}")
-    public ResponseEntity<Brand> getBrandById(@PathVariable UUID id) {
-        Optional<Brand> brand = brandService.findById(id);
-        return brand.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    @GetMapping("/{brandId}")
+    public ResponseEntity<BrandDto> getBrandById(@PathVariable UUID brandId) {
+        BrandDto brand = brandService.getBrandById(brandId);
+        return brand != null
+                ? ResponseEntity.ok(brand)
+                : ResponseEntity.notFound().build();
     }
 
-    // ایجاد یک برند جدید
     @PostMapping
-    public ResponseEntity<Brand> createBrand(@RequestBody Brand brand) {
-        Brand createdBrand = brandService.createBrand(brand);
-        return new ResponseEntity<>(createdBrand, HttpStatus.CREATED);
+    public ResponseEntity<BrandDto> createBrand(@RequestBody BrandDto brandDto) {
+        return ResponseEntity.ok(brandService.createBrand(brandDto));
     }
 
-    // به‌روزرسانی اطلاعات یک برند
     @PutMapping("/{id}")
-    public ResponseEntity<Brand> updateBrand(@PathVariable UUID id, @RequestBody Brand brand) {
-        Brand updatedBrand = brandService.updateBrand(id, brand);
-        return new ResponseEntity<>(updatedBrand, HttpStatus.OK);
+    public ResponseEntity<BrandDto> updateBrand(@PathVariable UUID id,
+                                             @RequestBody BrandDto brandDto) {
+        BrandDto updatedBrand = brandService.updateBrand(id, brandDto);
+        return updatedBrand != null
+                ? ResponseEntity.ok(updatedBrand)
+                : ResponseEntity.notFound().build();
     }
 
-    // حذف یک برند بر اساس شناسه
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBrand(@PathVariable UUID id) {
         brandService.deleteBrand(id);

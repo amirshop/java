@@ -1,5 +1,7 @@
 package com.ecommerce.backend.controller.product;
 
+import com.ecommerce.backend.dto.ResponseDto;
+import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.product.TagDto;
 import com.ecommerce.backend.service.product.TagService;
 import lombok.RequiredArgsConstructor;
@@ -24,9 +26,9 @@ public class TagController {
 
     @GetMapping("/{tagId}")
     public ResponseEntity<TagDto> getTagById(@PathVariable UUID tagId) {
-        TagDto category = tagService.getTagById(tagId);
-        return category != null
-                ? ResponseEntity.ok(category)
+        TagDto tag = tagService.getTagById(tagId);
+        return tag != null
+                ? ResponseEntity.ok(tag)
                 : ResponseEntity.notFound().build();
     }
 
@@ -48,6 +50,11 @@ public class TagController {
     public ResponseEntity<Void> deleteTag(@PathVariable UUID id) {
         tagService.deleteTag(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/search")
+    public ResponseDto searchTags(@RequestBody SearchDto requestDto) {
+        return tagService.searchTags(requestDto);
     }
 }
 

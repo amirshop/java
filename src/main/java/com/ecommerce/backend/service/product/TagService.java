@@ -89,5 +89,4 @@ public class TagService extends BaseService<Tag, TagDto> {
         return search(requestDto, TagDto.class);
     }
 
-
 }

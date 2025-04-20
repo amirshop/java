@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.UUID;
 
 
@@ -23,4 +24,11 @@ public class BrandDto {
     private String country;
 
     private String description;
+
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date createdAt;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private Date updatedAt;
 }

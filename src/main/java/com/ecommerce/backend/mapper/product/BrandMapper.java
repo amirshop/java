@@ -8,4 +8,5 @@ import org.mapstruct.Mapper;
 public interface BrandMapper {
 
     BrandDto toDto(Brand brand);
+    Brand toEntity(BrandDto brandDto);
 }
