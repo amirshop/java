@@ -8,4 +8,6 @@ import java.util.UUID;
 
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory, UUID>, JpaSpecificationExecutor<ProductCategory> {
     boolean existsBySlug(String slug);
+
+    boolean existsAllByParentId(UUID id);
 }

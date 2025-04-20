@@ -128,7 +128,32 @@ public class ProductCategoryService extends BaseService<ProductCategory, Product
     }
 
     public void deleteCategory(UUID categoryId) {
-        categoryRepository.deleteById(categoryId);
+        ProductCategory category = checkExistCategory(categoryId);
+        deleteSubCategoryById(category);
+        categoryRepository.delete(category);
+    }
+
+    public void deleteSubCategoryById(ProductCategory subCategory) {
+
+        // Remove subcategory from its parent's subcategories set
+        if (subCategory.getParentId() != null) {
+            ProductCategory parentCategory = categoryRepository.findById(subCategory.getParentId())
+                    .orElseThrow(() -> new ResourceNotFoundException("productCategory", "id", subCategory.getParentId().toString()));
+            parentCategory.getSubCategory().remove(subCategory);
+        }
+    }
+
+    private ProductCategory checkExistCategory(UUID id) {
+        ProductCategory category = categoryRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("productCategory", "id", id.toString()));
+        checkExistsAllByParentId(id);
+        return category;
+    }
+
+    private void checkExistsAllByParentId(UUID id) {
+        if (categoryRepository.existsAllByParentId(id)){
+            throw new RuntimeException("DELETE CATEGORY FAILED BECAUSE CHILD IS EXIST");
+        }
     }
 
     @Override
