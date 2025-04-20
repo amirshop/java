@@ -1,11 +1,11 @@
 {
 	"info": {
-		"_postman_id": "8267fc68-345a-48bc-80d5-a7d18c11935c",
+		"_postman_id": "988d93c4-139d-4c9c-804c-5ad9ecf7a481",
 		"name": "Spring Boot API Collection",
 		"description": "Collection of all API endpoints for the Spring Boot project.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "43794003",
-		"_collection_link": "https://amir-6592750.postman.co/workspace/amir's-Workspace~7aed2458-0281-426f-8fd6-63c39e9a6ef9/collection/43794003-8267fc68-345a-48bc-80d5-a7d18c11935c?action=share&source=collection_link&creator=43794003"
+		"_collection_link": "https://amir-6592750.postman.co/workspace/amir's-Workspace~7aed2458-0281-426f-8fd6-63c39e9a6ef9/collection/43794003-988d93c4-139d-4c9c-804c-5ad9ecf7a481?action=share&source=collection_link&creator=43794003"
 	},
 	"item": [
 		{
@@ -6336,7 +6336,7 @@
 								}
 							],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				},
@@ -6347,7 +6347,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"page\": 0,\r\n  \"size\": 10,\r\n  \"sortField\": \"name\",\r\n  \"sortDirection\": \"asc\",\r\n  \"filters\": [\r\n    {\r\n      \"col\": \"name\",\r\n      \"operator\": \"LIKE\",\r\n      \"value\": \"Nike\"\r\n    }\r\n  ]\r\n}",
+							"raw": "{\r\n    \"filters\": [\r\n        {\r\n        \"field\": \"name\",\r\n        \"operator\": \"CONTAINS\",\r\n        \"criteria\": \"Ni\"\r\n        }\r\n    ],\r\n    \"sort\":{\r\n        \"field\":\"createdAt\",\r\n        \"direction\":\"desc\"\r\n    },\r\n    \"page\": 0,\r\n    \"size\": 10\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -6926,14 +6926,14 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{baseUrl}}/api/tags/{{brandId}}",
+							"raw": "{{baseUrl}}/api/tags/{{tagId}}",
 							"host": [
 								"{{baseUrl}}"
 							],
 							"path": [
 								"api",
 								"tags",
-								"{{brandId}}"
+								"{{tagId}}"
 							]
 						}
 					},
@@ -7009,7 +7009,7 @@
 								}
 							],
 							"cookie": [],
-							"body": null
+							"body": ""
 						}
 					]
 				},
@@ -7020,7 +7020,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"page\": 0,\r\n  \"size\": 10,\r\n  \"sortField\": \"name\",\r\n  \"sortDirection\": \"asc\",\r\n  \"filters\": [\r\n    {\r\n      \"col\": \"name\",\r\n      \"operator\": \"LIKE\",\r\n      \"value\": \"Nike\"\r\n    }\r\n  ]\r\n}",
+							"raw": "{\r\n    \"filters\": [\r\n        {\r\n        \"field\": \"name\",\r\n        \"operator\": \"CONTAINS\",\r\n        \"criteria\": \"Ni\"\r\n        }\r\n    ],\r\n    \"sort\":{\r\n        \"field\":\"createdAt\",\r\n        \"direction\":\"desc\"\r\n    },\r\n    \"page\": 0,\r\n    \"size\": 10\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -7129,6 +7129,605 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"content\": [\n        {\n            \"id\": \"75b817af-91d5-4f83-b0ca-2a0fed7f99ff\",\n            \"name\": \"Nike\",\n            \"slug\": \"nike-slug\",\n            \"description\": \"test tags\",\n            \"createdAt\": null,\n            \"updatedAt\": null\n        }\n    ],\n    \"page\": 0,\n    \"size\": 10,\n    \"totalElements\": 1,\n    \"totalPages\": 1\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Attribute",
+			"item": [
+				{
+					"name": "Get All Attributes",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/attributes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"attributes"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get All Attributes",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/attributes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"attributes"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 20 Apr 2025 08:06:24 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": \"13c540a9-1c43-4c33-9b3e-127f43284035\",\n        \"createdAt\": \"2025-04-20T08:05:49.082+00:00\",\n        \"updatedAt\": \"2025-04-20T08:05:49.082+00:00\",\n        \"label\": \"size\",\n        \"value\": [\n            \"large\",\n            \"medium\",\n            \"small\"\n        ]\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get Attribute by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/api/attributes/{{attributeId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"attributes",
+								"{{attributeId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Tag by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"url": {
+									"raw": "{{baseUrl}}/api/attributes/{{attributeId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"attributes",
+										"{{attributeId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 20 Apr 2025 08:06:17 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"13c540a9-1c43-4c33-9b3e-127f43284035\",\n    \"createdAt\": \"2025-04-20T08:05:49.082+00:00\",\n    \"updatedAt\": \"2025-04-20T08:05:49.082+00:00\",\n    \"label\": \"size\",\n    \"value\": [\n        \"large\",\n        \"medium\",\n        \"small\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Create Attribute",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Nike\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/attributes",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"attributes"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create Attribute",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"label\": \"size\",\n  \"value\":[\"large\",\"medium\",\"small\"]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/attributes",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"attributes"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 20 Apr 2025 08:05:49 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"13c540a9-1c43-4c33-9b3e-127f43284035\",\n    \"createdAt\": \"2025-04-20T08:05:49.082+00:00\",\n    \"updatedAt\": \"2025-04-20T08:05:49.082+00:00\",\n    \"label\": \"size\",\n    \"value\": [\n        \"large\",\n        \"medium\",\n        \"small\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Attribute",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"label\": \"update size\",\n  \"value\":[\"medium\",\"small\"]\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/attributes/{{attributeId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"attributes",
+								"{{attributeId}}"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update Tag",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"label\": \"update size\",\n  \"value\":[\"medium\",\"small\"]\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/attributes/{{attributeId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"attributes",
+										"{{attributeId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 20 Apr 2025 08:09:18 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"0cd6c780-7217-4c0b-b83e-145d6185fca8\",\n    \"createdAt\": \"2025-04-20T08:09:08.315+00:00\",\n    \"updatedAt\": \"2025-04-20T08:09:18.591+00:00\",\n    \"label\": \"update size\",\n    \"value\": [\n        \"medium\",\n        \"small\"\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Attribute",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/api/attributes/{{attributeId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"attributes",
+								"{{attributeId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Attributes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"filters\": [\r\n        {\r\n        \"field\": \"label\",\r\n        \"operator\": \"CONTAINS\",\r\n        \"criteria\": \"s\"\r\n        }\r\n    ],\r\n    \"sort\":{\r\n        \"field\":\"createdAt\",\r\n        \"direction\":\"desc\"\r\n    },\r\n    \"page\": 0,\r\n    \"size\": 10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/api/attributes/search",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"api",
+								"attributes",
+								"search"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Search Tags",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"filters\": [\r\n        {\r\n        \"field\": \"label\",\r\n        \"operator\": \"CONTAINS\",\r\n        \"criteria\": \"s\"\r\n        }\r\n    ],\r\n    \"sort\":{\r\n        \"field\":\"createdAt\",\r\n        \"direction\":\"desc\"\r\n    },\r\n    \"page\": 0,\r\n    \"size\": 10\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/attributes/search",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"attributes",
+										"search"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 20 Apr 2025 08:10:45 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"content\": [\n        {\n            \"id\": \"0cd6c780-7217-4c0b-b83e-145d6185fca8\",\n            \"createdAt\": \"2025-04-20T08:09:08.315+00:00\",\n            \"updatedAt\": \"2025-04-20T08:09:18.591+00:00\",\n            \"label\": \"update size\",\n            \"value\": [\n                \"medium\",\n                \"small\"\n            ]\n        }\n    ],\n    \"page\": 0,\n    \"size\": 10,\n    \"totalElements\": 1,\n    \"totalPages\": 1\n}"
 						}
 					]
 				}

@@ -57,6 +57,7 @@ public class AttributeService extends BaseService<Attribute, AttributeDto> {
                     Optional.ofNullable(attributeDto.getLabel())
                             .filter(label -> !label.isBlank())
                             .ifPresent(attribute::setLabel);
+                    attribute.setValue(attributeDto.getValue());
                     attribute.setUpdatedAt(new Date());
                     Attribute updatedAttribute = attributeRepository.save(attribute);
                     return attributeMapper.toDto(updatedAttribute);
