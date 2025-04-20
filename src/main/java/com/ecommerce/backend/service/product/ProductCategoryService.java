@@ -31,9 +31,8 @@ public class ProductCategoryService extends BaseService<ProductCategory, Product
         this.productCategoryMapper = productCategoryMapper;
     }
 
-    //TODO: parentID is null in response !!!
     public List<ProductCategoryDto> getAllCategories() {
-        List<ProductCategory> categories = categoryRepository.findAll();
+        List<ProductCategory> categories = categoryRepository.findAllOrOrderByPriority();
         return categories.stream()
                 .map(productCategoryMapper::toDto)
                 .collect(Collectors.toList());
