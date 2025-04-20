@@ -6,11 +6,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 @Entity
+@Table(name = "attribute")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -29,6 +31,11 @@ public class Attribute {
     private Date updatedAt = new Date();
 
     private String label;  // نام ویژگی (مثلاً "بلوتوث")
+
+
+    @ElementCollection
+    @CollectionTable(name = "attribute_values", joinColumns = @JoinColumn(name = "attribute_id"))
+    @Column(name = "attribute_value")
     private List<String> value; // مقدار ویژگی (مثلاً "۵.۳")
 
     @ManyToOne
