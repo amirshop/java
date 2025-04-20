@@ -24,15 +24,11 @@ public class ProductCategoryService extends BaseService<ProductCategory, Product
     private final ProductCategoryRepository categoryRepository;
     private final ProductCategoryMapper productCategoryMapper;
 
-    private final EntityManager entityManager;
-
     public ProductCategoryService(ProductCategoryRepository categoryRepository,
-                                  ProductCategoryMapper productCategoryMapper,
-                                  EntityManager entityManager) {
+                                  ProductCategoryMapper productCategoryMapper) {
         super(categoryRepository, productCategoryMapper::toDto);
         this.categoryRepository = categoryRepository;
         this.productCategoryMapper = productCategoryMapper;
-        this.entityManager = entityManager;
     }
 
     public List<ProductCategoryDto> getAllCategories() {
