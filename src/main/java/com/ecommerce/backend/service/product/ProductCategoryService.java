@@ -11,6 +11,7 @@ import com.ecommerce.backend.mapper.product.ProductCategoryMapper;
 import com.ecommerce.backend.repository.product.ProductCategoryRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.GenericSpecification;
+import jakarta.persistence.EntityManager;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +24,15 @@ public class ProductCategoryService extends BaseService<ProductCategory, Product
     private final ProductCategoryRepository categoryRepository;
     private final ProductCategoryMapper productCategoryMapper;
 
+    private final EntityManager entityManager;
+
     public ProductCategoryService(ProductCategoryRepository categoryRepository,
-                                  ProductCategoryMapper productCategoryMapper) {
+                                  ProductCategoryMapper productCategoryMapper,
+                                  EntityManager entityManager) {
         super(categoryRepository, productCategoryMapper::toDto);
         this.categoryRepository = categoryRepository;
         this.productCategoryMapper = productCategoryMapper;
+        this.entityManager = entityManager;
     }
 
     public List<ProductCategoryDto> getAllCategories() {
@@ -53,8 +58,7 @@ public class ProductCategoryService extends BaseService<ProductCategory, Product
         } else {
             productCategory = addNewChildCategory(categoryRequest);
         }
-        ProductCategory saved = categoryRepository.save(productCategory);
-        return productCategoryMapper.toDto(saved);
+        return productCategoryMapper.toDto(productCategory);
     }
 
     private ProductCategory addNewParentCategory(ProductCategoryDto categoryRequest){
@@ -64,6 +68,7 @@ public class ProductCategoryService extends BaseService<ProductCategory, Product
         return categoryRepository.save(productCategory);
     }
 
+    //TODO: check why return parentID null response?
     private ProductCategory addNewChildCategory(ProductCategoryDto categoryRequest){
         ProductCategory parentCategory = categoryRepository.findById(categoryRequest.getParentId())
                 .orElseThrow(() -> new ResourceNotFoundException("productCategory", "parentId", categoryRequest.getParentId().toString()));
@@ -76,7 +81,11 @@ public class ProductCategoryService extends BaseService<ProductCategory, Product
         productCategory.setUpdatedAt(new Date());
         subProductCategory.add(productCategory);
         parentCategory.setSubCategory(subProductCategory);
-        return categoryRepository.save(parentCategory);
+        ProductCategory savedParent = categoryRepository.save(parentCategory);
+        return savedParent.getSubCategory().stream()
+                .filter(c -> c.getSlug().equals(productCategory.getSlug()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Child not found"));
     }
 
     private String getChildSlug(ProductCategory parentCategory, ProductCategoryDto categoryReqDto) {
