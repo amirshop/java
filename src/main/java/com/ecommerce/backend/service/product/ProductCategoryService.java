@@ -13,10 +13,7 @@ import com.ecommerce.backend.specification.GenericSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,13 +42,43 @@ public class ProductCategoryService extends BaseService<ProductCategory, Product
                 .orElse(null);
     }
 
+    //TODO: test this method
     public ProductCategoryDto createCategory(ProductCategoryDto categoryRequest) {
         checkExistSlug(categoryRequest.getSlug());
-        ProductCategory category = productCategoryMapper.toEntity(categoryRequest);
-        category.setCreatedAt(new Date());
-        category.setUpdatedAt(new Date());
-        ProductCategory saved = categoryRepository.save(category);
+        ProductCategory productCategory;
+        if (categoryRequest.getParentId() == null) {
+            checkExistSlug(categoryRequest.getSlug());
+            productCategory = addNewParentCategory(categoryRequest);
+        } else {
+            productCategory = addNewChildCategory(categoryRequest);
+        }
+        ProductCategory saved = categoryRepository.save(productCategory);
         return productCategoryMapper.toDto(saved);
+    }
+
+    private ProductCategory addNewParentCategory(ProductCategoryDto categoryRequest){
+        ProductCategory productCategory = productCategoryMapper.toEntity(categoryRequest);
+        productCategory.setCreatedAt(new Date());
+        productCategory.setUpdatedAt(new Date());
+        return categoryRepository.save(productCategory);
+    }
+
+    private ProductCategory addNewChildCategory(ProductCategoryDto categoryRequest){
+        ProductCategory parentCategoryById = categoryRepository.findById(categoryRequest.getParentId()).get();
+        ProductCategory productCategory = productCategoryMapper.toEntity(categoryRequest);
+        productCategory.setCreatedAt(new Date());
+        productCategory.setUpdatedAt(new Date());
+        productCategory.setSlug(getChildSlug(parentCategoryById, categoryRequest));
+        Set<ProductCategory> subProductCategory = parentCategoryById.getSubCategory();
+        subProductCategory.add(productCategory);
+        parentCategoryById.setSubCategory(subProductCategory);
+        return categoryRepository.save(parentCategoryById);
+    }
+
+    private String getChildSlug(ProductCategory parentCategory, ProductCategoryDto categoryReqDto) {
+        String url = parentCategory.getSlug() + "/" + categoryReqDto.getSlug();
+        checkExistSlug(url);
+        return url;
     }
 
     private void checkExistSlug(String slug) {
@@ -60,6 +87,7 @@ public class ProductCategoryService extends BaseService<ProductCategory, Product
         }
     }
 
+    //TODO: check update
     public ProductCategoryDto updateCategory(UUID categoryId, ProductCategoryDto categoryRequest) {
         return categoryRepository.findById(categoryId)
                 .map(category -> {
@@ -69,10 +97,17 @@ public class ProductCategoryService extends BaseService<ProductCategory, Product
                     Optional.ofNullable(categoryRequest.getDescription())
                             .filter(description -> !description.isBlank())
                             .ifPresent(category::setDescription);
-                    Optional.ofNullable(categoryRequest.getSlug())
-                            .filter(slug -> !slug.isBlank())
-                            .filter(this::isSlugUnique)
-                            .ifPresent(category::setSlug);
+                    Optional.ofNullable(categoryRequest.getPriority())
+                            .ifPresent(category::setPriority);
+
+                    //TODO: can't change slug and is child or parent
+//                    Optional.ofNullable(categoryRequest.getSlug())
+//                            .filter(slug -> !slug.isBlank())
+//                            .filter(this::isSlugUnique)
+//                            .ifPresent(category::setSlug);
+
+                    category.setUpdatedAt(new Date());
+
                     ProductCategory updatedCategory = categoryRepository.save(category);
                     return productCategoryMapper.toDto(updatedCategory);
                 })
