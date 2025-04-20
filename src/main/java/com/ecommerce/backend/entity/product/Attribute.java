@@ -32,13 +32,8 @@ public class Attribute {
 
     private String label;  // نام ویژگی (مثلاً "بلوتوث")
 
-
     @ElementCollection
     @CollectionTable(name = "attribute_values", joinColumns = @JoinColumn(name = "attribute_id"))
     @Column(name = "attribute_value")
     private List<String> value; // مقدار ویژگی (مثلاً "۵.۳")
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
 }

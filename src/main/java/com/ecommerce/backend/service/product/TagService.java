@@ -3,6 +3,7 @@ package com.ecommerce.backend.service.product;
 import com.ecommerce.backend.dto.FilterCriteria;
 import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
+import com.ecommerce.backend.dto.product.BrandDto;
 import com.ecommerce.backend.dto.product.TagDto;
 import com.ecommerce.backend.entity.product.ProductCategory;
 import com.ecommerce.backend.entity.product.Tag;
@@ -66,6 +67,7 @@ public class TagService extends BaseService<Tag, TagDto> {
                             .filter(slug -> !slug.isBlank())
                             .filter(this::isSlugUnique)
                             .ifPresent(tag::setSlug);
+                    tag.setUpdatedAt(new Date());
                     Tag updatedTag = tagRepository.save(tag);
                     return tagMapper.toDto(updatedTag);
                 })
@@ -86,7 +88,7 @@ public class TagService extends BaseService<Tag, TagDto> {
     }
 
     public ResponseDto searchTags(SearchDto requestDto) {
-        return search(requestDto, TagDto.class);
+        return search(requestDto, BrandDto.class);
     }
 
 }

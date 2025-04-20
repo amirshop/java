@@ -35,11 +35,16 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductReview> productReviews;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Attribute> attributes; // مشخصات
+    @ManyToMany
+    @JoinTable(
+            name = "product_attributes",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "attribute_id")
+    )
+    private Set<Attribute> attributes = new HashSet<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductImage> images; // لیست تصاویر محصول
+    private List<ProductImage> images;
 
     @ManyToOne
     @JoinColumn(name = "brand_id", nullable = false)

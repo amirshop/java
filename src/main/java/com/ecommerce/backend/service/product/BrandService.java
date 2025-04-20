@@ -64,6 +64,7 @@ public class BrandService extends BaseService<Brand, BrandDto> {
                     Optional.ofNullable(brandDto.getCountry())
                             .filter(country -> !country.isBlank())
                             .ifPresent(brand::setCountry);
+                    brand.setUpdatedAt(new Date());
                     Brand updatedBrand = brandRepository.save(brand);
                     return brandMapper.toDto(updatedBrand);
                 })
