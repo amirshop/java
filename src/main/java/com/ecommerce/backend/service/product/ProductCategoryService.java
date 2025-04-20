@@ -6,6 +6,7 @@ import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.product.ProductCategoryDto;
 import com.ecommerce.backend.entity.product.ProductCategory;
 import com.ecommerce.backend.exception.ResourceAlreadyExistsException;
+import com.ecommerce.backend.exception.ResourceNotFoundException;
 import com.ecommerce.backend.mapper.product.ProductCategoryMapper;
 import com.ecommerce.backend.repository.product.ProductCategoryRepository;
 import com.ecommerce.backend.service.BaseService;
@@ -64,15 +65,18 @@ public class ProductCategoryService extends BaseService<ProductCategory, Product
     }
 
     private ProductCategory addNewChildCategory(ProductCategoryDto categoryRequest){
-        ProductCategory parentCategoryById = categoryRepository.findById(categoryRequest.getParentId()).get();
+        ProductCategory parentCategory = categoryRepository.findById(categoryRequest.getParentId())
+                .orElseThrow(() -> new ResourceNotFoundException("productCategory", "parentId", categoryRequest.getParentId().toString()));
         ProductCategory productCategory = productCategoryMapper.toEntity(categoryRequest);
+        productCategory.setParentId(categoryRequest.getParentId());
+        productCategory.setSlug(getChildSlug(parentCategory, categoryRequest));
+        productCategory.setPriority(parentCategory.getSubCategory().size() + 1);
+        Set<ProductCategory> subProductCategory = parentCategory.getSubCategory();
         productCategory.setCreatedAt(new Date());
         productCategory.setUpdatedAt(new Date());
-        productCategory.setSlug(getChildSlug(parentCategoryById, categoryRequest));
-        Set<ProductCategory> subProductCategory = parentCategoryById.getSubCategory();
         subProductCategory.add(productCategory);
-        parentCategoryById.setSubCategory(subProductCategory);
-        return categoryRepository.save(parentCategoryById);
+        parentCategory.setSubCategory(subProductCategory);
+        return categoryRepository.save(parentCategory);
     }
 
     private String getChildSlug(ProductCategory parentCategory, ProductCategoryDto categoryReqDto) {
