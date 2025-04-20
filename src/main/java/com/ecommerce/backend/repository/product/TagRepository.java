@@ -10,4 +10,6 @@ import java.util.UUID;
 
 public interface TagRepository extends JpaRepository<Tag, UUID>, JpaSpecificationExecutor<Tag> {
     Optional<Tag> findByName(String name);
+
+    boolean existsBySlug(String slug);
 }

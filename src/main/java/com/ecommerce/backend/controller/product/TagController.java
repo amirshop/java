@@ -21,9 +21,27 @@ public class TagController {
         return ResponseEntity.ok(tagService.getAllTags());
     }
 
+
+    @GetMapping("/{tagId}")
+    public ResponseEntity<TagDto> getTagById(@PathVariable UUID tagId) {
+        TagDto category = tagService.getTagById(tagId);
+        return category != null
+                ? ResponseEntity.ok(category)
+                : ResponseEntity.notFound().build();
+    }
+
     @PostMapping
     public ResponseEntity<TagDto> createTag(@RequestBody TagDto tagDto) {
         return ResponseEntity.ok(tagService.createTag(tagDto));
+    }
+
+    @PutMapping("/{tagId}")
+    public ResponseEntity<TagDto> updateTag(@PathVariable UUID tagId,
+                                                             @RequestBody TagDto tagDto) {
+        TagDto updatedTag = tagService.updateTag(tagId, tagDto);
+        return updatedTag != null
+                ? ResponseEntity.ok(updatedTag)
+                : ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/{id}")
