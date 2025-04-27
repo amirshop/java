@@ -34,5 +34,5 @@ public class ProductDto {
     private Set<UUID> tags;
 
     // Variants for this product
-    private List<ProductVariantDTO> variants;
+    private List<ProductVariantDto> variants;
 }

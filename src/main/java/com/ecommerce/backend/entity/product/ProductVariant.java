@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -30,13 +29,37 @@ public class ProductVariant {
     @Column(nullable = false)
     private int availableItemCount;
 
+    // Name (e.g., "color", "size", "material", etc.)
+    @Column(nullable = false)
+    private String variantName;
+
+    // Value (e.g., "red", "XL", "cotton")
+    @Column(nullable = false)
+    private String variantValue;
+
     // Link back to the base product
     @ManyToOne
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
-    // Association to the variant's attributes (e.g., color, size, etc.)
-    @OneToMany(mappedBy = "variant", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductVariantAttribute> attributes;
+    @Column(nullable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
+
+    @Column(nullable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
+
+
+    @PrePersist
+    public void prePersist() {
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updatedAt = new Date();
+    }
 }
 
