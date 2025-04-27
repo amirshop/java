@@ -19,5 +19,5 @@ public class ProductVariantDTO {
     private int availableItemCount;
 
     // Key/value attributes for this variant
-    private List<ProductVariantAttributeDTO> attributes;
+    private List<ProductVariantAttributeDto> attributes;
 }

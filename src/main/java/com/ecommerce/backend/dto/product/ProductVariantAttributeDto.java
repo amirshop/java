@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.UUID;
 
 @Data
-public class ProductVariantAttributeDTO {
+public class ProductVariantAttributeDto {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private UUID id;
