@@ -12,5 +12,5 @@ public interface ProductCategoryRepository extends JpaRepository<ProductCategory
 
     boolean existsAllByParentId(UUID id);
 
-    List<ProductCategory> findAllOrOrderByPriority();
+    List<ProductCategory> findAllByParentIdIsNullOrderByPriorityAscCreatedAtAsc();
 }

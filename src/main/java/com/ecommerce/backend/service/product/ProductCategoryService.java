@@ -32,7 +32,7 @@ public class ProductCategoryService extends BaseService<ProductCategory, Product
     }
 
     public List<ProductCategoryDto> getAllCategories() {
-        List<ProductCategory> categories = categoryRepository.findAllOrOrderByPriority();
+        List<ProductCategory> categories = categoryRepository.findAllByParentIdIsNullOrderByPriorityAscCreatedAtAsc();
         return categories.stream()
                 .map(productCategoryMapper::toDto)
                 .collect(Collectors.toList());
