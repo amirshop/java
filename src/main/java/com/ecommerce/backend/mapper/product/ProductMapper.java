@@ -18,11 +18,13 @@ public interface ProductMapper {
     @Mapping(target = "productReviews", source = "productReviews", qualifiedByName = "mapUUIDsToProductReviews")
     @Mapping(target = "tags", source = "tags", qualifiedByName = "mapUUIDsToTags")
     @Mapping(target = "categories", source = "categories", qualifiedByName = "mapUUIDsToProductCategories")
+    @Mapping(target = "brand.id", source = "brandId")
     Product toEntity(ProductDto productDto);
 
     @Mapping(target = "productReviews", source = "productReviews", qualifiedByName = "mapProductReviewsToUUIDs")
     @Mapping(target = "tags", source = "tags", qualifiedByName = "mapTagsToUUIDs")
     @Mapping(target = "categories", source = "categories", qualifiedByName = "mapProductCategoriesToUUIDs")
+    @Mapping(target = "brandId", source = "brand.id")
     ProductDto toDto(Product product);
 
     @Named("mapUUIDsToProductReviews")

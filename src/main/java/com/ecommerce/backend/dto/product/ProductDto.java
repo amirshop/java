@@ -24,11 +24,7 @@ public class ProductDto {
 
     private String description;
 
-    @AllowedFilter
-    private double price;
-
-    @AllowedFilter
-    private int availableItemCount;
+    private UUID brandId;
 
     private Set<UUID> categories;
     private List<UUID> productReviews;
