@@ -49,21 +49,13 @@ public class ProductService extends BaseService<Product, ProductDto> {
     public ProductDto createProduct(ProductDto productRequest) {
         Product product = productMapper.toEntity(productRequest);
 
-        // Handle nested variant relationships
-        if (product.getVariants() != null) {
-            product.getVariants().forEach(variant -> {
-                variant.setProduct(product);
-            });
+        if (productRequest.getVariants() != null) {
+            for (ProductVariantDto variantDTO : productRequest.getVariants()) {
+                ProductVariant productVariant = productVariantMapper.toEntity(variantDTO);
+                productVariant.setProduct(product);
+                product.getVariants().add(productVariant);
+            }
         }
-
-//        // Handle Tags
-//        Set<Tag> tags = new HashSet<>();
-//        if (productRequest.getTags() != null) {
-//            for (TagDto tag : productRequest.getTags()) {
-//                tagRepository.findById(tag.getId()).ifPresent(tags::add);
-//            }
-//        }
-//        product.setTags(tags);
 
         Product saved = productRepository.save(product);
         return productMapper.toDto(saved);
@@ -78,13 +70,13 @@ public class ProductService extends BaseService<Product, ProductDto> {
                     // Update variants: For simplicity, we remove all old variants and add new ones.
                     // In a real-world scenario, you might want to perform a diff and update instead.
                     existingProduct.getVariants().clear();
-                    if (productRequest.getVariants() != null) {
-                        for (ProductVariantDto variantDTO : productRequest.getVariants()) {
-                            ProductVariant variant = productVariantMapper.toEntity(variantDTO);
-                            variant.setProduct(existingProduct);
-                            existingProduct.getVariants().add(variant);
-                        }
-                    }
+//                    if (productRequest.getVariants() != null) {
+//                        for (ProductVariantDto variantDTO : productRequest.getVariants()) {
+//                            ProductVariant variant = productVariantMapper.toEntity(variantDTO);
+//                            variant.setProduct(existingProduct);
+//                            existingProduct.getVariants().add(variant);
+//                        }
+//                    }
 
 //                    // Update Tags
 //                    Set<Tag> tags = new HashSet<>();
@@ -100,6 +92,7 @@ public class ProductService extends BaseService<Product, ProductDto> {
                 })
                 .orElse(null);
     }
+
 
     public void deleteProduct(UUID productId) {
         productRepository.deleteById(productId);

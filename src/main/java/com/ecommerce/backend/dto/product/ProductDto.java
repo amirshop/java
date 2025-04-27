@@ -1,6 +1,7 @@
 package com.ecommerce.backend.dto.product;
 
 import com.ecommerce.backend.annotaions.AllowedFilter;
+import com.ecommerce.backend.entity.product.ProductVariant;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
