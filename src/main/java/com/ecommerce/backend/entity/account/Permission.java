@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Entity
+@Table(name = "permission")
 @Data
 public class Permission {
     @Id
@@ -16,7 +17,8 @@ public class Permission {
     @Column(length = 50, nullable = false)
     private String label;
 
-    @Column(length = 50, nullable = false)
+//    @Column(length = 50, nullable = false)
+    @Column(name = "permission_value", length = 50, nullable = false)
     private String value;
 
     @Column(nullable = false, updatable = false)

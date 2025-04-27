@@ -25,7 +25,7 @@ public class ProductImageService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("محصول پیدا نشد!"));
 
-        String imageUrl = minioService.uploadFile(file, productId);
+        String imageUrl = "minioService.uploadFile(file, productId)";
 
         ProductImage productImage = new ProductImage();
         productImage.setProduct(product);
@@ -48,7 +48,7 @@ public class ProductImageService {
         ProductImage productImage = productImageRepository.findById(imageId)
                 .orElseThrow(() -> new RuntimeException("تصویر یافت نشد!"));
 
-        minioService.deleteFile(productImage.getImageUrl());
+//        minioService.deleteFile(productImage.getImageUrl());
         productImageRepository.delete(productImage);
     }
 
@@ -56,13 +56,13 @@ public class ProductImageService {
     public String updateImage(UUID imageId, MultipartFile file) {
         ProductImage productImage = productImageRepository.findById(imageId)
                 .orElseThrow(() -> new RuntimeException("تصویر یافت نشد!"));
+//
+//        minioService.deleteFile(productImage.getImageUrl());
+//        String newImageUrl = minioService.uploadFile(file, productImage.getProduct().getId());
 
-        minioService.deleteFile(productImage.getImageUrl());
-        String newImageUrl = minioService.uploadFile(file, productImage.getProduct().getId());
-
-        productImage.setImageUrl(newImageUrl);
+//        productImage.setImageUrl(newImageUrl);
         productImageRepository.save(productImage);
-        return newImageUrl;
+        return "newImageUrl";
     }
 }
 

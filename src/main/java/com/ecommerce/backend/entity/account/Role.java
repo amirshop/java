@@ -25,7 +25,7 @@ public class Role {
   @Column(length = 50, nullable = false)
   private String label;
 
-  @Column(length = 50, nullable = false)
+  @Column(name = "role_value", length = 50, nullable = false)
   private String value;
 
   @ManyToMany(fetch = FetchType.EAGER)
