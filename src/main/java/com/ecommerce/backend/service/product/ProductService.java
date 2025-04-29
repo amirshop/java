@@ -4,12 +4,13 @@ import com.ecommerce.backend.dto.FilterCriteria;
 import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.product.ProductDto;
-import com.ecommerce.backend.dto.product.ProductVariantDto;
 import com.ecommerce.backend.entity.product.Product;
 import com.ecommerce.backend.entity.product.ProductVariant;
+import com.ecommerce.backend.exception.ResourceAlreadyExistsException;
 import com.ecommerce.backend.mapper.product.ProductMapper;
 import com.ecommerce.backend.mapper.product.ProductVariantMapper;
 import com.ecommerce.backend.repository.product.ProductRepository;
+import com.ecommerce.backend.repository.product.ProductVariantRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.GenericSpecification;
 import org.springframework.data.jpa.domain.Specification;
@@ -25,13 +26,15 @@ public class ProductService extends BaseService<Product, ProductDto> {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final ProductVariantMapper productVariantMapper;
+    private final ProductVariantRepository productVariantRepository;
 
     public ProductService(ProductRepository productRepository, ProductMapper productMapper,
-                          ProductVariantMapper productVariantMapper) {
+                          ProductVariantMapper productVariantMapper, ProductVariantRepository productVariantRepository) {
         super(productRepository, productMapper::toDto);
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.productVariantMapper = productVariantMapper;
+        this.productVariantRepository = productVariantRepository;
     }
 
     public List<ProductDto> getAllProducts() {
@@ -48,17 +51,27 @@ public class ProductService extends BaseService<Product, ProductDto> {
 
     public ProductDto createProduct(ProductDto productRequest) {
         Product product = productMapper.toEntity(productRequest);
+        checkExistSlug(product.getSlug());
+        Product savedProduct = productRepository.save(product);
 
         if (productRequest.getVariants() != null) {
-            for (ProductVariantDto variantDTO : productRequest.getVariants()) {
-                ProductVariant productVariant = productVariantMapper.toEntity(variantDTO);
-                productVariant.setProduct(product);
-                product.getVariants().add(productVariant);
-            }
+            List<ProductVariant> variants = productRequest.getVariants().stream()
+                    .map(productVariant -> {
+                        ProductVariant v = productVariantMapper.toEntity(productVariant);
+                        v.setProduct(savedProduct);
+                        return productVariantRepository.save(v);
+                    })
+                    .collect(Collectors.toList());
+            savedProduct.setVariants(variants);
         }
 
-        Product saved = productRepository.save(product);
-        return productMapper.toDto(saved);
+        return productMapper.toDto(savedProduct);
+    }
+
+    private void checkExistSlug(String slug) {
+        if (productRepository.existsBySlug(slug)) {
+            throw new ResourceAlreadyExistsException("slug in product already exists");
+        }
     }
 
     public ProductDto updateProduct(UUID productId, ProductDto productRequest) {

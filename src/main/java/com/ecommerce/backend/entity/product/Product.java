@@ -68,7 +68,7 @@ public class Product {
 
 
     // Association to product variants
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "product", orphanRemoval = true)
     private List<ProductVariant> variants;
 
 
@@ -81,6 +81,11 @@ public class Product {
     @PreUpdate
     public void preUpdate() {
         this.updatedAt = new Date();
+    }
+
+    public void addVariant(ProductVariant productVariant) {
+        variants.add(productVariant);
+        productVariant.setProduct(this);
     }
 }
 

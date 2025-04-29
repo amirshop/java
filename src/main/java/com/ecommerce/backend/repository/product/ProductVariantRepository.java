@@ -10,4 +10,5 @@ import java.util.UUID;
 public interface ProductVariantRepository extends JpaRepository<ProductVariant, UUID>,
         JpaSpecificationExecutor<ProductVariant> {
    List<ProductVariant> findAllByProductId(UUID productId);
+   void deleteAllByProductId(UUID productId);
 }
