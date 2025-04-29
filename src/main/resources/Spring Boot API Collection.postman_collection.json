@@ -1,11 +1,11 @@
 {
 	"info": {
-		"_postman_id": "988d93c4-139d-4c9c-804c-5ad9ecf7a481",
+		"_postman_id": "fc4a99d8-9526-4b43-b5d6-42250dfa49dc",
 		"name": "Spring Boot API Collection",
 		"description": "Collection of all API endpoints for the Spring Boot project.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "43794003",
-		"_collection_link": "https://amir-6592750.postman.co/workspace/amir's-Workspace~7aed2458-0281-426f-8fd6-63c39e9a6ef9/collection/43794003-988d93c4-139d-4c9c-804c-5ad9ecf7a481?action=share&source=collection_link&creator=43794003"
+		"_exporter_id": "12086211",
+		"_collection_link": "https://onlineshop-team.postman.co/workspace/onlineshop-team-Workspace~f9d95331-03c3-4961-af8e-98d4591c57ba/collection/12086211-fc4a99d8-9526-4b43-b5d6-42250dfa49dc?action=share&source=collection_link&creator=12086211"
 	},
 	"item": [
 		{
@@ -6023,7 +6023,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Nike\"\n}"
+							"raw": "{\n  \"name\": \"Nike\",\n  \"country\":\"US\",\n  \"description\":\"tstsgdcx\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/brands",
@@ -6696,7 +6696,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Nike\"\n}"
+							"raw": "{\n  \"name\": \"Nike\",\n  \"slug\": \"nike-slug\",\n  \"description\":\"test tags\"\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/tags",
@@ -7369,7 +7369,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Nike\"\n}"
+							"raw": "{\n  \"label\": \"size\",\n  \"value\":[\"large\",\"medium\",\"small\"]\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/attributes",
@@ -8029,7 +8029,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Laptop\",\n  \"price\": 999.99,\n  \"description\": \"High-end gaming laptop\"\n}"
+							"raw": "{\n    \"name\": \"Laptop\",\n    \"price\": 999.99,\n    \"brandId\":\"25e3fb39-aa52-4be3-9567-ddba9731fb29\",\n    \"slug\":\"loptop3\",\n    \"description\": \"High-end gaming laptop\",\n    \"categories\": [],\n    \"productReviews\": [],\n    \"tags\": [\"5f74a358-af9b-4339-a840-14c22e92b600\",\n    \"6338cde9-0537-4ebe-9e43-4b12f807912a\"],\n    \"variants\": [\n        {\n            \"regularPrice\":\"100\",\n            \"salePrice\":\"75\",\n            \"salePriceFromAt\":\"2025-04-29T08:30:22\",\n            \"salePriceToAt\":\"2025-04-30T08:30:22\",\n            \"availableItemCount\":\"10\",\n            \"variantName\":\"color\",\n            \"variantValue\":\"black\"\n        }\n    ]\n\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/products",
@@ -8042,7 +8042,97 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create Product",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Laptop\",\n    \"price\": 999.99,\n    \"brandId\":\"25e3fb39-aa52-4be3-9567-ddba9731fb29\",\n    \"slug\":\"loptop3\",\n    \"description\": \"High-end gaming laptop\",\n    \"categories\": [],\n    \"productReviews\": [],\n    \"tags\": [],\n    \"variants\": [\n        {\n            \"regularPrice\":\"100\",\n            \"salePrice\":\"75\",\n            \"salePriceFromAt\":\"2025-04-29T08:30:22\",\n            \"salePriceToAt\":\"2025-04-30T08:30:22\",\n            \"availableItemCount\":\"10\",\n            \"variantName\":\"color\",\n            \"variantValue\":\"black\"\n        }\n    ]\n\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/products",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"products"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Apr 2025 05:09:55 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"a92d619d-89a1-43ff-b299-02db7573a113\",\n    \"name\": \"Laptop\",\n    \"slug\": \"loptop3\",\n    \"description\": \"High-end gaming laptop\",\n    \"brandId\": \"25e3fb39-aa52-4be3-9567-ddba9731fb29\",\n    \"categories\": [],\n    \"productReviews\": [],\n    \"tags\": [],\n    \"variants\": [\n        {\n            \"id\": \"f7df20d8-7776-4a1e-8b95-751a44f008e3\",\n            \"regularPrice\": 100,\n            \"salePrice\": 75,\n            \"salePriceFromAt\": \"2025-04-29T08:30:22.000+00:00\",\n            \"salePriceToAt\": \"2025-04-30T08:30:22.000+00:00\",\n            \"availableItemCount\": 10,\n            \"variantName\": \"color\",\n            \"variantValue\": \"black\"\n        }\n    ]\n}"
+						}
+					]
 				},
 				{
 					"name": "Update Product",
@@ -8056,7 +8146,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Updated Laptop\",\n  \"price\": 1099.99\n}"
+							"raw": "{\n    \"name\": \"Laptop\",\n    \"brandId\":\"25e3fb39-aa52-4be3-9567-ddba9731fb29\",\n    \"slug\":\"loptop4\",\n    \"description\": \"High-end gaming laptop\",\n    \"categories\": [],\n    \"productReviews\": [],\n    \"tags\": [\"5f74a358-af9b-4339-a840-14c22e92b600\", \"6338cde9-0537-4ebe-9e43-4b12f807912a\"],\n    \"variants\": [\n        {\n            \"regularPrice\":\"100\",\n            \"salePrice\":\"75\",\n            \"salePriceFromAt\":\"2025-04-29T08:30:22\",\n            \"salePriceToAt\":\"2025-04-30T08:30:22\",\n            \"availableItemCount\":\"10\",\n            \"variantName\":\"color\",\n            \"variantValue\":\"black\"\n        }\n    ]\n\n}"
 						},
 						"url": {
 							"raw": "{{baseUrl}}/api/products/{{productId}}",
@@ -8070,7 +8160,98 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update Product",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Laptop\",\n    \"brandId\":\"25e3fb39-aa52-4be3-9567-ddba9731fb29\",\n    \"slug\":\"loptop4\",\n    \"description\": \"High-end gaming laptop\",\n    \"categories\": [],\n    \"productReviews\": [],\n    \"tags\": [\"5f74a358-af9b-4339-a840-14c22e92b600\", \"6338cde9-0537-4ebe-9e43-4b12f807912a\"],\n    \"variants\": [\n        {\n            \"regularPrice\":\"100\",\n            \"salePrice\":\"75\",\n            \"salePriceFromAt\":\"2025-04-29T08:30:22\",\n            \"salePriceToAt\":\"2025-04-30T08:30:22\",\n            \"availableItemCount\":\"10\",\n            \"variantName\":\"color\",\n            \"variantValue\":\"black\"\n        }\n    ]\n\n}"
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/products/{{productId}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"products",
+										"{{productId}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Method"
+								},
+								{
+									"key": "Vary",
+									"value": "Access-Control-Request-Headers"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "DENY"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 29 Apr 2025 11:44:52 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": \"227ee219-d0d0-485d-a914-a3e17d2d78df\",\n    \"name\": \"Laptop\",\n    \"slug\": \"loptop4\",\n    \"description\": \"High-end gaming laptop\",\n    \"brandId\": \"25e3fb39-aa52-4be3-9567-ddba9731fb29\",\n    \"categories\": [],\n    \"productReviews\": [],\n    \"tags\": [\n        \"6338cde9-0537-4ebe-9e43-4b12f807912a\",\n        \"5f74a358-af9b-4339-a840-14c22e92b600\"\n    ],\n    \"variants\": [\n        {\n            \"id\": \"8558cddd-26d5-446e-b912-4a12c5240fe3\",\n            \"regularPrice\": 100,\n            \"salePrice\": 75,\n            \"salePriceFromAt\": \"2025-04-29T08:30:22.000+00:00\",\n            \"salePriceToAt\": \"2025-04-30T08:30:22.000+00:00\",\n            \"availableItemCount\": 10,\n            \"variantName\": \"color\",\n            \"variantValue\": \"black\"\n        }\n    ]\n}"
+						}
+					]
 				},
 				{
 					"name": "Delete Product",
