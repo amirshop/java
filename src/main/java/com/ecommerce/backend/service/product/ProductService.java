@@ -6,18 +6,20 @@ import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.product.ProductDto;
 import com.ecommerce.backend.entity.product.Product;
 import com.ecommerce.backend.entity.product.ProductVariant;
+import com.ecommerce.backend.entity.product.Tag;
 import com.ecommerce.backend.exception.ResourceAlreadyExistsException;
+import com.ecommerce.backend.exception.ResourceNotFoundException;
 import com.ecommerce.backend.mapper.product.ProductMapper;
 import com.ecommerce.backend.mapper.product.ProductVariantMapper;
 import com.ecommerce.backend.repository.product.ProductRepository;
 import com.ecommerce.backend.repository.product.ProductVariantRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.GenericSpecification;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,14 +29,16 @@ public class ProductService extends BaseService<Product, ProductDto> {
     private final ProductMapper productMapper;
     private final ProductVariantMapper productVariantMapper;
     private final ProductVariantRepository productVariantRepository;
+    private final TagService tagService;
 
     public ProductService(ProductRepository productRepository, ProductMapper productMapper,
-                          ProductVariantMapper productVariantMapper, ProductVariantRepository productVariantRepository) {
+                          ProductVariantMapper productVariantMapper, ProductVariantRepository productVariantRepository, TagService tagService) {
         super(productRepository, productMapper::toDto);
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.productVariantMapper = productVariantMapper;
         this.productVariantRepository = productVariantRepository;
+        this.tagService = tagService;
     }
 
     public List<ProductDto> getAllProducts() {
@@ -55,6 +59,7 @@ public class ProductService extends BaseService<Product, ProductDto> {
         Product savedProduct = productRepository.save(product);
 
         if (productRequest.getVariants() != null) {
+            //TODO: find better way for save product and productVariant together
             List<ProductVariant> variants = productRequest.getVariants().stream()
                     .map(productVariant -> {
                         ProductVariant v = productVariantMapper.toEntity(productVariant);
@@ -74,37 +79,82 @@ public class ProductService extends BaseService<Product, ProductDto> {
         }
     }
 
+    @Transactional
     public ProductDto updateProduct(UUID productId, ProductDto productRequest) {
-        return productRepository.findById(productId)
-                .map(existingProduct -> {
-                    existingProduct.setName(productRequest.getName());
-                    existingProduct.setDescription(productRequest.getDescription());
+        Product existingProduct = productRepository.findById(productId)
+                .map(product -> {
+                    Optional.ofNullable(productRequest.getSlug())
+                            .filter(slug -> !slug.isBlank())
+                            .filter(this::isSlugUnique)
+                            .ifPresent(product::setSlug);
+                    Optional.ofNullable(productRequest.getName())
+                            .filter(name -> !name.isBlank())
+                            .ifPresent(product::setName);
+                    Optional.ofNullable(productRequest.getDescription())
+                                    .filter(description -> !description.isBlank())
+                            .ifPresent(product::setDescription);
 
-                    // Update variants: For simplicity, we remove all old variants and add new ones.
-                    // In a real-world scenario, you might want to perform a diff and update instead.
-                    existingProduct.getVariants().clear();
-//                    if (productRequest.getVariants() != null) {
-//                        for (ProductVariantDto variantDTO : productRequest.getVariants()) {
-//                            ProductVariant variant = productVariantMapper.toEntity(variantDTO);
-//                            variant.setProduct(existingProduct);
-//                            existingProduct.getVariants().add(variant);
-//                        }
-//                    }
+                    // Update Tags
+                    Set<Tag> tags = new HashSet<>();
+                    if (productRequest.getTags() != null) {
+                        for (UUID tagId : productRequest.getTags()) {
+                            Tag tag = tagService.findById(tagId);
+                            tags.add(tag);
+                        }
+                    }
+                    product.setTags(tags);
 
-//                    // Update Tags
-//                    Set<Tag> tags = new HashSet<>();
-//                    if (productRequest.getTags() != null) {
-//                        for (TagDto tag : productRequest.getTags()) {
-//                            tagRepository.findById(tag.getId()).ifPresent(tags::add);
-//                        }
-//                    }
-//                    existingProduct.setTags(tags);
+                    return productRepository.save(product);
+                }).orElseThrow(() -> new ResourceNotFoundException("product", "id", productId.toString()));
 
-                    Product updated = productRepository.save(existingProduct);
-                    return productMapper.toDto(updated);
+        productVariantRepository.deleteAllByProductId(productId);
+
+        List<ProductVariant> newVariants = Optional.ofNullable(productRequest.getVariants())
+                .orElse(Collections.emptyList())
+                .stream()
+                .map(productVariantDto -> {
+                    ProductVariant productVariant = productVariantMapper.toEntity(productVariantDto);
+                    productVariant.setProduct(existingProduct);
+                    return productVariantRepository.save(productVariant);
                 })
-                .orElse(null);
+                .collect(Collectors.toList());
+        existingProduct.setVariants(newVariants);
+
+        return productMapper.toDto(existingProduct);
     }
+
+    private boolean isSlugUnique(String slug) {
+        return !productRepository.existsBySlug(slug);
+    }
+
+
+//    public ProductDTO update(UUID id, ProductDTO dto) {
+//        Product existing = productRepo.findById(id)
+//                .orElseThrow(() -> new NoSuchElementException("Product not found"));
+//
+//        // update simple fields
+//        existing.setName(dto.getName());
+//        existing.setSlug(dto.getSlug());
+//        existing.setDescription(dto.getDescription());
+//        productRepo.save(existing);
+//
+//        // 3) delete old variants
+//        variantRepo.deleteAllByProduct_Id(id);
+//
+//        // 4) save new variants
+//        List<ProductVariant> newVariants = Optional.ofNullable(dto.getVariants())
+//                .orElse(Collections.emptyList())
+//                .stream()
+//                .map(vDto -> {
+//                    ProductVariant v = variantMapper.toProductVariant(vDto);
+//                    v.setProduct(existing);
+//                    return variantRepo.save(v);
+//                })
+//                .collect(Collectors.toList());
+//        existing.setVariants(newVariants);
+//
+//        return productMapper.toProductDTO(existing);
+//    }
 
 
     public void deleteProduct(UUID productId) {

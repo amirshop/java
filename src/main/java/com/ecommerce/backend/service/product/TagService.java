@@ -7,6 +7,7 @@ import com.ecommerce.backend.dto.product.BrandDto;
 import com.ecommerce.backend.dto.product.TagDto;
 import com.ecommerce.backend.entity.product.ProductCategory;
 import com.ecommerce.backend.entity.product.Tag;
+import com.ecommerce.backend.exception.ResourceNotFoundException;
 import com.ecommerce.backend.mapper.product.TagMapper;
 import com.ecommerce.backend.repository.product.TagRepository;
 import com.ecommerce.backend.service.BaseService;
@@ -44,6 +45,11 @@ public class TagService extends BaseService<Tag, TagDto> {
         return tagRepository.findById(tagId)
                 .map(tagMapper::toDto)
                 .orElse(null);
+    }
+
+    public Tag findById(UUID tagId) {
+        return tagRepository.findById(tagId)
+                .orElseThrow(() -> new ResourceNotFoundException("tag", "id", tagId.toString()));
     }
 
     public TagDto createTag(TagDto tagDto) {

@@ -68,7 +68,7 @@ public class Product {
 
 
     // Association to product variants
-    @OneToMany(mappedBy = "product", orphanRemoval = true)
+    @OneToMany(mappedBy = "product")
     private List<ProductVariant> variants;
 
 

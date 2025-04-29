@@ -68,7 +68,7 @@ public class BrandService extends BaseService<Brand, BrandDto> {
                     Brand updatedBrand = brandRepository.save(brand);
                     return brandMapper.toDto(updatedBrand);
                 })
-                .orElse(null);
+                .orElseThrow(null);
     }
 
     public void deleteBrand(UUID id) {
