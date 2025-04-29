@@ -70,6 +70,11 @@ public class ProductService extends BaseService<Product, ProductDto> {
             savedProduct.setVariants(variants);
         }
 
+        Set<Tag> tags = productRequest.getTags().stream()
+                .map(tagService::findById)
+                .collect(Collectors.toSet());
+        savedProduct.setTags(tags);
+
         return productMapper.toDto(savedProduct);
     }
 
@@ -94,18 +99,17 @@ public class ProductService extends BaseService<Product, ProductDto> {
                                     .filter(description -> !description.isBlank())
                             .ifPresent(product::setDescription);
 
-                    // Update Tags
-                    Set<Tag> tags = new HashSet<>();
-                    if (productRequest.getTags() != null) {
-                        for (UUID tagId : productRequest.getTags()) {
-                            Tag tag = tagService.findById(tagId);
-                            tags.add(tag);
-                        }
-                    }
-                    product.setTags(tags);
+                    product.getTags().clear();
 
                     return productRepository.save(product);
-                }).orElseThrow(() -> new ResourceNotFoundException("product", "id", productId.toString()));
+                })
+                .orElseThrow(() -> new ResourceNotFoundException("product", "id", productId.toString()));
+
+        Set<Tag> newTags = productRequest.getTags().stream()
+                .map(tagService::findById)
+                .collect(Collectors.toSet());
+
+        existingProduct.setTags(newTags);
 
         productVariantRepository.deleteAllByProductId(productId);
 
@@ -126,36 +130,6 @@ public class ProductService extends BaseService<Product, ProductDto> {
     private boolean isSlugUnique(String slug) {
         return !productRepository.existsBySlug(slug);
     }
-
-
-//    public ProductDTO update(UUID id, ProductDTO dto) {
-//        Product existing = productRepo.findById(id)
-//                .orElseThrow(() -> new NoSuchElementException("Product not found"));
-//
-//        // update simple fields
-//        existing.setName(dto.getName());
-//        existing.setSlug(dto.getSlug());
-//        existing.setDescription(dto.getDescription());
-//        productRepo.save(existing);
-//
-//        // 3) delete old variants
-//        variantRepo.deleteAllByProduct_Id(id);
-//
-//        // 4) save new variants
-//        List<ProductVariant> newVariants = Optional.ofNullable(dto.getVariants())
-//                .orElse(Collections.emptyList())
-//                .stream()
-//                .map(vDto -> {
-//                    ProductVariant v = variantMapper.toProductVariant(vDto);
-//                    v.setProduct(existing);
-//                    return variantRepo.save(v);
-//                })
-//                .collect(Collectors.toList());
-//        existing.setVariants(newVariants);
-//
-//        return productMapper.toProductDTO(existing);
-//    }
-
 
     public void deleteProduct(UUID productId) {
         productRepository.deleteById(productId);

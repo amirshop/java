@@ -27,9 +27,6 @@ public class Tag {
 
     private String description;
 
-    @ManyToMany(mappedBy = "tags")
-    private Set<Product> products = new HashSet<>();
-
     @Column(nullable = false, updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;

@@ -88,6 +88,11 @@ public class TagService extends BaseService<Tag, TagDto> {
         tagRepository.deleteById(tagId);
     }
 
+    public Tag findByName(String name) {
+        return tagRepository.findByName(name)
+                .orElseThrow(() -> new ResourceNotFoundException("tag", "name", name));
+    }
+
     @Override
     protected Specification<Tag> createSpecification(FilterCriteria filter) {
         return new GenericSpecification<>(filter);
