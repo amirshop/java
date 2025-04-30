@@ -36,13 +36,13 @@ public class WishlistItemController {
         return ResponseEntity.status(HttpStatus.CREATED).body(createdWishlistItem);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<WishlistItemDto> updateWishlistItem(@PathVariable UUID id, @RequestBody WishlistItemDto request) {
-        WishlistItemDto updatedWishlistItem = wishlistItemService.updateWishlistItem(id, request);
-        return updatedWishlistItem != null
-                ? ResponseEntity.ok(updatedWishlistItem)
-                : ResponseEntity.notFound().build();
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<WishlistItemDto> updateWishlistItem(@PathVariable UUID id, @RequestBody WishlistItemDto request) {
+//        WishlistItemDto updatedWishlistItem = wishlistItemService.updateWishlistItem(id, request);
+//        return updatedWishlistItem != null
+//                ? ResponseEntity.ok(updatedWishlistItem)
+//                : ResponseEntity.notFound().build();
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteWishlistItem(@PathVariable UUID id) {

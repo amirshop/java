@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -61,11 +62,12 @@ public abstract class BaseService<T, D> {
 
     private Specification<T> buildSpecifications(SearchDto requestDto, Class<?> dtoClass) {
         Specification<T> spec = Specification.where(null);
-        // Extract allowed filter fields from the DTO
-        List<String> allowedFields = FilterUtils.getAllowedFilterFields(dtoClass);
+        Map<String,String> allowedFieldMap = FilterUtils.getAllowedFilterFieldMappings(dtoClass);
         if (requestDto.getFilters() != null) {
             for (FilterCriteria filter : requestDto.getFilters()) {
-                if (allowedFields.contains(filter.getField())) {
+                String dtoField = filter.getField();
+                if (allowedFieldMap.containsKey(dtoField)) {
+                    filter.setField( allowedFieldMap.get(dtoField) );
                     Specification<T> filterSpec = createSpecification(filter);
                     if (filterSpec != null) {
                         spec = spec.and(filterSpec);
@@ -73,6 +75,7 @@ public abstract class BaseService<T, D> {
                 }
             }
         }
+
         return spec;
     }
 

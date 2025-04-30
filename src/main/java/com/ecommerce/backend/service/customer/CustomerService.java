@@ -96,6 +96,12 @@ public class CustomerService extends BaseService<Customer, CustomerDto> {
         }
     }
 
+    public void checkExistCustomer(UUID customerId) {
+        if (!customerRepository.existsById(customerId)) {
+            throw new ResourceNotFoundException("customer", "id", customerId.toString());
+        }
+    }
+
     public CustomerDto updateCustomer(UUID customerId, CustomerDto customerRequest) {
         return customerRepository.findById(customerId)
                 .map(customer -> {

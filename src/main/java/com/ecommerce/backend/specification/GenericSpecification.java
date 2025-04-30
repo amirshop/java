@@ -2,10 +2,7 @@ package com.ecommerce.backend.specification;
 
 import com.ecommerce.backend.dto.FilterCriteria;
 import com.ecommerce.backend.enums.FilterType;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
+import jakarta.persistence.criteria.*;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
@@ -25,48 +22,62 @@ public class GenericSpecification<T> implements Specification<T> {
 
         switch (operator) {
             case LESS_THAN:
-                return criteriaBuilder.lt(root.get(field), Double.valueOf(value.toString()));
+                return criteriaBuilder.lt(buildPath(root, field).as(Number.class), Double.valueOf(value.toString()));
             case GREATER_THAN:
-                return criteriaBuilder.gt(root.get(field), Double.valueOf(value.toString()));
+                return criteriaBuilder.gt(buildPath(root, field).as(Number.class), Double.valueOf(value.toString()));
             case IN_RANGE:
                 if (value instanceof List) {
                     List<?> values = (List<?>) value;
                     if (values.size() >= 2) {
                         // Assumes the field type is Comparable (like a number or a date)
-                        return criteriaBuilder.between(root.get(field),
+                        return criteriaBuilder.between(comparablePath(root, field),
                                 (Comparable) values.get(0),
                                 (Comparable) values.get(1));
                     }
                 }
                 break;
             case CONTAINS:
-                return criteriaBuilder.like(root.get(field), "%" + value.toString() + "%");
+                return criteriaBuilder.like(buildPath(root, field).as(String.class), "%" + value.toString() + "%");
             case NOT_CONTAINS:
-                return criteriaBuilder.notLike(root.get(field), "%" + value.toString() + "%");
+                return criteriaBuilder.notLike(buildPath(root, field).as(String.class), "%" + value.toString() + "%");
             case STARTS_WITH:
-                return criteriaBuilder.like(root.get(field), value.toString() + "%");
+                return criteriaBuilder.like(buildPath(root, field).as(String.class), value.toString() + "%");
             case ENDS_WITH:
-                return criteriaBuilder.like(root.get(field), "%" + value.toString());
+                return criteriaBuilder.like(buildPath(root, field).as(String.class), "%" + value.toString());
             case EQUALS:
-                return criteriaBuilder.equal(root.get(field), value);
+                return criteriaBuilder.equal(buildPath(root, field), value);
             case NOT_EQUAL:
-                return criteriaBuilder.notEqual(root.get(field), value);
+                return criteriaBuilder.notEqual(buildPath(root, field), value);
             case BEFORE:
-                return criteriaBuilder.lessThan(root.get(field), (Comparable) value);
+                return criteriaBuilder.lessThan(buildPath(root, field).as(String.class), (Comparable) value);
             case AFTER:
-                return criteriaBuilder.greaterThan(root.get(field), (Comparable) value);
+                return criteriaBuilder.greaterThan(buildPath(root, field).as(String.class), (Comparable) value);
             case BLANK:
                 return criteriaBuilder.or(
-                        criteriaBuilder.isNull(root.get(field)),
-                        criteriaBuilder.equal(root.get(field), ""));
+                        criteriaBuilder.isNull(buildPath(root, field)),
+                        criteriaBuilder.equal(buildPath(root, field), ""));
             case NOT_BLANK:
                 return criteriaBuilder.and(
-                        criteriaBuilder.isNotNull(root.get(field)),
-                        criteriaBuilder.notEqual(root.get(field), ""));
+                        criteriaBuilder.isNotNull(buildPath(root, field)),
+                        criteriaBuilder.notEqual(buildPath(root, field), ""));
             default:
                 return null;
         }
         return null;
+    }
+
+
+    private Path<?> buildPath(Root<T> root, String fieldPath) {
+        Path<?> path = root;
+        for (String part : fieldPath.split("\\.")) {
+            path = path.get(part);
+        }
+        return path;
+    }
+
+    @SuppressWarnings("unchecked")
+    private <Y extends Comparable<? super Y>> Expression<Y> comparablePath(Root<T> root, String field) {
+        return (Expression<Y>) buildPath(root, field).as(Comparable.class);
     }
 }
 

@@ -9,6 +9,7 @@ import com.ecommerce.backend.exception.ResourceNotFoundException;
 import com.ecommerce.backend.mapper.customer.WishlistItemMapper;
 import com.ecommerce.backend.repository.customer.WishlistItemRepository;
 import com.ecommerce.backend.service.BaseService;
+import com.ecommerce.backend.service.product.ProductService;
 import com.ecommerce.backend.specification.GenericSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -23,12 +24,16 @@ public class WishlistItemService extends BaseService<WishlistItem, WishlistItemD
 
     private final WishlistItemRepository wishlistItemRepository;
     private final WishlistItemMapper wishlistItemMapper;
+    private final ProductService productService;
+    private final CustomerService customerService;
 
     public WishlistItemService(WishlistItemRepository wishlistItemRepository,
-                               WishlistItemMapper wishlistItemMapper) {
+                               WishlistItemMapper wishlistItemMapper, ProductService productService, CustomerService customerService) {
         super(wishlistItemRepository, wishlistItemMapper::toDto);
         this.wishlistItemRepository = wishlistItemRepository;
         this.wishlistItemMapper = wishlistItemMapper;
+        this.productService = productService;
+        this.customerService = customerService;
     }
 
     public List<WishlistItemDto> getAllWishlistItems() {
@@ -45,23 +50,27 @@ public class WishlistItemService extends BaseService<WishlistItem, WishlistItemD
     }
 
     public WishlistItemDto createWishlistItem(WishlistItemDto request) {
+        customerService.checkExistCustomer(request.getCustomerId());
+        productService.checkExistsProduct(request.getProductId());
         WishlistItem wishlistItem = wishlistItemMapper.toEntity(request);
         wishlistItem.setAddedAt(new Date());
         WishlistItem savedWishlistItem = wishlistItemRepository.save(wishlistItem);
         return wishlistItemMapper.toDto(savedWishlistItem);
     }
 
-    public WishlistItemDto updateWishlistItem(UUID id, WishlistItemDto itemDetails) {
-        return wishlistItemRepository.findById(id).map(item -> {
-//            item.setCustomer(itemDetails.getCustomer());
-//            item.setProduct(itemDetails.getProduct());
-            item.setAddedAt(new Date());
-            WishlistItem updated = wishlistItemRepository.save(item);
-            return wishlistItemMapper.toDto(updated);
-        }).orElseThrow(() -> new RuntimeException("WishlistItem not found with id " + id));
-    }
+//    public WishlistItemDto updateWishlistItem(UUID id, WishlistItemDto itemDetails) {
+//        return wishlistItemRepository.findById(id).map(item -> {
+////            item.setCustomer(itemDetails.getCustomer());
+////            item.setProduct(itemDetails.getProduct());
+//            item.setAddedAt(new Date());
+//            WishlistItem updated = wishlistItemRepository.save(item);
+//            return wishlistItemMapper.toDto(updated);
+//        }).orElseThrow(() -> new RuntimeException("WishlistItem not found with id " + id));
+//    }
 
     public void deleteWishlistItem(UUID id) {
+        wishlistItemRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("wishlistItem", "id", id.toString()));
         wishlistItemRepository.deleteById(id);
     }
 

@@ -148,8 +148,15 @@ public class ProductService extends BaseService<Product, ProductDto> {
 
     @Transactional
     public void deleteProduct(UUID productId) {
+        checkExistsProduct(productId);
         productVariantService.deleteVariantsByProductId(productId);
         productRepository.deleteById(productId);
+    }
+
+    public void checkExistsProduct(UUID productId) {
+        if (!productRepository.existsById(productId)) {
+            throw new ResourceNotFoundException("product", "id", productId.toString());
+        }
     }
 
 
