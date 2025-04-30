@@ -38,9 +38,6 @@ public class ProductCategory {
 
     private Integer priority;
 
-    @ManyToMany(mappedBy = "categories")
-    private Set<Product> products = new HashSet<>();
-
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<ProductCategory> subCategory = new HashSet<>();
 }

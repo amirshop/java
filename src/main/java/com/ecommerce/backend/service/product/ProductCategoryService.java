@@ -44,6 +44,12 @@ public class ProductCategoryService extends BaseService<ProductCategory, Product
                 .orElse(null);
     }
 
+    public ProductCategory findCategoryById(UUID categoryId) {
+        return categoryRepository.findById(categoryId).orElseThrow(
+                () -> new ResourceNotFoundException("category", "id", categoryId.toString())
+        );
+    }
+
     //TODO: test this method
     public ProductCategoryDto createCategory(ProductCategoryDto categoryRequest) {
         checkExistSlug(categoryRequest.getSlug());

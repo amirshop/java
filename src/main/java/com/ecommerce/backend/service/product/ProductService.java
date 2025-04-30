@@ -5,6 +5,7 @@ import com.ecommerce.backend.dto.ResponseDto;
 import com.ecommerce.backend.dto.SearchDto;
 import com.ecommerce.backend.dto.product.ProductDto;
 import com.ecommerce.backend.entity.product.Product;
+import com.ecommerce.backend.entity.product.ProductCategory;
 import com.ecommerce.backend.entity.product.ProductVariant;
 import com.ecommerce.backend.entity.product.Tag;
 import com.ecommerce.backend.exception.ResourceAlreadyExistsException;
@@ -30,15 +31,18 @@ public class ProductService extends BaseService<Product, ProductDto> {
     private final ProductVariantMapper productVariantMapper;
     private final ProductVariantRepository productVariantRepository;
     private final TagService tagService;
+    private final ProductCategoryService productCategoryService;
 
     public ProductService(ProductRepository productRepository, ProductMapper productMapper,
-                          ProductVariantMapper productVariantMapper, ProductVariantRepository productVariantRepository, TagService tagService) {
+                          ProductVariantMapper productVariantMapper, ProductVariantRepository productVariantRepository,
+                          TagService tagService, ProductCategoryService productCategoryService) {
         super(productRepository, productMapper::toDto);
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.productVariantMapper = productVariantMapper;
         this.productVariantRepository = productVariantRepository;
         this.tagService = tagService;
+        this.productCategoryService = productCategoryService;
     }
 
     public List<ProductDto> getAllProducts() {
@@ -75,6 +79,11 @@ public class ProductService extends BaseService<Product, ProductDto> {
                 .collect(Collectors.toSet());
         savedProduct.setTags(tags);
 
+        Set<ProductCategory> categories = productRequest.getCategories().stream()
+                .map(productCategoryService::findCategoryById)
+                .collect(Collectors.toSet());
+        savedProduct.setCategories(categories);
+
         return productMapper.toDto(savedProduct);
     }
 
@@ -100,6 +109,7 @@ public class ProductService extends BaseService<Product, ProductDto> {
                             .ifPresent(product::setDescription);
 
                     product.getTags().clear();
+                    product.getCategories().clear();
 
                     return productRepository.save(product);
                 })
@@ -108,8 +118,12 @@ public class ProductService extends BaseService<Product, ProductDto> {
         Set<Tag> newTags = productRequest.getTags().stream()
                 .map(tagService::findById)
                 .collect(Collectors.toSet());
-
         existingProduct.setTags(newTags);
+
+        Set<ProductCategory> newCategories = productRequest.getCategories().stream()
+                .map(productCategoryService::findCategoryById)
+                .collect(Collectors.toSet());
+        existingProduct.setCategories(newCategories);
 
         productVariantRepository.deleteAllByProductId(productId);
 
