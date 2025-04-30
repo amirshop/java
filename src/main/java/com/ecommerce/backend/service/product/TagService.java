@@ -88,6 +88,8 @@ public class TagService extends BaseService<Tag, TagDto> {
         tagRepository.deleteById(tagId);
     }
 
+    public void deleteTags(List<UUID> tagIds) {}
+
     public Tag findByName(String name) {
         return tagRepository.findByName(name)
                 .orElseThrow(() -> new ResourceNotFoundException("tag", "name", name));

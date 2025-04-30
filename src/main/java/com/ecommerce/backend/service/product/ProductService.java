@@ -13,7 +13,6 @@ import com.ecommerce.backend.exception.ResourceNotFoundException;
 import com.ecommerce.backend.mapper.product.ProductMapper;
 import com.ecommerce.backend.mapper.product.ProductVariantMapper;
 import com.ecommerce.backend.repository.product.ProductRepository;
-import com.ecommerce.backend.repository.product.ProductVariantRepository;
 import com.ecommerce.backend.service.BaseService;
 import com.ecommerce.backend.specification.GenericSpecification;
 import jakarta.transaction.Transactional;
@@ -29,20 +28,22 @@ public class ProductService extends BaseService<Product, ProductDto> {
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final ProductVariantMapper productVariantMapper;
-    private final ProductVariantRepository productVariantRepository;
     private final TagService tagService;
     private final ProductCategoryService productCategoryService;
+    private final ProductVariantService productVariantService;
 
     public ProductService(ProductRepository productRepository, ProductMapper productMapper,
-                          ProductVariantMapper productVariantMapper, ProductVariantRepository productVariantRepository,
-                          TagService tagService, ProductCategoryService productCategoryService) {
+                          ProductVariantMapper productVariantMapper, TagService tagService,
+                          ProductCategoryService productCategoryService,
+                          ProductVariantService productVariantService) {
+
         super(productRepository, productMapper::toDto);
         this.productRepository = productRepository;
         this.productMapper = productMapper;
         this.productVariantMapper = productVariantMapper;
-        this.productVariantRepository = productVariantRepository;
         this.tagService = tagService;
         this.productCategoryService = productCategoryService;
+        this.productVariantService = productVariantService;
     }
 
     public List<ProductDto> getAllProducts() {
@@ -68,7 +69,7 @@ public class ProductService extends BaseService<Product, ProductDto> {
                     .map(productVariant -> {
                         ProductVariant v = productVariantMapper.toEntity(productVariant);
                         v.setProduct(savedProduct);
-                        return productVariantRepository.save(v);
+                        return productVariantService.saveVariant(v);
                     })
                     .collect(Collectors.toList());
             savedProduct.setVariants(variants);
@@ -125,7 +126,7 @@ public class ProductService extends BaseService<Product, ProductDto> {
                 .collect(Collectors.toSet());
         existingProduct.setCategories(newCategories);
 
-        productVariantRepository.deleteAllByProductId(productId);
+        productVariantService.deleteVariantsByProductId(productId);
 
         List<ProductVariant> newVariants = Optional.ofNullable(productRequest.getVariants())
                 .orElse(Collections.emptyList())
@@ -133,7 +134,7 @@ public class ProductService extends BaseService<Product, ProductDto> {
                 .map(productVariantDto -> {
                     ProductVariant productVariant = productVariantMapper.toEntity(productVariantDto);
                     productVariant.setProduct(existingProduct);
-                    return productVariantRepository.save(productVariant);
+                    return productVariantService.saveVariant(productVariant);
                 })
                 .collect(Collectors.toList());
         existingProduct.setVariants(newVariants);
@@ -145,7 +146,9 @@ public class ProductService extends BaseService<Product, ProductDto> {
         return !productRepository.existsBySlug(slug);
     }
 
+    @Transactional
     public void deleteProduct(UUID productId) {
+        productVariantService.deleteVariantsByProductId(productId);
         productRepository.deleteById(productId);
     }
 
