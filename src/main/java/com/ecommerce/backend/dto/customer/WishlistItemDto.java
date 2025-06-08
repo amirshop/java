@@ -18,7 +18,7 @@ public class WishlistItemDto {
     @AllowedFilter
     private UUID customerId;
 
-    @AllowedFilter
+    @AllowedFilter(path="product.id")
     private UUID productId;
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)

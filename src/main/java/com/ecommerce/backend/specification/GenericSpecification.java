@@ -6,6 +6,8 @@ import jakarta.persistence.criteria.*;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
+import java.util.UUID;
+import java.util.function.BiFunction;
 
 public class GenericSpecification<T> implements Specification<T> {
     private final FilterCriteria filter;
@@ -19,47 +21,49 @@ public class GenericSpecification<T> implements Specification<T> {
         String field = filter.getField();
         FilterType operator = filter.getOperator();
         Object value = filter.getCriteria();
+        Path<?> path = buildPath(root, field);
+        Object coercedValue = coerceValueToFieldType(path, value);
 
         switch (operator) {
             case LESS_THAN:
-                return criteriaBuilder.lt(buildPath(root, field).as(Number.class), Double.valueOf(value.toString()));
+                return criteriaBuilder.lt(path.as(Number.class), Double.valueOf(value.toString()));
             case GREATER_THAN:
-                return criteriaBuilder.gt(buildPath(root, field).as(Number.class), Double.valueOf(value.toString()));
+                return criteriaBuilder.gt(path.as(Number.class), Double.valueOf(value.toString()));
             case IN_RANGE:
                 if (value instanceof List) {
                     List<?> values = (List<?>) value;
                     if (values.size() >= 2) {
                         // Assumes the field type is Comparable (like a number or a date)
-                        return criteriaBuilder.between(comparablePath(root, field),
+                        return criteriaBuilder.between(root.get(field),
                                 (Comparable) values.get(0),
                                 (Comparable) values.get(1));
                     }
                 }
                 break;
             case CONTAINS:
-                return criteriaBuilder.like(buildPath(root, field).as(String.class), "%" + value.toString() + "%");
+                return criteriaBuilder.like(path.as(String.class), "%" + value.toString() + "%");
             case NOT_CONTAINS:
-                return criteriaBuilder.notLike(buildPath(root, field).as(String.class), "%" + value.toString() + "%");
+                return criteriaBuilder.notLike(path.as(String.class), "%" + value.toString() + "%");
             case STARTS_WITH:
-                return criteriaBuilder.like(buildPath(root, field).as(String.class), value.toString() + "%");
+                return criteriaBuilder.like(path.as(String.class), value.toString() + "%");
             case ENDS_WITH:
-                return criteriaBuilder.like(buildPath(root, field).as(String.class), "%" + value.toString());
+                return criteriaBuilder.like(path.as(String.class), "%" + value.toString());
             case EQUALS:
-                return criteriaBuilder.equal(buildPath(root, field), value);
+                return criteriaBuilder.equal(path, coercedValue);
             case NOT_EQUAL:
-                return criteriaBuilder.notEqual(buildPath(root, field), value);
+                return criteriaBuilder.notEqual(path, value);
             case BEFORE:
-                return criteriaBuilder.lessThan(buildPath(root, field).as(String.class), (Comparable) value);
+                return criteriaBuilder.lessThan(path.as(String.class), (String) value);
             case AFTER:
-                return criteriaBuilder.greaterThan(buildPath(root, field).as(String.class), (Comparable) value);
+                return criteriaBuilder.greaterThan(path.as(String.class), (String) value);
             case BLANK:
                 return criteriaBuilder.or(
-                        criteriaBuilder.isNull(buildPath(root, field)),
-                        criteriaBuilder.equal(buildPath(root, field), ""));
+                        criteriaBuilder.isNull(path),
+                        criteriaBuilder.equal(path, ""));
             case NOT_BLANK:
                 return criteriaBuilder.and(
-                        criteriaBuilder.isNotNull(buildPath(root, field)),
-                        criteriaBuilder.notEqual(buildPath(root, field), ""));
+                        criteriaBuilder.isNotNull(path),
+                        criteriaBuilder.notEqual(path, ""));
             default:
                 return null;
         }
@@ -75,9 +79,42 @@ public class GenericSpecification<T> implements Specification<T> {
         return path;
     }
 
+//    @SuppressWarnings("unchecked")
+//    private <Y extends Comparable<? super Y>> Expression<Y> comparablePath(Root<T> root, String field) {
+//        return (Expression<Y>) buildPath(root, field).as(Comparable.class);
+//    }
+
+
     @SuppressWarnings("unchecked")
-    private <Y extends Comparable<? super Y>> Expression<Y> comparablePath(Root<T> root, String field) {
-        return (Expression<Y>) buildPath(root, field).as(Comparable.class);
+    private <Y extends Comparable<? super Y>>
+    Predicate compare(CriteriaBuilder cb, Expression<?> expr, Object value, BiFunction<Expression<Y>,Y,Predicate> op) {
+        Class<Y> type = (Class<Y>) value.getClass();
+        Expression<Y> typed = expr.as(type);
+        return op.apply(typed, (Y) value);
     }
+
+    private Object coerceValueToFieldType(Path<?> path, Object value) {
+        Class<?> type = path.getJavaType();
+
+        if (value == null) return null;
+
+        if (type.equals(UUID.class) && value instanceof String) {
+            return UUID.fromString((String) value);
+        }
+
+        if (type.equals(Integer.class) && value instanceof String) {
+            return Integer.valueOf((String) value);
+        }
+
+        if (type.equals(Long.class) && value instanceof String) {
+            return Long.valueOf((String) value);
+        }
+
+        //TODO: add support for LocalDate, Enum, Boolean, etc.
+
+        return value;
+    }
+
+
 }
 
