@@ -28,6 +28,7 @@
     </scm>
     <properties>
         <java.version>17</java.version>
+        <native-build-tools.version>0.9.28</native-build-tools.version>
     </properties>
     <dependencies>
         <dependency>
@@ -118,6 +119,7 @@
 
     <build>
         <plugins>
+            <!-- Maven Compiler Plugin (unchanged) -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -141,14 +143,29 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
+
+            <!-- Spring Boot Maven Plugin (merged configuration) -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.4.3</version>
                 <configuration>
                     <mainClass>com.ecommerce.backend.BackendApplication</mainClass>
+                    <image>
+                        <builder>paketobuildpacks/builder:tiny</builder>
+                        <env>
+                            <BP_NATIVE_IMAGE>true</BP_NATIVE_IMAGE>
+                        </env>
+                    </image>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.graalvm.buildtools</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <version>${native-build-tools.version}</version>
+            </plugin>
         </plugins>
+
     </build>
 
 </project>

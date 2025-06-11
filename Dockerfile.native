@@ -1,0 +1,58 @@
+##Start with a base image containing Java runtime
+#FROM openjdk:17-jdk-alpine
+#
+## Add the application's jar to the image
+#COPY target/backend-0.0.1-SNAPSHOT.jar backend-0.0.1-SNAPSHOT.jar
+#
+## execute the application
+#ENTRYPOINT ["java", "-jar", "backend-0.0.1-SNAPSHOT.jar"]
+
+
+#-----------------------------------------------------------------------
+
+## Build stage
+#FROM ghcr.io/graalvm/native-image-community:22.3.1-ol9-java17 AS builder
+#
+#WORKDIR /workspace
+#
+## Copy only the files needed for build to optimize layer caching
+#COPY mvnw .
+#COPY .mvn .mvn
+#COPY pom.xml .
+#COPY src src
+#
+## Build the native image
+#RUN ./mvnw -Pnative native:compile
+#
+## Runtime stage
+#FROM alpine:3.18
+#
+#WORKDIR /app
+#
+## Copy the native executable from the builder
+#COPY --from=builder /workspace/target/backend-0.0.1-SNAPSHOT.jar /app/application
+#
+## Set the entrypoint
+#ENTRYPOINT ["/app/application"]
+
+
+#------------------------------------------------------------------------------------
+
+
+FROM eclipse-temurin:17-jdk-jammy as builder
+
+WORKDIR /workspace
+
+COPY . .
+
+# For Maven projects
+RUN ./mvnw -Pnative spring-boot:build-image
+
+# For Gradle projects
+# RUN ./gradlew bootBuildImage
+
+FROM eclipse-temurin:17-jre-jammy
+
+COPY --from=builder /workspace/target/*.jar app.jar
+
+ENTRYPOINT ["java","-jar","/app.jar"]
