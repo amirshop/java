@@ -1,0 +1,13 @@
+[
+  {
+    "name": "org.springframework.aop.framework.DefaultAopProxyFactory",
+    "methods": [
+      {"name": "hasNoUserSuppliedProxyInterfaces", "parameterTypes": ["org.springframework.aop.framework.AdvisedSupport"]}
+    ]
+  },
+  {
+    "name": "org.springframework.aop.framework.AdvisedSupport",
+    "allDeclaredConstructors": true,
+    "allPublicConstructors": true
+  }
+]

@@ -1,0 +1,7 @@
+[
+  ["org.springframework.aop.SpringProxy"],
+  ["org.springframework.aop.framework.Advised"],
+  ["org.springframework.core.DecoratingProxy"],
+  ["org.springframework.aop.TargetClassAware"],
+  ["org.springframework.aop.framework.AopInfrastructureBean"]
+]

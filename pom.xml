@@ -115,6 +115,11 @@
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
             <version>2.6.0</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.experimental</groupId>
+            <artifactId>spring-native</artifactId>
+            <version>0.12.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -162,7 +167,19 @@
             <plugin>
                 <groupId>org.graalvm.buildtools</groupId>
                 <artifactId>native-maven-plugin</artifactId>
-                <version>${native-build-tools.version}</version>
+                <version>0.9.28</version>
+                <configuration>
+                    <mainClass>com.ecommerce.backend.BackendApplication</mainClass>
+                    <imageName>output</imageName>
+                    <buildArgs>
+                        <buildArg>-H:+ReportExceptionStackTraces</buildArg>
+                        <buildArg>-H:+AddAllCharsets</buildArg>
+                        <buildArg>-H:EnableURLProtocols=http,https</buildArg>
+                        <buildArg>-H:+DynamicProxyLoading</buildArg>
+                        <buildArg>-H:ReflectionConfigurationResources=${project.basedir}/src/main/resources/META-INF/native-image/reflect-config.json</buildArg>
+                        <buildArg>-H:DynamicProxyConfigurationResources=${project.basedir}/src/main/resources/META-INF/native-image/proxies.json</buildArg>
+                    </buildArgs>
+                </configuration>
             </plugin>
         </plugins>
 
