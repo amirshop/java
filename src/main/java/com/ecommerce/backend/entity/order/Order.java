@@ -3,14 +3,12 @@ package com.ecommerce.backend.entity.order;
 import com.ecommerce.backend.entity.customer.Customer;
 import com.ecommerce.backend.entity.payment.Payment;
 import com.ecommerce.backend.entity.shipment.Shipment;
-import com.ecommerce.backend.entity.cart.Item;
 import com.ecommerce.backend.enums.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.math.BigDecimal;
+import java.util.*;
 
 @Entity
 @Table(name = "orders")
@@ -23,16 +21,12 @@ public class Order {
     private UUID id;
 
     private Date createdAt;
-    private Date updatedAt;
 
     private String orderNumber;
     private String orderProcessor;
 
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date orderDate;
 
     @OneToMany
     @JoinColumn(name = "order_id")
@@ -42,12 +36,13 @@ public class Order {
     @JoinColumn(name = "order_id")
     private List<Shipment> shipments;
 
-    // If each order has items:
-    @OneToMany
-    @JoinColumn(name = "order_id")
-    private List<Item> items;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<OrderItem> items = new HashSet<>();
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
+
+    private BigDecimal totalAmount;
+    private String shippingAddress;
+    private String billingAddress;
 }

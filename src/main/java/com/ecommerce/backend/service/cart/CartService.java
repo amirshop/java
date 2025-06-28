@@ -27,6 +27,11 @@ public class CartService {
                 .orElse(null);
     }
 
+    public Cart findCartById(UUID cartId) {
+        return cartRepository.findById(cartId)
+                .orElse(null);
+    }
+
     public ItemDto addItem(UUID cartId, ItemDto itemRequest) {
         Optional<Cart> cartOpt = cartRepository.findById(cartId);
         if (!cartOpt.isPresent()) {

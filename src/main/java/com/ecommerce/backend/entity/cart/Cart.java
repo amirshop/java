@@ -15,19 +15,11 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private Date createdAt;
-    private Date updatedAt;
-
-//    private boolean isClosed;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date creationDate;
-
     @OneToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
     // A shopping cart can have many items
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
-    private List<Item> items;
+    private List<CartItem> items;
 }
