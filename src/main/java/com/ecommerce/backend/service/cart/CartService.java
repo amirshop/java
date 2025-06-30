@@ -89,14 +89,14 @@ public class CartService {
                 .ifPresentOrElse(
                         item -> {
                             item.setQuantity(item.getQuantity() + quantity);
-//                            cartItemService.save(item); //fixme: add save method in cartItemService
+                            cartItemService.save(item); //fixme: add save method in cartItemService
                         },
                         () -> {
                             CartItem newItem = new CartItem();
                             newItem.setQuantity(quantity);
                             newItem.setVariant(variant);
                             cart.getItems().add(newItem);
-//                            cartItemService.save(newItem); //fixme: add save method in cartItemService
+                            cartItemService.save(newItem); //fixme: add save method in cartItemService
                         }
                 );
 
@@ -112,22 +112,31 @@ public class CartService {
                 });
     }
 
-    private Cart addItemToCustomerCart(UUID productId, int quantity, UUID customerId) {
+    private Cart addItemToCustomerCart(UUID productVariantId, int quantity, UUID customerId) {
         Cart cart = getOrCreateCustomerCart(customerId);
 
         cart.getItems().stream()
-                .filter(item -> item.getProductId().equals(productId))
+                .filter(item -> item.getVariant().getId().equals(productVariantId))
                 .findFirst()
                 .ifPresentOrElse(
-                        item -> item.setQuantity(item.getQuantity() + quantity),
-                        () -> cart.getItems().add(new CartItem(productId, quantity))
+                        item -> {
+                            item.setQuantity(item.getQuantity() + quantity);
+                            cartItemService.save(item); //fixme: add save method in cartItemService
+                        },
+                        () -> {
+                            CartItem newItem = new CartItem();
+                            newItem.setQuantity(quantity);
+                            newItem.getVariant().setId(productVariantId);
+                            cart.getItems().add(newItem);
+                            cartItemService.save(newItem); //fixme: add save method in cartItemService
+                        }
                 );
 
         return cartRepository.save(cart);
     }
 
     public ItemDto updateItem(UUID cartId, UUID itemId, ItemDto itemRequest) {
-        Optional<CartItem> itemOpt = itemRepository.findById(itemId);
+        Optional<CartItem> itemOpt = cartItemService.findById(itemId); //fixme: add findById method in cartItemService
         if (itemOpt.isPresent()) {
             CartItem item = itemOpt.get();
             if (!item.getCart().getId().equals(cartId)) {
@@ -135,18 +144,18 @@ public class CartService {
             }
             item.setQuantity(itemRequest.getQuantity());
             item.setPrice(itemRequest.getPrice());
-            CartItem updatedItem = itemRepository.save(item);
+            CartItem updatedItem = cartItemService.save(item); //fixme: add save method in cartItemService
             return modelMapper.map(updatedItem, ItemDto.class);
         }
         return null;
     }
 
     public void removeItem(UUID cartId, UUID itemId) {
-        Optional<CartItem> itemOpt = itemRepository.findById(itemId);
+        Optional<CartItem> itemOpt = cartItemService.findById(itemId); //fixme: add findById method in cartItemService
         if (itemOpt.isPresent()) {
             CartItem item = itemOpt.get();
             if (item.getCart().getId().equals(cartId)) {
-                itemRepository.deleteById(itemId);
+                cartItemService.deleteById(itemId); //fixme: add deleteById method in cartItemService
             }
         }
     }
