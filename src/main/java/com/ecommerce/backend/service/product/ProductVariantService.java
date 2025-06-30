@@ -67,5 +67,9 @@ public class ProductVariantService extends BaseService<ProductVariant, ProductVa
     public ResponseDto searchProducts(SearchDto requestDto) {
         return search(requestDto, ProductVariantDto.class);
     }
+
+    public ProductVariant getAvailableVariant(Long productVariantId) {
+        return null;
+    }
 }
 

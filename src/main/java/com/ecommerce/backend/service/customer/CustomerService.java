@@ -10,6 +10,8 @@ import com.ecommerce.backend.exception.ResourceNotFoundException;
 import com.ecommerce.backend.mapper.customer.CustomerMapper;
 import com.ecommerce.backend.repository.customer.CustomerRepository;
 import com.ecommerce.backend.service.BaseService;
+import com.ecommerce.backend.service.auth.UserDetailsImpl;
+import com.ecommerce.backend.service.auth.UserDetailsServiceImpl;
 import com.ecommerce.backend.specification.GenericSpecification;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -30,13 +32,16 @@ public class CustomerService extends BaseService<Customer, CustomerDto> {
     private final CustomerRepository customerRepository;
     private final CustomerMapper customerMapper;
     private final PasswordEncoder passwordEncoder;
+    private final UserDetailsServiceImpl userDetailsService;
 
     public CustomerService(CustomerRepository customerRepository,
-                           CustomerMapper customerMapper, PasswordEncoder passwordEncoder) {
+                           CustomerMapper customerMapper, PasswordEncoder passwordEncoder,
+                           UserDetailsServiceImpl userDetailsService) {
         super(customerRepository, customerMapper::toDto);
         this.customerRepository = customerRepository;
         this.customerMapper = customerMapper;
         this.passwordEncoder = passwordEncoder;
+        this.userDetailsService = userDetailsService;
     }
 
     public List<CustomerDto> getAllCustomers() {
@@ -55,6 +60,11 @@ public class CustomerService extends BaseService<Customer, CustomerDto> {
     public Customer findById(UUID customerId) {
         return customerRepository.findById(customerId)
                 .orElseThrow(() -> new ResourceNotFoundException("customer", "id", customerId.toString()));
+    }
+
+    public Customer getCustomerByAuthenticationToken() {
+        UserDetailsImpl userDetails = userDetailsService.getPrincipal();
+        return customerRepository.findById(userDetails.getId()).orElse(null);
     }
 
     public CustomerDto createCustomer(CustomerDto customerRequest) {

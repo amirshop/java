@@ -23,9 +23,9 @@ public class CartController {
         return cart != null ? ResponseEntity.ok(cart) : ResponseEntity.notFound().build();
     }
 
-    @PostMapping("/{cartId}/items")
-    public ResponseEntity<ItemDto> addItemToCart(@PathVariable UUID cartId, @RequestBody ItemDto itemRequest) {
-        ItemDto createdItem = cartService.addItem(cartId, itemRequest);
+    @PostMapping("/addItems")
+    public ResponseEntity<ItemDto> addItemToCart(@RequestBody ItemDto itemRequest) {
+        ItemDto createdItem = cartService.addItem(itemRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdItem);
     }
 
